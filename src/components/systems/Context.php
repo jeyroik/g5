@@ -16,7 +16,7 @@ class Context implements IContext
     protected const ITEM__MODE = 'mode';
 
     /**
-     * @var IItem[]
+     * @var array
      */
     protected $items = [];
 
@@ -88,7 +88,7 @@ class Context implements IContext
         }
 
         if ($this->isWritable($name)) {
-            $this->items[$name]->setValue($value);
+            $this->items[$name][static::ITEM__SELF]->setValue($value);
         } else {
             throw new \Exception('Access restricted for the item "' . $name . '".');
         }
