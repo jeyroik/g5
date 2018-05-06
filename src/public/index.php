@@ -9,6 +9,9 @@ if (is_file(G5__ROOT_PATH . '/.env')) {
     $dotenv->load();
 }
 
+if (!is_file(G5__ROOT_PATH . '/resources/configs/states.php')) {
+    exit('Missed basic configuration #13');
+}
 
 $statesConfig = include G5__ROOT_PATH . '/resources/configs/states.php';
 $stateMachine = new \tratabor\components\systems\states\StateMachine($statesConfig);

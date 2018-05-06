@@ -6,7 +6,9 @@ return [
     'app:run' => [
         State::STATE__ID => 'app:run',
         State::STATE__MAX_TRY => 1,
-        State::STATE__DISPATCHERS => [],
+        State::STATE__DISPATCHERS => [
+            \tratabor\components\dispatchers\DispatcherTest::class
+        ],
         State::STATE__ON_SUCCESS => '',
         State::STATE__ON_FAILURE => '',
         State::STATE__ON_TERMINATE => '',
