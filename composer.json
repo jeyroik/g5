@@ -1,0 +1,14 @@
+{
+  "name": "jeyroik/g5",
+  "description": "GTg",
+  "require": {
+    "vlucas/phpdotenv": "^2.4",
+    "psr/container": "*",
+    "league/container": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "tratabor\\": "src/"
+    }
+  }
+}
