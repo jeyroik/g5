@@ -50,15 +50,6 @@ class StateFactory implements IStateFactory
     }
 
     /**
-     * StateFactory constructor.
-     *
-     * Restrict instantiation.
-     */
-    protected function __construct()
-    {
-    }
-
-    /**
      * @param $stateConfig
      * @param $fromState
      * @param $stateId

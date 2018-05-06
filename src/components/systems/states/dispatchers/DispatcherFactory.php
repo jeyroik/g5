@@ -42,15 +42,6 @@ class DispatcherFactory implements IDispatchersFactory
     }
 
     /**
-     * DispatcherFactory constructor.
-     *
-     * Restrict instantiation.
-     */
-    protected function __construct()
-    {
-    }
-
-    /**
      * @param string|callable|array $dispatcherConfig
      * @param string $dispatcherId
      * @param array $arguments
