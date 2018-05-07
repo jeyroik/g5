@@ -93,7 +93,7 @@ class Context implements IContext
             throw new \Exception('Access restricted for the item "' . $name . '".');
         }
 
-        return $this->items[$name];
+        return $this->items[$name][static::ITEM__SELF];
     }
 
     /**
