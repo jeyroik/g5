@@ -5,5 +5,6 @@ use tratabor\components\systems\states as CStates;
 
 return [
     IStates\IStateFactory::class => CStates\StateFactory::class,
-    IStates\dispatchers\IDispatchersFactory::class => CStates\dispatchers\DispatcherFactory::class
+    IStates\dispatchers\IDispatchersFactory::class => CStates\dispatchers\DispatcherFactory::class,
+    IStates\machines\streams\IStreamFactory::class => CStates\machines\streams\StreamFactory::class,
 ];

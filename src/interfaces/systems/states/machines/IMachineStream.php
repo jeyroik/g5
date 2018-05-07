@@ -1,19 +1,17 @@
 <?php
 namespace tratabor\interfaces\systems\states\machines;
 
-use tratabor\interfaces\systems\IItem;
-
 /**
  * Interface IMachineStream
  *
  * @package tratabor\interfaces\systems\states\machines
- * @author aivanov@fix.ru
+ * @author Funcraft <me@funcraft.ru>
  */
 interface IMachineStream
 {
     /**
      * IMachineStream constructor.
-     * @param string|array|IItem $data
+     * @param mixed
      */
     public function __construct($data = null);
 

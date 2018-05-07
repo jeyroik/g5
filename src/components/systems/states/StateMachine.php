@@ -2,13 +2,13 @@
 namespace tratabor\components\systems\states;
 
 use tratabor\components\systems\Context;
-use tratabor\components\systems\states\machines\MachineStream;
 use tratabor\components\systems\SystemContainer;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\IStateFactory;
 use tratabor\interfaces\systems\states\IStateMachine;
 use tratabor\interfaces\systems\states\machines\IMachineStream;
+use tratabor\interfaces\systems\states\machines\streams\IStreamFactory;
 
 /**
  * Class StateMachine
@@ -42,6 +42,11 @@ class StateMachine implements IStateMachine
     protected $currentState = null;
 
     /**
+     * @var IStateFactory
+     */
+    protected $stateFactory = null;
+
+    /**
      * @var IMachineStream
      */
     protected $stream = null;
@@ -67,12 +72,6 @@ class StateMachine implements IStateMachine
      */
     public function run($stateId = null)
     {
-        /**
-         * @var $stateFactory IStateFactory
-         */
-        $stateFactory = SystemContainer::getItem(IStateFactory::class);
-
-        $this->stream->write(' [i] Got state factory: "' . get_class($stateFactory) . '".');
         $stateId = $this->validateStateId($stateId);
         $this->stream->write(' [i] Current state id = "' . $stateId . '".');
 
@@ -87,6 +86,26 @@ class StateMachine implements IStateMachine
             return true;
         }
 
+        $state = $this->buildState($stateId);
+
+        return $this->runState($state);
+    }
+
+    /**
+     * @return IMachineStream
+     */
+    public function getStream(): IMachineStream
+    {
+        return $this->stream;
+    }
+
+    /**
+     * @param $stateId
+     *
+     * @return IState
+     */
+    protected function buildState($stateId)
+    {
         $stateConfig = $this->config[$stateId];
         $this->stream
             ->write(' [i] Current state config:')
@@ -95,11 +114,25 @@ class StateMachine implements IStateMachine
         $fromState = $this->currentState ? $this->currentState->getId() : '';
         $this->stream->write(' [i] Current "from state" = "' . $fromState . '"');
 
-        $state = $stateFactory::buildState($stateConfig, $fromState, $stateId);
+        $state = $this->stateFactory::buildState($stateConfig, $fromState, $stateId);
         $this->currentState = $state;
 
         $this->stream
             ->write(' [i] State is built:')
+            ->write($state);
+
+        return $state;
+    }
+
+    /**
+     * @param IState $state
+     *
+     * @return bool
+     */
+    protected function runState($state)
+    {
+        $this->stream
+            ->write(' [i] Run state:')
             ->write($state);
 
         if ($state->getMaxTry()) {
@@ -120,21 +153,7 @@ class StateMachine implements IStateMachine
                 }
             }
 
-            $this->stream
-                ->write(' [i] Start calling state dispatchers. Current context is:')
-                ->write($this->currentContext);
-
-            foreach ($state->getDispatchers() as $dispatcher) {
-                $this->stream->write(' [i] Current dispatcher: ')->write($dispatcher);
-                $this->currentContext = $dispatcher($state, $this->currentContext);
-                $this->stream->write(' [i] Current context is')->write($this->currentContext);
-
-                if (!$this->currentContext->readItem(static::CONTEXT__SUCCESS)) {
-                    $this->stream
-                        ->write(' [i] Context result is not success. Terminate current state dispatchers cycle.');
-                    break;
-                }
-            }
+            $this->runStateDispatchers($state);
 
             return $this->validateContextFor($state);
         } else {
@@ -147,11 +166,29 @@ class StateMachine implements IStateMachine
     }
 
     /**
-     * @return IMachineStream
+     * @param IState $state
+     *
+     * @return $this
      */
-    public function getStream(): IMachineStream
+    protected function runStateDispatchers($state)
     {
-        return $this->stream;
+        $this->stream
+            ->write(' [i] Start calling state dispatchers. Current context is:')
+            ->write($this->currentContext);
+
+        foreach ($state->getDispatchers() as $dispatcher) {
+            $this->stream->write(' [i] Current dispatcher: ')->write($dispatcher);
+            $this->currentContext = $dispatcher($state, $this->currentContext);
+            $this->stream->write(' [i] Current context is')->write($this->currentContext);
+
+            if (!$this->currentContext->readItem(static::CONTEXT__SUCCESS)) {
+                $this->stream
+                    ->write(' [i] Context result is not success. Terminate current state dispatchers cycle.');
+                break;
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -237,9 +274,24 @@ class StateMachine implements IStateMachine
     /**
      * @return $this
      */
+    protected function initStateFactory()
+    {
+        $this->stateFactory = SystemContainer::getItem(IStateFactory::class);
+        $this->stream->write(' [i] Got state factory: "' . get_class($this->stateFactory) . '".');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     protected function initStream()
     {
-        $this->stream = new MachineStream([]);
+        /**
+         * @var $streamFactory IStreamFactory
+         */
+        $streamFactory = SystemContainer::getItem(IStreamFactory::class);
+        $this->stream = $streamFactory::buildStream([]);
 
         return $this;
     }
