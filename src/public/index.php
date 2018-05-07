@@ -18,7 +18,12 @@ $stateMachine = new \tratabor\components\systems\states\StateMachine($statesConf
 
 try {
     $stateMachine->run();
+    echo '<pre>';
+    print_r($stateMachine->getStream()->read());
+    echo '</pre>';
+
 } catch (\Exception $e) {
+
     echo $e->getMessage();
     echo '<pre>';
     print_r($e);

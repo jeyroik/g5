@@ -1,5 +1,6 @@
 <?php
 namespace tratabor\interfaces\systems\states;
+use tratabor\interfaces\systems\states\machines\IMachineStream;
 
 /**
  * Interface IStateMachine
@@ -25,4 +26,9 @@ interface IStateMachine
      * @return void
      */
     public function run($stateId = null);
+
+    /**
+     * @return IMachineStream
+     */
+    public function getStream(): IMachineStream;
 }
