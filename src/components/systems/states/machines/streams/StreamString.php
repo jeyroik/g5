@@ -33,7 +33,7 @@ class StreamString implements IMachineStream
      */
     public function read($index = null)
     {
-        return substr($this->contents, 0, $index);
+        return $index ? substr($this->contents, 0, $index) : $this->contents;
     }
 
     /**

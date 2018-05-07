@@ -33,7 +33,7 @@ class StreamArray implements IMachineStream
      */
     public function read($index = null)
     {
-        return $this->contents[$index] ?? null;
+        return $index ? ($this->contents[$index] ?? null) : $this->contents;
     }
 
     /**
