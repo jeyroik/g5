@@ -60,6 +60,7 @@ class StateMachine implements IStateMachine
     public function __construct($statesConfig, $contextData = [])
     {
         $this->initStream()
+            ->initStateFactory()
             ->setConfig($statesConfig)
             ->initContext($contextData);
     }
