@@ -17,8 +17,13 @@ $statesConfig = include G5__ROOT_PATH . '/resources/configs/states.php';
 $stateMachine = new \tratabor\components\systems\states\StateMachine($statesConfig);
 
 try {
+    echo 'Machine context: <pre>';
+    print_r($stateMachine->getStream()->read());
+    echo '</pre>';
+
     $stateMachine->run();
-    echo '<pre>';
+
+    echo 'Machine context: <pre>';
     print_r($stateMachine->getStream()->read());
     echo '</pre>';
 
