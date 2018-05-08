@@ -1,5 +1,6 @@
 <?php
 namespace tratabor\interfaces\systems\states;
+use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\machines\IMachineStream;
 
 /**
@@ -11,6 +12,7 @@ use tratabor\interfaces\systems\states\machines\IMachineStream;
 interface IStateMachine
 {
     const CONTEXT__SUCCESS = '@directive.success()';
+    const CONTEXT__STATES = '';
 
     /**
      * IStateMachine constructor.
@@ -23,7 +25,7 @@ interface IStateMachine
     /**
      * @param $stateId string
      *
-     * @return void
+     * @return mixed
      */
     public function run($stateId = null);
 
@@ -31,4 +33,9 @@ interface IStateMachine
      * @return IMachineStream
      */
     public function getStream(): IMachineStream;
+
+    /**
+     * @return IState|null
+     */
+    public function getCurrentState();
 }

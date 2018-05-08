@@ -34,6 +34,19 @@ class DispatcherFactory implements IDispatchersFactory
     }
 
     /**
+     * @param $dispatcherConfig
+     * @param string $dispatcherId
+     *
+     * @return bool
+     */
+    public static function registerDispatcher($dispatcherConfig, $dispatcherId): bool
+    {
+        static::buildDispatcher($dispatcherConfig, $dispatcherId);
+
+        return true;
+    }
+
+    /**
      * @return static
      */
     protected static function getInstance()

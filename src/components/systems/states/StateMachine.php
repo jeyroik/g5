@@ -101,6 +101,14 @@ class StateMachine implements IStateMachine
     }
 
     /**
+     * @return IState|null
+     */
+    public function getCurrentState()
+    {
+        return $this->currentState;
+    }
+
+    /**
      * @param $stateId
      *
      * @return IState
@@ -292,7 +300,9 @@ class StateMachine implements IStateMachine
          * @var $streamFactory IStreamFactory
          */
         $streamFactory = SystemContainer::getItem(IStreamFactory::class);
-        $this->stream = $streamFactory::buildStream([]);
+        $this->stream = $streamFactory::buildStream([
+
+        ]);
 
         return $this;
     }

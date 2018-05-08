@@ -1,7 +1,11 @@
 <?php
 namespace tratabor\components\systems;
 
+use tratabor\components\systems\states\machines\TMachineAvailable;
+use tratabor\components\systems\states\TStateAvailable;
 use tratabor\interfaces\systems\IItem;
+use tratabor\interfaces\systems\states\IStateAvailable;
+use tratabor\interfaces\systems\states\machines\IMachineAvailable;
 
 /**
  * Class Item
@@ -9,8 +13,11 @@ use tratabor\interfaces\systems\IItem;
  * @package tratabor\components\systems
  * @author Funcraft <me@funcraft.ru>
  */
-class Item implements IItem
+class Item implements IItem, IMachineAvailable, IStateAvailable
 {
+    use TMachineAvailable;
+    use TStateAvailable;
+
     /**
      * @var string
      */
@@ -20,11 +27,6 @@ class Item implements IItem
      * @var string
      */
     protected $value = null;
-
-    /**
-     * @var string
-     */
-    protected $state = '';
 
     /**
      * @var string
@@ -82,7 +84,7 @@ class Item implements IItem
      */
     public function getState(): string
     {
-        return $this->state;
+        return $this->getCurrentStateId();
     }
 
     /**
@@ -157,7 +159,7 @@ class Item implements IItem
      */
     protected function setState($state)
     {
-        $this->state = $state;
+        $this->setCurrentState($state);
 
         return $this;
     }

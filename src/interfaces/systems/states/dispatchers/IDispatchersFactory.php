@@ -16,4 +16,15 @@ interface IDispatchersFactory
      * @return mixed
      */
     public static function buildDispatcher($dispatcherConfig, $dispatcherId = null);
+
+    /**
+     * This is syntax shugar.
+     * Return false if dispatcher registration is failed.
+     *
+     * @param $dispatcherConfig
+     * @param string $dispatcherId
+     *
+     * @return bool
+     */
+    public static function registerDispatcher($dispatcherConfig, $dispatcherId): bool;
 }
