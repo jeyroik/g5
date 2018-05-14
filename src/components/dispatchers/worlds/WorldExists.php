@@ -29,7 +29,7 @@ class WorldExists implements IStateDispatcher
             $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
         } else {
             $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
-            $context->updateItem('world', array_shift($worlds));
+            $context->pushItemByName('world', array_shift($worlds));
         }
 
         return $context;
