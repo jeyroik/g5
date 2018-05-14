@@ -190,7 +190,7 @@ class StateMachine implements IStateMachine
             $this->currentContext = $dispatcher($state, $this->currentContext);
             $this->stream->write(' [i] Current context is')->write($this->currentContext);
 
-            if (!$this->currentContext->readItem(static::CONTEXT__SUCCESS)) {
+            if (!$this->currentContext->readItem(static::CONTEXT__SUCCESS)->getValue()) {
                 $this->stream
                     ->write(' [i] Context result is not success. Terminate current state dispatchers cycle.');
                 break;
@@ -210,7 +210,7 @@ class StateMachine implements IStateMachine
     {
         $this->stream->write(' [i] Start state context validation.');
 
-        if ($this->currentContext->readItem(static::CONTEXT__SUCCESS)) {
+        if ($this->currentContext->readItem(static::CONTEXT__SUCCESS)->getValue()) {
             $this->stream->write(' [i] Context result is success');
             if (!$state->getOnSuccess()) {// у терминальных состояний нет продолжения
                 $this->stream->write(' [i] Termination state is detected. Terminate cycle.');
