@@ -65,7 +65,7 @@ trait TMachineAvailable
      *
      * @return bool
      */
-    public function initStateMachine($stateConfig)
+    public function initStateMachine($stateConfig): bool
     {
         if ($this->stateMachineIsPublicInit) {
             return $this->initStateMachineObject($stateConfig);
