@@ -40,7 +40,7 @@ return [
     'world:exists' => [
         State::STATE__ID => 'world:exists',
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherSuccess::class
+            \tratabor\components\dispatchers\worlds\WorldExists::class
         ],
         State::STATE__ON_SUCCESS => 'user:is_authorized',
         State::STATE__ON_FAILURE => 'world:create',
@@ -49,7 +49,7 @@ return [
     'user:is_authorized' => [
         State::STATE__ID => 'user:is_authorized',
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherSuccess::class
+            \tratabor\components\dispatchers\users\UserAuthorized::class
         ],
         State::STATE__ON_SUCCESS => 'user:profile_exists',
         State::STATE__ON_FAILURE => 'world:info_render',
