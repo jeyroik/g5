@@ -59,9 +59,9 @@ class DispatcherFactory implements IDispatchersFactory
      * @param string $dispatcherId
      * @param array $arguments
      *
-     * @return IStateDispatcher
+     * @return IStateDispatcher|callable
      */
-    public function build($dispatcherConfig, $dispatcherId = '', $arguments = []): IStateDispatcher
+    public function build($dispatcherConfig, $dispatcherId = '', $arguments = [])
     {
         if (is_callable($dispatcherConfig)) {
             return $dispatcherConfig;
