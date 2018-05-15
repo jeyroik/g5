@@ -25,7 +25,8 @@ class CreatureHeroExists implements IStateDispatcher
     public function __invoke(IState $currentState, IContext $context): IContext
     {
         try {
-            $profile = $context->readItem('profile')->getValue();
+            $context->readItem('profile')->getValue();
+            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
         } catch (\Exception $e) {
             $profiles = ProfileRepository::all();
             if (empty($profiles)) {
@@ -39,15 +40,15 @@ class CreatureHeroExists implements IStateDispatcher
                 $profile = array_shift($profiles);
                 $context->pushItemByName('profile', $profile);
             }
-        }
 
-        $heroes = $profile->getHeroes();
+            $heroes = $profile->getHeroes();
 
-        if (empty($heroes)) {
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
-        } else {
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
-            $context->pushItemByName('heroes', $heroes);
+            if (empty($heroes)) {
+                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+            } else {
+                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+                $context->pushItemByName('heroes', $heroes);
+            }
         }
 
         return $context;
