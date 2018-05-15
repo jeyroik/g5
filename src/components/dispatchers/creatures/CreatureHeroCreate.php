@@ -46,7 +46,7 @@ class CreatureHeroCreate implements IStateDispatcher
         /**
          * @var $profile IUserProfile
          */
-        $profile = $context->readItem('profile');
+        $profile = $context->readItem('profile')->getValue();
         $profile->addCreature($hero);
         $context->updateItem('profile', $profile);
         $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);

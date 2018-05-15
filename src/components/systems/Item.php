@@ -72,9 +72,9 @@ class Item implements IItem, IMachineAvailable, IStateAvailable
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }

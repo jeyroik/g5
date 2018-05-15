@@ -21,12 +21,12 @@ interface IItem
     public function setValue($value);
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getValue(): string;
+    public function getValue();
 
     /**
-     * @return IState
+     * @return string
      */
     public function getState(): string;
 
