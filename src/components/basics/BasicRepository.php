@@ -10,9 +10,9 @@ namespace tratabor\components\basics;
 abstract class BasicRepository
 {
     /**
-     * @var static
+     * @var BasicRepository[]
      */
-    protected static $instance = null;
+    protected static $instances = [];
 
     /**
      * @var array|mixed
@@ -32,7 +32,9 @@ abstract class BasicRepository
      */
     protected static function getInstance()
     {
-        return static::$instance ?: static::$instance = new static();
+        $staticClass = static::class;
+
+        return static::$instances[$staticClass] ?: static::$instances[$staticClass] = new $staticClass();
     }
 
     /**
