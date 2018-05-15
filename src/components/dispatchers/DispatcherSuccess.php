@@ -15,6 +15,8 @@ use tratabor\interfaces\systems\states\IStateMachine;
  */
 class DispatcherSuccess implements IStateDispatcher
 {
+    protected static $counter = 0;
+
     /**
      * @param IState $currentState
      * @param IContext $context
@@ -23,9 +25,11 @@ class DispatcherSuccess implements IStateDispatcher
      */
     public function __invoke(IState $currentState, IContext $context): IContext
     {
-        $context->pushItemByName(static::class, 'worked');
+        $context->pushItemByName(static::class . '.' . static::$counter, 'worked');
         $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
-        
+
+        static::$counter++;
+
         return $context;
     }
 }
