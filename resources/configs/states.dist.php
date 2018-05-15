@@ -130,6 +130,15 @@ return [
         State::STATE__ON_FAILURE => '',
         State::STATE__ON_TERMINATE => 'app:terminate',
     ],
+    'response:html_render' => [
+        State::STATE__ID => 'response:html_render',
+        State::STATE__DISPATCHERS => [
+            \tratabor\components\dispatchers\DispatcherSuccess::class
+        ],
+        State::STATE__ON_SUCCESS => '',
+        State::STATE__ON_FAILURE => '',
+        State::STATE__ON_TERMINATE => 'app:terminate',
+    ],
     'board:free_exists' => [
         State::STATE__ID => 'board:free_exists',
         State::STATE__DISPATCHERS => [
