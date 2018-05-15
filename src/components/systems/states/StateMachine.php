@@ -156,7 +156,7 @@ class StateMachine implements IStateMachine
             } else {
                 $this->stream->write(' [i] Current state is already was');
 
-                if ($this->states[$state->getId()] >= $state->getMaxTry()) {
+                if ($this->states[$state->getId()] > $state->getMaxTry()) {
                     $this->stream->write('Too much state tries. Run "on terminate" state');
                     return $this->run($state->getOnTerminate());
                 }
