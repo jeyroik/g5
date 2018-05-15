@@ -39,17 +39,18 @@ class ViewHtmlRender implements IStateDispatcher
     {
         $view = $view ?: 'index/index';
         $basePath = getenv('G5__VIEWS__PATH') ?: G5__ROOT_PATH . '/resources/views/';
+        $viewFullPath = $basePath . $view . '.php';
 
-        if (is_file($basePath . $view)) {
+        if (is_file($viewFullPath)) {
             ob_start();
             $content = '<pre>' . print_r($context, true) . '</pre>';
-            require $basePath . $view;
+            require $viewFullPath;
             $viewContent = ob_get_contents();
             ob_end_clean();
 
             echo $viewContent;
         } else {
-            throw new \Exception('Missed or restricted view file path "' . $basePath . $view . '".');
+            throw new \Exception('Missed or restricted view file path "' . $viewFullPath . '".');
         }
 
         return $this;
