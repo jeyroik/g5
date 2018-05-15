@@ -11,8 +11,8 @@ return [
         'creatures' => [],
         'heroes' => [],
         'heroes_max' => 1,
-        'current_exp' => 0,
-        'current_level' => 0,
+        'exp_current' => 0,
+        'level_current' => 0,
         'decks_max' => 1,
         'decks' => []
     ]

@@ -67,10 +67,19 @@ return [
     'profile:hero_exists' => [
         State::STATE__ID => 'profile:hero_exists',
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherSuccess::class
+            \tratabor\components\dispatchers\creatures\CreatureHeroExists::class
         ],
         State::STATE__ON_SUCCESS => 'hero:board_check',
         State::STATE__ON_FAILURE => 'hero:create',
+        State::STATE__ON_TERMINATE => 'app:terminate',
+    ],
+    'hero:create' => [
+        State::STATE__ID => 'hero:create',
+        State::STATE__DISPATCHERS => [
+            \tratabor\components\dispatchers\creatures\CreatureHeroCreate::class
+        ],
+        State::STATE__ON_SUCCESS => 'profile:hero_exists',
+        State::STATE__ON_FAILURE => 'app:terminate',
         State::STATE__ON_TERMINATE => 'app:terminate',
     ],
     'hero:board_check' => [

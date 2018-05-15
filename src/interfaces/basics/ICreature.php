@@ -90,4 +90,9 @@ interface ICreature extends ICellSnag
      * @return ICreatureRoute
      */
     public function getRoute();
+
+    /**
+     * @return string
+     */
+    public function getType(): string;
 }
