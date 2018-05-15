@@ -21,3 +21,7 @@ try {
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
+
+echo 'States log:<pre>';
+print_r($stateMachine->getStream()->read());
+echo '</pre>';

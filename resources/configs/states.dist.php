@@ -145,7 +145,7 @@ return [
             \tratabor\components\dispatchers\DispatcherSuccess::class
         ],
         State::STATE__ON_SUCCESS => 'hero:board_check',
-        State::STATE__ON_FAILURE => 'hero:create',
+        State::STATE__ON_FAILURE => 'app:terminate',
         State::STATE__ON_TERMINATE => 'app:terminate',
     ],
 ];

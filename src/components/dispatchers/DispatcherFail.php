@@ -22,14 +22,7 @@ class DispatcherFail implements IStateDispatcher
      */
     public function __invoke(IState $currentState, IContext $context): IContext
     {
-        echo 'Current state: <pre>';
-        print_r($currentState);
-        echo '</pre>';
-
-        echo 'Current context: <pre>';
-        print_r($context);
-        echo '</pre>';
-
+        $context->pushItemByName(static::class, 'worked');
         $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
 
         return $context;

@@ -43,6 +43,7 @@ class StreamArray implements IMachineStream
      */
     public function write($data)
     {
+        $this->contents[] = date('Y.m.d H:i:s');
         $this->contents[] = $data;
 
         return $this;
