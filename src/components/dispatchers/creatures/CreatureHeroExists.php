@@ -25,7 +25,7 @@ class CreatureHeroExists implements IStateDispatcher
     public function __invoke(IState $currentState, IContext $context): IContext
     {
         try {
-            $profile = $context->readItem('profile');
+            $profile = $context->readItem('profile')->getValue();
         } catch (\Exception $e) {
             $profiles = ProfileRepository::all();
             if (empty($profiles)) {
