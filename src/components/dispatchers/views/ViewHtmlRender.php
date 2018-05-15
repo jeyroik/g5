@@ -8,7 +8,7 @@ use tratabor\interfaces\systems\states\IStateMachine;
 
 /**
  * Class ViewHtmlRender
- * 
+ *
  * @package tratabor\components\dispatchers\views
  * @author Funcraft <me@funcraft.ru>
  */

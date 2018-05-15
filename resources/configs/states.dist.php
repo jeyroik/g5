@@ -133,7 +133,7 @@ return [
     'response:html_render' => [
         State::STATE__ID => 'response:html_render',
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherSuccess::class
+            \tratabor\components\dispatchers\views\ViewHtmlRender::class
         ],
         State::STATE__ON_SUCCESS => '',
         State::STATE__ON_FAILURE => '',
