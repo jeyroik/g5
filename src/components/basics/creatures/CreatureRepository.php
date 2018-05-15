@@ -3,6 +3,7 @@ namespace tratabor\components\basics\creatures;
 
 use tratabor\components\basics\BasicCreature;
 use tratabor\components\basics\BasicRepository;
+use tratabor\components\basics\users\profiles\ProfileRepository;
 use tratabor\interfaces\basics\ICreature;
 
 /**
@@ -30,7 +31,9 @@ class CreatureRepository extends BasicRepository
      */
     public function createItem($itemConfig)
     {
-        return new BasicCreature($itemConfig);
+        $creature = new BasicCreature($itemConfig);
+
+        return $creature;
     }
 
     /**

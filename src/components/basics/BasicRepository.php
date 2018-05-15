@@ -63,8 +63,8 @@ abstract class BasicRepository
         $itemClass = $this->getItemClass();
         $items = [];
 
-        foreach ($this->items as $world) {
-            $items[] = new $itemClass($world);
+        foreach ($this->items as $item) {
+            $items[] = new $itemClass($item);
         }
 
         return $items;

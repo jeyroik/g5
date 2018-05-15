@@ -138,6 +138,9 @@ class AState implements IState
      */
     public function getDispatchers()
     {
+        /**
+         * @var $factory IDispatchersFactory
+         */
         $factory = SystemContainer::getItem(IDispatchersFactory::class);
 
         if (!$factory) {

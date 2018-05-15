@@ -1,6 +1,8 @@
 <?php
 namespace tratabor\interfaces\basics\users;
 
+use tratabor\interfaces\basics\ICreature;
+
 /**
  * Interface IUserProfile
  *
@@ -51,6 +53,13 @@ interface IUserProfile
     public function getCreaturesMax(): int;
 
     /**
+     * @param ICreature $creature
+     *
+     * @return IUserProfile
+     */
+    public function addCreature(ICreature $creature);
+
+    /**
      * @return mixed
      */
     public function getHeroes();
@@ -81,4 +90,9 @@ interface IUserProfile
      * @return int
      */
     public function getDecksMax(): int;
+
+    /**
+     * @return array
+     */
+    public function __toArray();
 }

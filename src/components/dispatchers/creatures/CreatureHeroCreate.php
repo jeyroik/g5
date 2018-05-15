@@ -2,6 +2,7 @@
 namespace tratabor\components\dispatchers\creatures;
 
 use tratabor\components\basics\creatures\CreatureRepository;
+use tratabor\interfaces\basics\users\IUserProfile;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\IStateDispatcher;
@@ -23,7 +24,7 @@ class CreatureHeroCreate implements IStateDispatcher
      */
     public function __invoke(IState $currentState, IContext $context): IContext
     {
-        $context->pushItemByName('creature', CreatureRepository::create([
+        $hero = CreatureRepository::create([
             'name' => 'Hero #' . time(),
             'type' => 'hero',
             'avatar' => 'https://image.freepik.com/free-icon/no-translate-detected_318-9118.jpg',
@@ -39,8 +40,15 @@ class CreatureHeroCreate implements IStateDispatcher
             'skills_max' => 1,
             'properties_max' => 1,
             'characteristics_max' => 3
-        ]));
+        ]);
+        $context->pushItemByName('hero', $hero);
 
+        /**
+         * @var $profile IUserProfile
+         */
+        $profile = $context->readItem('profile');
+        $profile->addCreature($hero);
+        $context->updateItem('profile', $profile);
         $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
 
         return $context;

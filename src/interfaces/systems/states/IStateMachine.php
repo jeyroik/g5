@@ -30,11 +30,6 @@ interface IStateMachine
     public function run($stateId = null);
 
     /**
-     * @return IMachineStream
-     */
-    public function getStream(): IMachineStream;
-
-    /**
      * @return IState|null
      */
     public function getCurrentState();

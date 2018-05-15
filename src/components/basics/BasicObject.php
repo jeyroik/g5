@@ -25,6 +25,14 @@ class BasicObject
     }
 
     /**
+     * @return array
+     */
+    public function __toArray()
+    {
+        return $this->data;
+    }
+
+    /**
      * @param $config
      *
      * @return $this

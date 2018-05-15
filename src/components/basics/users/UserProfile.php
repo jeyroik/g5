@@ -54,6 +54,18 @@ class UserProfile extends BasicObject implements IUserProfile
     }
 
     /**
+     * @param ICreature $creature
+     *
+     * @return $this
+     */
+    public function addCreature(ICreature $creature)
+    {
+        $this->data['creatures'][] = $creature;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getDecks()
