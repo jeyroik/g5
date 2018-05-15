@@ -34,7 +34,13 @@ abstract class BasicRepository
     {
         $staticClass = static::class;
 
-        return static::$instances[$staticClass] ?: static::$instances[$staticClass] = new $staticClass();
+        if (isset(static::$instances[$staticClass])) {
+            return static::$instances[$staticClass];
+        } else {
+            static::$instances[$staticClass] = new $staticClass();
+
+            return static::getInstance();
+        }
     }
 
     /**

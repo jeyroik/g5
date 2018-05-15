@@ -31,6 +31,8 @@ return [
                 echo 'App termination...<br/><pre>';
                 print_r($context);
                 echo '</pre>';
+
+                return $context;
             }
         ],
         State::STATE__ON_SUCCESS => '',
@@ -66,6 +68,7 @@ return [
     ],
     'profile:hero_exists' => [
         State::STATE__ID => 'profile:hero_exists',
+        State::STATE__MAX_TRY => 2,
         State::STATE__DISPATCHERS => [
             \tratabor\components\dispatchers\creatures\CreatureHeroExists::class
         ],
