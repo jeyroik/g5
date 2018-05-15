@@ -44,6 +44,14 @@ class CreatureHeroExists implements IStateDispatcher
             }
         }
 
+        echo '(after) Current state: <pre>';
+        print_r($currentState);
+        echo '</pre>';
+
+        echo '(after) Current context: <pre>';
+        print_r($context);
+        echo '</pre>';
+
         return $context;
     }
 }

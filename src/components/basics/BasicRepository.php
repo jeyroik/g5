@@ -32,7 +32,7 @@ abstract class BasicRepository
      */
     protected static function getInstance()
     {
-        return self::$instance ?: self::$instance = new static();
+        return static::$instance ?: static::$instance = new static();
     }
 
     /**
