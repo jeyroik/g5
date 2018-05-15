@@ -86,4 +86,11 @@ trait TMachineAvailable
 
         return true;
     }
+
+    public function __destruct()
+    {
+        echo 'Machine ' . $this->stateMachineId . '<pre>';
+        print_r($this->stateMachine->getStream()->read());
+        echo '</pre>';
+    }
 }
