@@ -23,7 +23,7 @@ class ViewHtmlRender implements IStateDispatcher
     public function __invoke(IState $currentState, IContext $context): IContext
     {
         $this->render('', $context);
-        $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+        $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
 
         return $context;
     }

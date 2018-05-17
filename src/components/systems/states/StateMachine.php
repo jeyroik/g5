@@ -259,7 +259,17 @@ class StateMachine implements IStateMachine
     protected function initContext($contextData)
     {
         $this->currentContext = new Context($contextData);
-        $this->currentContext->pushItemByName(static::CONTEXT__SUCCESS, true);
+
+        /**
+         * Try to get context_success item.
+         * If this is sub-machine, than this item is already exists - so we don't need to do anything.
+         * If this is primary machine, than item is not exists, so exception will be thrown.
+         */
+        try {
+            $this->currentContext->readItem(static::CONTEXT__SUCCESS);
+        } catch (\Exception $e) {
+            $this->currentContext->pushItemByName(static::CONTEXT__SUCCESS, true);
+        }
 
         return $this;
     }
