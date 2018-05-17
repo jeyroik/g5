@@ -49,9 +49,9 @@ interface IState
     public function getMaxTry(): int;
 
     /**
-     * @return string
+     * @return string|array
      */
-    public function getOnSuccess(): string;
+    public function getOnSuccess();
 
     /**
      * @return string

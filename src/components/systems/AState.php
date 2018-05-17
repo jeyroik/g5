@@ -100,9 +100,9 @@ class AState implements IState
     }
 
     /**
-     * @return string
+     * @return string|array
      */
-    public function getOnSuccess(): string
+    public function getOnSuccess()
     {
         return $this->onSuccess;
     }
