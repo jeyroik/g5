@@ -88,7 +88,7 @@ class StateMachine implements IStateMachine
         if (is_array($stateId)) {
             $stateMachine = new static($stateId, $this->currentContext);
             $subResult = $stateMachine->run();
-            $this->addToStatesRoute($this->currentState, $stateMachine->getStatesRoute());
+            $this->addToStatesRoute($this->currentState->getId(), $stateMachine->getStatesRoute());
 
             return $subResult;
         }
@@ -96,7 +96,9 @@ class StateMachine implements IStateMachine
         $stateId = $this->validateStateId($stateId);
 
         if (!isset($this->config[$stateId])) {
-            throw new \Exception('Unknown state "' . $stateId . '"');
+            throw new \Exception(
+                'Unknown to state "' . $stateId . '" from "' . $this->currentState->getId() . '"'
+            );
         }
 
         if ($this->currentState && ($this->currentState == $stateId)) {
