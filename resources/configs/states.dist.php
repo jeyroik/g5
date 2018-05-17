@@ -95,6 +95,7 @@ return [
     ],
     'hero:board_check' => [
         State::STATE__ID => 'hero:board_check',
+        State::STATE__MAX_TRY => 2,
         State::STATE__DISPATCHERS => [
             \tratabor\components\dispatchers\boards\BoardCheck::class
         ],
@@ -170,7 +171,7 @@ return [
         State::STATE__DISPATCHERS => [
             \tratabor\components\dispatchers\boards\BoardCreate::class
         ],
-        State::STATE__ON_SUCCESS => 'board:free_exists',
+        State::STATE__ON_SUCCESS => 'hero:board_check',
         State::STATE__ON_FAILURE => 'app:terminate',
         State::STATE__ON_TERMINATE => 'app:terminate',
     ],
