@@ -203,10 +203,10 @@ class StateMachine implements IStateMachine
     /**
      * @param string|array $stateId
      *
-     * @return bool
+     * @return bool|string
      * @throws \Exception
      */
-    protected function isRunningApplicableState($stateId): bool
+    protected function isRunningApplicableState($stateId)
     {
         /**
          * Terminate state transition.
