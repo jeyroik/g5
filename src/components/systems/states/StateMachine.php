@@ -75,6 +75,13 @@ class StateMachine implements IStateMachine
      */
     public function run($stateId = null)
     {
+        /**
+         * Terminate state transition.
+         */
+        if ($this->currentState && !$stateId) {
+            return true;
+        }
+
         $stateId = $this->validateStateId($stateId);
 
         if (!isset($this->config[$stateId])) {
