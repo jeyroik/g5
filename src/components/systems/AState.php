@@ -189,37 +189,37 @@ class AState implements IState
     }
 
     /**
-     * @param string $onSuccess
+     * @param string|array $onSuccess
      *
      * @return $this
      */
     protected function setOnSuccess($onSuccess)
     {
-        $this->onSuccess = (string) $onSuccess;
+        $this->onSuccess = $onSuccess;
 
         return $this;
     }
 
     /**
-     * @param string $onFailure
+     * @param string|array $onFailure
      *
      * @return $this
      */
     protected function setOnFailure($onFailure)
     {
-        $this->onFailure = (string) $onFailure;
+        $this->onFailure = $onFailure;
 
         return $this;
     }
 
     /**
-     * @param string $onTerminate
+     * @param string|array $onTerminate
      *
      * @return $this
      */
     protected function setOnTerminate($onTerminate)
     {
-        $this->onTerminate = (string) $onTerminate;
+        $this->onTerminate = $onTerminate;
 
         return $this;
     }
