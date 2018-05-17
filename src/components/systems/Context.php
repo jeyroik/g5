@@ -21,11 +21,6 @@ class Context implements IContext
     protected $items = [];
 
     /**
-     * @var array
-     */
-    protected $rawData = [];
-
-    /**
      * Context constructor.
      * @param $data
      *
@@ -33,8 +28,12 @@ class Context implements IContext
      */
     public function __construct($data)
     {
-        foreach ($data as $key => $value) {
-            $this->pushItemByName($key, $value);
+        if (is_object($data) && ($data instanceof IContext)) {
+            $this->items = $data->readAllItems();
+        } else {
+            foreach ($data as $key => $value) {
+                $this->pushItemByName($key, $value);
+            }
         }
     }
 
@@ -72,6 +71,14 @@ class Context implements IContext
         }
 
         return $this->items[$name][static::ITEM__SELF];
+    }
+
+    /**
+     * @return array
+     */
+    public function readAllItems()
+    {
+        return $this->items;
     }
 
     /**

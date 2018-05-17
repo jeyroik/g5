@@ -56,4 +56,9 @@ interface IContext
      * @return bool
      */
     public function removeItem($name): bool;
+
+    /**
+     * @return array
+     */
+    public function readAllItems();
 }

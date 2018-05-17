@@ -90,7 +90,35 @@ return [
         State::STATE__DISPATCHERS => [
             \tratabor\components\dispatchers\DispatcherSuccess::class
         ],
-        State::STATE__ON_SUCCESS => 'hero:route_exists',
+        State::STATE__ON_SUCCESS => [
+            'hero:board_check :: sub:check1' => [
+                State::STATE__ID => 'hero:board_check :: sub:check1',
+                State::STATE__DISPATCHERS => [
+                    \tratabor\components\dispatchers\DispatcherSuccess::class
+                ],
+                State::STATE__ON_SUCCESS => 'hero:board_check :: sub:check2',
+                State::STATE__ON_FAILURE => 'hero:board_check :: sub:check3',
+                State::STATE__ON_TERMINATE => 'sub::app:terminate',
+            ],
+            'hero:board_check :: sub:check2' => [
+                State::STATE__ID => 'hero:board_check :: sub:check2',
+                State::STATE__DISPATCHERS => [
+                    \tratabor\components\dispatchers\DispatcherSuccess::class
+                ],
+                State::STATE__ON_SUCCESS => '',
+                State::STATE__ON_FAILURE => '',
+                State::STATE__ON_TERMINATE => 'sub::app:terminate',
+            ],
+            'sub:app:terminate' => [
+                State::STATE__ID => 'sub:app:terminate',
+                State::STATE__DISPATCHERS => [
+                    \tratabor\components\dispatchers\DispatcherSuccess::class
+                ],
+                State::STATE__ON_SUCCESS => '',
+                State::STATE__ON_FAILURE => '',
+                State::STATE__ON_TERMINATE => '',
+            ]
+        ],
         State::STATE__ON_FAILURE => 'board:free_exists',
         State::STATE__ON_TERMINATE => 'app:terminate',
     ],

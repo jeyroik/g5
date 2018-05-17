@@ -82,6 +82,14 @@ class StateMachine implements IStateMachine
             return true;
         }
 
+        /**
+         * State is a StateMachine
+         */
+        if (is_array($stateId)) {
+            $stateMachine = new static($stateId, $this->currentContext);
+            return $stateMachine->run();
+        }
+
         $stateId = $this->validateStateId($stateId);
 
         if (!isset($this->config[$stateId])) {
