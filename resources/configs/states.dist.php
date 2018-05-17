@@ -1,8 +1,16 @@
 <?php
 
 use tratabor\interfaces\systems\states\IStateFactory as State;
+use tratabor\interfaces\systems\states\IStateMachine as Machine;
 
 return [
+    Machine::MACHINE__CONFIG => [
+        Machine::MACHINE__CONFIG__VERSION => '1.0',
+        Machine::MACHINE__CONFIG__ALIAS => 'primary machine',
+        Machine::MACHINE__CONFIG__START_STATE => 'app:run',
+        Machine::MACHINE__CONFIG__END_STATE => 'app:terminate',
+    ],
+
     'app:run' => [
         State::STATE__ID => 'app:run',
         State::STATE__MAX_TRY => 1,
@@ -91,6 +99,12 @@ return [
             \tratabor\components\dispatchers\DispatcherSuccess::class
         ],
         State::STATE__ON_SUCCESS => [
+            Machine::MACHINE__CONFIG => [
+                Machine::MACHINE__CONFIG__VERSION => '1.0',
+                Machine::MACHINE__CONFIG__ALIAS => 'test sub machine',
+                Machine::MACHINE__CONFIG__START_STATE => 'hero:board_check :: sub:check1',
+                Machine::MACHINE__CONFIG__END_STATE => 'sub:app:terminate',
+            ],
             'hero:board_check :: sub:check1' => [
                 State::STATE__ID => 'hero:board_check :: sub:check1',
                 State::STATE__DISPATCHERS => [

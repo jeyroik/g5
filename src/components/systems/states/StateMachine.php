@@ -7,8 +7,6 @@ use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\IStateFactory;
 use tratabor\interfaces\systems\states\IStateMachine;
-use tratabor\interfaces\systems\states\machines\IMachineStream;
-use tratabor\interfaces\systems\states\machines\streams\IStreamFactory;
 
 /**
  * Class StateMachine
@@ -75,42 +73,13 @@ class StateMachine implements IStateMachine
      */
     public function run($stateId = null)
     {
-        /**
-         * Terminate state transition.
-         */
-        if ($this->currentState && !$stateId) {
-            return true;
+        if ($stateId = $this->isRunningApplicableState($stateId)) {
+            $state = $this->buildState($stateId);
+
+            return $this->runState($state);
         }
 
-        /**
-         * State is a StateMachine
-         */
-        if (is_array($stateId)) {
-            $stateMachine = new static($stateId, $this->currentContext);
-            $subResult = $stateMachine->run();
-            $this->addToStatesRoute($this->currentState->getId(), $stateMachine->getStatesRoute());
-
-            return $subResult;
-        }
-
-        $stateId = $this->validateStateId($stateId);
-
-        if (!isset($this->config[$stateId])) {
-            $from = $this->currentState ? $this->currentState->getId() : '@directive.initializeMachine()';
-            throw new \Exception(
-                'Unknown to state "' . $stateId . '" from "' . $from . '"'
-            );
-        }
-
-        if ($this->currentState && ($this->currentState == $stateId)) {
-            // it seems to be an infinity cycle
-            // break it
-            return true;
-        }
-
-        $state = $this->buildState($stateId);
-
-        return $this->runState($state);
+        return true;
     }
 
     /**
@@ -171,7 +140,7 @@ class StateMachine implements IStateMachine
     /**
      * @param IState $state
      *
-     * @return bool
+     * @return string
      */
     protected function runState($state)
     {
@@ -189,7 +158,7 @@ class StateMachine implements IStateMachine
             return $this->validateContextFor($state);
         }
 
-        return true;
+        return $this->currentState->getId();
     }
 
     /**
@@ -232,17 +201,110 @@ class StateMachine implements IStateMachine
     }
 
     /**
+     * @param string|array $stateId
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    protected function isRunningApplicableState($stateId): bool
+    {
+        /**
+         * Terminate state transition.
+         */
+        if ($this->isTerminatingState($stateId)) {
+            return false;
+        }
+
+        /**
+         * State is a StateMachine
+         */
+        if ($this->isStateMachineConfig($stateId)) {
+            return $this->runSubMachine($stateId);
+        }
+
+        $stateId = $this->getStartState($stateId);
+
+        if (!isset($this->config[$stateId])) {
+            $from = $this->currentState ? $this->currentState->getId() : '@directive.initializeMachine()';
+            throw new \Exception(
+                'Unknown to state "' . $stateId . '" from "' . $from . '"'
+            );
+        }
+
+        if ($this->currentState && ($this->currentState == $stateId)) {
+            // it seems to be an infinity cycle
+            // break it
+            return false;
+        }
+
+        return $stateId;
+    }
+
+    /**
      * @param $stateId
+     *
+     * @return bool
+     */
+    protected function isStateMachineConfig($stateId): bool
+    {
+        return is_array($stateId);
+    }
+
+    /**
+     * @param $machineConfig
      *
      * @return string
      */
-    protected function validateStateId($stateId)
+    protected function runSubMachine($machineConfig)
+    {
+        $stateMachine = new static($machineConfig, $this->currentContext);
+        $nextPrimaryState = $stateMachine->run();
+        $this->addToStatesRoute($this->currentState->getId(), $stateMachine->getStatesRoute());
+
+        return $nextPrimaryState;
+    }
+
+    /**
+     * @param $stateId
+     *
+     * @return bool
+     */
+    protected function isTerminatingState($stateId): bool
+    {
+        return $this->currentState && !$stateId;
+    }
+
+    /**
+     * @param string $stateId
+     *
+     * @return string
+     */
+    protected function getStartState($stateId): string
     {
         return $stateId
             ?: (
-                getenv('G5__STATE__START')
-                ?: 'app:run'
+                ($startState = $this->hasEnvStartState())
+                    ? $startState
+                    : $this->getStartStateFromConfig()
             );
+    }
+
+    /**
+     * @return string
+     */
+    protected function hasEnvStartState(): string
+    {
+        return getenv(static::ENV__START_STATE);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStartStateFromConfig(): string
+    {
+        $machineConfig = $this->config[static::MACHINE__CONFIG];
+
+        return $machineConfig[static::MACHINE__CONFIG__START_STATE];
     }
 
     /**
