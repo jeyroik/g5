@@ -55,6 +55,7 @@ class BoardRender implements IStateDispatcher
                 $views = [$boardRendered];
                 $context->pushItemByName('html', $views);
             }
+            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
         } catch (\Exception $e) {
             $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
         }

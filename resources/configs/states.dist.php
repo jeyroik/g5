@@ -124,7 +124,7 @@ return [
     'board:render' => [
         State::STATE__ID => 'board:render',
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherSuccess::class
+            \tratabor\components\dispatchers\boards\BoardRender::class
         ],
         State::STATE__ON_SUCCESS => 'board:c_panel_render',
         State::STATE__ON_FAILURE => '',
