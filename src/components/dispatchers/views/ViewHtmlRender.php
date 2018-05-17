@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\dispatchers\views;
 
+use tratabor\components\systems\views\ViewRender;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\IStateDispatcher;
@@ -22,36 +23,34 @@ class ViewHtmlRender implements IStateDispatcher
      */
     public function __invoke(IState $currentState, IContext $context): IContext
     {
-        $this->render('', $context);
+        $this->render($context);
         $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
 
         return $context;
     }
 
     /**
-     * @param string $view
      * @param IContext $context
      *
      * @return $this
      * @throws \Exception
      */
-    protected function render($view = '', $context)
+    protected function render($context)
     {
-        $view = $view ?: 'index/index';
-        $basePath = getenv('G5__VIEWS__PATH') ?: G5__ROOT_PATH . '/resources/views/';
-        $viewFullPath = $basePath . $view . '.php';
+        $viewRender = new ViewRender();
+        $content = '';
 
-        if (is_file($viewFullPath)) {
-            ob_start();
-            $content = '<pre>' . print_r($context, true) . '</pre>';
-            require $viewFullPath;
-            $viewContent = ob_get_contents();
-            ob_end_clean();
-
-            echo $viewContent;
-        } else {
-            throw new \Exception('Missed or restricted view file path "' . $viewFullPath . '".');
+        try {
+            $views = $context->readItem('html')->getValue();
+        } catch (\Exception $e) {
+            $views = [];
         }
+
+        foreach ($views as $view) {
+            $content .= $view;
+        }
+
+        echo $viewRender->render('index/index', ['content' => $content]);
 
         return $this;
     }
