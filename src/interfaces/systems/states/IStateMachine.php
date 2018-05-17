@@ -33,4 +33,9 @@ interface IStateMachine
      * @return IState|null
      */
     public function getCurrentState();
+
+    /**
+     * @return array
+     */
+    public function getStatesRoute();
 }

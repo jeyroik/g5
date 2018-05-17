@@ -23,13 +23,18 @@ class WorldExists implements IStateDispatcher
      */
     public function __invoke(IState $currentState, IContext $context): IContext
     {
-        $worlds = WorldRepository::all();
-
-        if (empty($worlds)) {
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
-        } else {
+        try {
+            $context->readItem('world');
             $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
-            $context->pushItemByName('world', array_shift($worlds));
+        } catch (\Exception $e) {
+            $worlds = WorldRepository::all();
+
+            if (empty($worlds)) {
+                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+            } else {
+                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+                $context->pushItemByName('world', array_shift($worlds));
+            }
         }
 
         return $context;

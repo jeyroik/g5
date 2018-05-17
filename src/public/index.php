@@ -21,3 +21,11 @@ try {
 } catch (\Exception $e) {
     echo $e->getMessage();
 }
+
+echo '
+<div class="row mt-5">
+    <div class="col-md-12">
+        States route:<pre>' . print_r($stateMachine->getStatesRoute(), true) . '</pre>
+    </div>
+</div>
+';

@@ -47,6 +47,14 @@ class StateMachine implements IStateMachine
     protected $stateFactory = null;
 
     /**
+     * @var array
+     */
+    protected $statesRoute = [
+        'path' => [],
+        'states' => []
+    ];
+
+    /**
      * StateMachine constructor.
      *
      * @param $statesConfig
@@ -93,6 +101,14 @@ class StateMachine implements IStateMachine
     }
 
     /**
+     * @return array
+     */
+    public function getStatesRoute()
+    {
+        return $this->statesRoute;
+    }
+
+    /**
      * @param $stateId
      *
      * @return IState
@@ -102,10 +118,33 @@ class StateMachine implements IStateMachine
         $stateConfig = $this->config[$stateId];
         $fromState = $this->currentState ? $this->currentState->getId() : '';
 
+        $this->addToStatesRoute($fromState, $stateId);
         $state = $this->stateFactory::buildState($stateConfig, $fromState, $stateId);
         $this->currentState = $state;
 
         return $state;
+    }
+
+    /**
+     * @param $from
+     * @param $to
+     *
+     * @return $this
+     */
+    protected function addToStatesRoute($from, $to)
+    {
+        if (empty($from)) {
+            $from = '@directive.machineInitialization()';
+        }
+
+        if (!isset($this->statesRoute['states'][$from])) {
+            $this->statesRoute['states'][$from] = [];
+        }
+
+        $this->statesRoute['path'][] = [$from => $to];
+        $this->statesRoute['states'][$from][] = $to;
+
+        return $this;
     }
 
     /**
