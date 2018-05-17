@@ -69,17 +69,16 @@ class StateMachine implements IStateMachine
      * @param string $stateId
      *
      * @throws \Exception
-     * @return mixed
+     * @return string
      */
     public function run($stateId = null)
     {
         if ($stateId = $this->isRunningApplicableState($stateId)) {
             $state = $this->buildState($stateId);
-
             return $this->runState($state);
         }
 
-        return $this->currentState->getId();
+        return $this->currentState ? $this->currentState->getId() : '';
     }
 
     /**
@@ -182,7 +181,7 @@ class StateMachine implements IStateMachine
     /**
      * @param IState $state
      *
-     * @return bool|mixed
+     * @return string
      * @throws \Exception
      */
     protected function validateContextFor($state)

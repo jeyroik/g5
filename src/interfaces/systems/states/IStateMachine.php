@@ -14,9 +14,7 @@ interface IStateMachine
     const CONTEXT__SUCCESS = '@directive.success()';
     const CONTEXT__STATES = '';
 
-    const DEFAULT__START_STATE = 'app:run';
-
-    const MACHINE__CONFIG = 'config';
+    const MACHINE__CONFIG = '@directive.config()';
     const MACHINE__CONFIG__VERSION = 'version';
     const MACHINE__CONFIG__ALIAS = 'alias';
     const MACHINE__CONFIG__START_STATE = 'start';

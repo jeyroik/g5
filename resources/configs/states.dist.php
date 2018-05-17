@@ -96,43 +96,9 @@ return [
     'hero:board_check' => [
         State::STATE__ID => 'hero:board_check',
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherSuccess::class
+            \tratabor\components\dispatchers\boards\BoardCheck::class
         ],
-        State::STATE__ON_SUCCESS => [
-            Machine::MACHINE__CONFIG => [
-                Machine::MACHINE__CONFIG__VERSION => '1.0',
-                Machine::MACHINE__CONFIG__ALIAS => 'test sub machine',
-                Machine::MACHINE__CONFIG__START_STATE => 'hero:board_check :: sub:check1',
-                Machine::MACHINE__CONFIG__END_STATE => 'hero:route_exists',
-            ],
-            'hero:board_check :: sub:check1' => [
-                State::STATE__ID => 'hero:board_check :: sub:check1',
-                State::STATE__DISPATCHERS => [
-                    \tratabor\components\dispatchers\DispatcherSuccess::class
-                ],
-                State::STATE__ON_SUCCESS => 'hero:board_check :: sub:check2',
-                State::STATE__ON_FAILURE => 'hero:board_check :: sub:check3',
-                State::STATE__ON_TERMINATE => 'hero:route_exists',
-            ],
-            'hero:board_check :: sub:check2' => [
-                State::STATE__ID => 'hero:board_check :: sub:check2',
-                State::STATE__DISPATCHERS => [
-                    \tratabor\components\dispatchers\DispatcherSuccess::class
-                ],
-                State::STATE__ON_SUCCESS => 'hero:route_exists',
-                State::STATE__ON_FAILURE => '',
-                State::STATE__ON_TERMINATE => 'hero:route_exists',
-            ],
-            'hero:route_exists' => [
-                State::STATE__ID => 'hero:route_exists',
-                State::STATE__DISPATCHERS => [
-                    \tratabor\components\dispatchers\DispatcherSuccess::class
-                ],
-                State::STATE__ON_SUCCESS => '',
-                State::STATE__ON_FAILURE => '',
-                State::STATE__ON_TERMINATE => '',
-            ]
-        ],
+        State::STATE__ON_SUCCESS => 'hero:route_exists',
         State::STATE__ON_FAILURE => 'board:free_exists',
         State::STATE__ON_TERMINATE => 'app:terminate',
     ],
@@ -184,7 +150,7 @@ return [
     'board:free_exists' => [
         State::STATE__ID => 'board:free_exists',
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherSuccess::class
+            \tratabor\components\dispatchers\DispatcherFail::class
         ],
         State::STATE__ON_SUCCESS => 'board:hero_attach',
         State::STATE__ON_FAILURE => 'board:create',
@@ -196,6 +162,15 @@ return [
             \tratabor\components\dispatchers\DispatcherSuccess::class
         ],
         State::STATE__ON_SUCCESS => 'hero:board_check',
+        State::STATE__ON_FAILURE => 'app:terminate',
+        State::STATE__ON_TERMINATE => 'app:terminate',
+    ],
+    'board:create' => [
+        State::STATE__ID => 'board:create',
+        State::STATE__DISPATCHERS => [
+            \tratabor\components\dispatchers\boards\BoardCreate::class
+        ],
+        State::STATE__ON_SUCCESS => 'board:free_exists',
         State::STATE__ON_FAILURE => 'app:terminate',
         State::STATE__ON_TERMINATE => 'app:terminate',
     ],
