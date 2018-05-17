@@ -79,7 +79,7 @@ class StateMachine implements IStateMachine
             return $this->runState($state);
         }
 
-        return true;
+        return $this->currentState->getId();
     }
 
     /**
