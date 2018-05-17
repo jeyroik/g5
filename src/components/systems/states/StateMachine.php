@@ -87,7 +87,10 @@ class StateMachine implements IStateMachine
          */
         if (is_array($stateId)) {
             $stateMachine = new static($stateId, $this->currentContext);
-            return $stateMachine->run();
+            $subResult = $stateMachine->run();
+            $this->addToStatesRoute($this->currentState, $stateMachine->getStatesRoute());
+
+            return $subResult;
         }
 
         $stateId = $this->validateStateId($stateId);
