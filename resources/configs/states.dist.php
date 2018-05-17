@@ -103,7 +103,7 @@ return [
                 Machine::MACHINE__CONFIG__VERSION => '1.0',
                 Machine::MACHINE__CONFIG__ALIAS => 'test sub machine',
                 Machine::MACHINE__CONFIG__START_STATE => 'hero:board_check :: sub:check1',
-                Machine::MACHINE__CONFIG__END_STATE => 'sub:app:terminate',
+                Machine::MACHINE__CONFIG__END_STATE => 'hero:route_exists',
             ],
             'hero:board_check :: sub:check1' => [
                 State::STATE__ID => 'hero:board_check :: sub:check1',
@@ -112,7 +112,7 @@ return [
                 ],
                 State::STATE__ON_SUCCESS => 'hero:board_check :: sub:check2',
                 State::STATE__ON_FAILURE => 'hero:board_check :: sub:check3',
-                State::STATE__ON_TERMINATE => 'sub::app:terminate',
+                State::STATE__ON_TERMINATE => 'hero:route_exists',
             ],
             'hero:board_check :: sub:check2' => [
                 State::STATE__ID => 'hero:board_check :: sub:check2',
@@ -121,10 +121,10 @@ return [
                 ],
                 State::STATE__ON_SUCCESS => '',
                 State::STATE__ON_FAILURE => '',
-                State::STATE__ON_TERMINATE => 'sub::app:terminate',
+                State::STATE__ON_TERMINATE => 'hero:route_exists',
             ],
-            'sub:app:terminate' => [
-                State::STATE__ID => 'sub:app:terminate',
+            'hero:route_exists' => [
+                State::STATE__ID => 'hero:route_exists',
                 State::STATE__DISPATCHERS => [
                     \tratabor\components\dispatchers\DispatcherSuccess::class
                 ],
