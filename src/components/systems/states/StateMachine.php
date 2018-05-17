@@ -96,8 +96,9 @@ class StateMachine implements IStateMachine
         $stateId = $this->validateStateId($stateId);
 
         if (!isset($this->config[$stateId])) {
+            $from = $this->currentState ? $this->currentState->getId() : '@directive.initializeMachine()';
             throw new \Exception(
-                'Unknown to state "' . $stateId . '" from "' . $this->currentState->getId() . '"'
+                'Unknown to state "' . $stateId . '" from "' . $from . '"'
             );
         }
 
