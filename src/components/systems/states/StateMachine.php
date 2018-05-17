@@ -189,7 +189,7 @@ class StateMachine implements IStateMachine
     {
         if ($this->currentContext->readItem(static::CONTEXT__SUCCESS)->getValue()) {
             if (!$state->getOnSuccess()) {// у терминальных состояний нет продолжения
-                return true;
+                return $this->currentState->getId();
             }
 
             return $this->run($state->getOnSuccess());

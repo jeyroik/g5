@@ -119,7 +119,7 @@ return [
                 State::STATE__DISPATCHERS => [
                     \tratabor\components\dispatchers\DispatcherSuccess::class
                 ],
-                State::STATE__ON_SUCCESS => '',
+                State::STATE__ON_SUCCESS => 'hero:route_exists',
                 State::STATE__ON_FAILURE => '',
                 State::STATE__ON_TERMINATE => 'hero:route_exists',
             ],
