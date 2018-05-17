@@ -108,17 +108,17 @@ class AState implements IState
     }
 
     /**
-     * @return string
+     * @return string|array
      */
-    public function getOnFailure(): string
+    public function getOnFailure()
     {
         return $this->onFailure;
     }
 
     /**
-     * @return string
+     * @return string|array
      */
-    public function getOnTerminate(): string
+    public function getOnTerminate()
     {
         return $this->onTerminate;
     }

@@ -54,12 +54,12 @@ interface IState
     public function getOnSuccess();
 
     /**
-     * @return string
+     * @return string|array
      */
-    public function getOnFailure(): string;
+    public function getOnFailure();
 
     /**
-     * @return string
+     * @return string|array
      */
-    public function getOnTerminate(): string;
+    public function getOnTerminate();
 }
