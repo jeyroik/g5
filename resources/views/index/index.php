@@ -1,9 +1,50 @@
+<?php
+$transform = [
+    'name' => 'scale',
+    'start' => '(1.1, 1.1)',
+    'end' => '(1, 1)',
+];
+?>
 <html>
     <head>
         <title>G5</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <style>
+            .gm-field-cell {
+                border: 1px solid #000;
+                width: 50px;
+                height: 50px;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .gm-field-player {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 1px solid #f0f0f0;
+            }
+
+            .gm-field-snag {
+                width: 40px;
+                height: 40px;
+            }
+
+            @keyframes slideInFromLeft {
+                0% {
+                    transform: <?=$transform['name'] . $transform['start']?>;
+                }
+                100% {
+                    transform: <?=$transform['name'] . $transform['end']?>;
+                }
+            }
+
+            .gm-field-player img {
+                animation: 1s ease-out 0s 1 slideInFromLeft;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
