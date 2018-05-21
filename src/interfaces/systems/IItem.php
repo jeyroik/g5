@@ -48,4 +48,9 @@ interface IItem
      * @return mixed
      */
     public function getId();
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array;
 }

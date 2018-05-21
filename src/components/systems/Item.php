@@ -129,6 +129,26 @@ class Item implements IItem, IMachineAvailable, IStateAvailable
     }
 
     /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        $value = $this->getValue();
+
+        if (is_object($value) && ($value instanceof IItem)) {
+            $value = $value->__toArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'key' => $this->getKey(),
+            'value' => $value,
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt()
+        ];
+    }
+
+    /**
      * @param $key
      *
      * @return $this

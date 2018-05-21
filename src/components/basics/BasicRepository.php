@@ -20,6 +20,11 @@ abstract class BasicRepository
     protected $items = [];
 
     /**
+     * @var string
+     */
+    protected $storageType = 'php';
+
+    /**
      * @return array
      */
     public static function all()

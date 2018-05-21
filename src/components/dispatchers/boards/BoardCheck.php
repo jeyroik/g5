@@ -1,8 +1,11 @@
 <?php
 namespace tratabor\components\dispatchers\boards;
 
+use tratabor\components\dispatchers\DispatcherAbstract;
+use tratabor\interfaces\basics\creatures\ICreatureHero;
+use tratabor\interfaces\basics\IBoard;
+use tratabor\interfaces\basics\users\IUserProfile;
 use tratabor\interfaces\systems\IContext;
-use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\IStateDispatcher;
 use tratabor\interfaces\systems\states\IStateMachine;
 
@@ -12,21 +15,25 @@ use tratabor\interfaces\systems\states\IStateMachine;
  * @package tratabor\components\dispatchers\boards
  * @author Funcraft <me@funcraft.ru>
  */
-class BoardCheck implements IStateDispatcher
+class BoardCheck extends DispatcherAbstract implements IStateDispatcher
 {
     /**
-     * @param IState $currentState
      * @param IContext $context
      *
      * @return IContext
+     * @throws \Exception
      */
-    public function __invoke(IState $currentState, IContext $context): IContext
+    protected function dispatch(IContext $context): IContext
     {
-        try {
-            $context->readItem('board');
+        /**
+         * @var $hero ICreatureHero
+         */
+        $hero = $context->readItem('hero')->getValue();
+
+        if ($hero->getBoardId()) {
             $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
-        } catch (\Exception $e) {
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+        } else {
+            throw new \Exception('Hero is not attached to a board');
         }
 
         return $context;
