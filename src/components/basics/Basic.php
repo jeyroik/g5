@@ -27,6 +27,14 @@ class Basic extends Item
     }
 
     /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        return $this->data;
+    }
+
+    /**
      * @param $config
      *
      * @return $this

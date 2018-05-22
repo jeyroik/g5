@@ -10,7 +10,7 @@ use tratabor\interfaces\basics\cells\ICellSnag;
  * @package tratabor\components\basics
  * @author Funcraft <me@funcraft.ru>
  */
-class BasicSnag extends Item implements ICellSnag
+class BasicSnag extends Basic implements ICellSnag
 {
     /**
      * @var array

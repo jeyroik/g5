@@ -68,7 +68,7 @@ class Item implements IItem, IMachineAvailable, IStateAvailable
      */
     public function getKey(): string
     {
-        return $this->key;
+        return (string) $this->key;
     }
 
     /**

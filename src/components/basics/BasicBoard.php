@@ -60,4 +60,21 @@ class BasicBoard extends Basic implements IBoard
     {
         return $this->data['creatures_count'] ?? 0;
     }
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'size' => $this->getSize(),
+            'cells' => $this->getCells(),
+            'creatures_max' => $this->getCreaturesMax(),
+            'creatures' => $this->getCreatures(),
+            'creatures_count' => $this->getCreaturesCount(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt()
+        ];
+    }
 }

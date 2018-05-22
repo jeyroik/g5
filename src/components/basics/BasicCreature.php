@@ -26,9 +26,8 @@ class BasicCreature extends BasicSnag implements ICreature
      */
     public function __construct($creatureConfig)
     {
-        $this->initCreature($creatureConfig);
-
-        parent::__construct('cid', 'creature_' . time());
+        parent::__construct($creatureConfig);
+        $this->initCreature();
     }
 
     /**
@@ -172,14 +171,10 @@ class BasicCreature extends BasicSnag implements ICreature
     }
 
     /**
-     * @param $creatureConfig
-     *
      * @return $this
      */
-    protected function initCreature($creatureConfig)
+    protected function initCreature()
     {
-        $this->data = $creatureConfig;
-
         $this->initRoute()->initSkills()->initProperties()->initCharacteristics()->initInventory();
 
         return $this;
