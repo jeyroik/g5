@@ -17,9 +17,9 @@ interface IRepository
     /**
      * @param $item
      *
-     * @return bool
+     * @return mixed
      */
-    public function create($item): bool;
+    public function create($item);
 
     /**
      * @param $item

@@ -32,10 +32,10 @@ class RepositoryJson extends RepositoryPhp implements IRepository
     /**
      * @param $item
      *
-     * @return bool
+     * @return mixed
      * @throws \Exception
      */
-    public function create($item): bool
+    public function create($item)
     {
         if (is_object($item) && ($item instanceof IItem)) {
             $this->items[$item->getId()] = $item->__toArray();
@@ -48,7 +48,7 @@ class RepositoryJson extends RepositoryPhp implements IRepository
             throw new \Exception('Unsupported item type "' . gettype($item) . '".');
         }
 
-        return true;
+        return $item;
     }
 
     /**

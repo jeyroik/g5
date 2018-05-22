@@ -3,6 +3,7 @@ namespace tratabor\components\systems\repositories;
 
 use deflou\components\compares\CompareDefault;
 use deflou\interfaces\ICompare;
+use tratabor\interfaces\systems\IItem;
 use tratabor\interfaces\systems\IRepository;
 
 /**
@@ -113,11 +114,11 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
     /**
      * @param $item
      *
-     * @return bool
+     * @return mixed
      */
-    public function create($item): bool
+    public function create($item)
     {
-        return true;
+        return null;
     }
 
     /**
