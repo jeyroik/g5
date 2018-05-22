@@ -72,15 +72,7 @@ class RepositoryJson extends RepositoryPhp implements IRepository
         } else {
             $count = 0;
             foreach ($this->items as $id => $currentItem) {
-                $accepted = true;
-
-                foreach ($this->where as $field => $value) {
-                    if (!isset($currentItem[$field]) || ($currentItem[$field] != $value)) {
-                        $accepted = false;
-                    }
-                }
-
-                if ($accepted) {
+                if ($this->isItemApplicable($currentItem)) {
                     unset($this->items[$id]);
                     $count++;
                 }
@@ -104,15 +96,7 @@ class RepositoryJson extends RepositoryPhp implements IRepository
         } else {
             $count = 0;
             foreach ($this->items as $id => $currentItem) {
-                $accepted = true;
-
-                foreach ($this->where as $field => $value) {
-                    if (!isset($currentItem[$field]) || ($currentItem[$field] != $value)) {
-                        $accepted = false;
-                    }
-                }
-
-                if ($accepted) {
+                if ($this->isItemApplicable($currentItem)) {
                     foreach ($item as $field => $value) {
                         $this->items[$id][$field] = $value;
                         $count++;

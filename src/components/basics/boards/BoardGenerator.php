@@ -68,6 +68,7 @@ class BoardGenerator
             'cells' => $cells,
             'size' => count($cells),
             'creatures_max' => 1,
+            'creatures_count' => 0,
             'creatures' => []
         ]);
     }

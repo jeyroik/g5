@@ -52,4 +52,12 @@ class BasicBoard extends Basic implements IBoard
     {
         return $this->data['creatures'] ?? [];
     }
+
+    /**
+     * @return int
+     */
+    public function getCreaturesCount(): int
+    {
+        return $this->data['creatures_count'] ?? 0;
+    }
 }

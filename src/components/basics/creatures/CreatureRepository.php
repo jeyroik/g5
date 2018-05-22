@@ -2,9 +2,7 @@
 namespace tratabor\components\basics\creatures;
 
 use tratabor\components\basics\BasicCreature;
-use tratabor\components\basics\BasicRepository;
-use tratabor\components\basics\users\profiles\ProfileRepository;
-use tratabor\interfaces\basics\ICreature;
+use tratabor\components\systems\repositories\RepositoryJson;
 
 /**
  * Class CreatureRepository
@@ -12,51 +10,8 @@ use tratabor\interfaces\basics\ICreature;
  * @package tratabor\components\basics\creatures
  * @author Funcraft <me@funcraft.ru>
  */
-class CreatureRepository extends BasicRepository
+class CreatureRepository extends RepositoryJson
 {
-    /**
-     * @param $itemConfig
-     *
-     * @return ICreature
-     */
-    public static function create($itemConfig)
-    {
-        return static::getInstance()->createItem($itemConfig);
-    }
-
-    /**
-     * @param $itemConfig
-     *
-     * @return BasicCreature
-     */
-    public function createItem($itemConfig)
-    {
-        $creature = new BasicCreature($itemConfig);
-
-        return $creature;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getItemClass(): string
-    {
-        return BasicCreature::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPathKey(): string
-    {
-        return 'G5__CREATURES__PATH';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPathDefault(): string
-    {
-        return G5__ROOT_PATH . '/resources/creatures.php';
-    }
+    protected $dsn = G5__ROOT_PATH . '/runtime/creatures.json';
+    protected $itemClass = BasicCreature::class;
 }

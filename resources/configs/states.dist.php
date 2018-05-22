@@ -95,7 +95,7 @@ return [
     ],
     'hero:board_check' => [
         State::STATE__ID => 'hero:board_check',
-        State::STATE__MAX_TRY => 2,
+        State::STATE__MAX_TRY => 3,
         State::STATE__DISPATCHERS => [
             \tratabor\components\dispatchers\boards\BoardCheck::class
         ],
@@ -150,8 +150,9 @@ return [
     ],
     'board:free_exists' => [
         State::STATE__ID => 'board:free_exists',
+        State::STATE__MAX_TRY => 2,
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherFail::class
+            \tratabor\components\dispatchers\boards\BoardFreeExists::class
         ],
         State::STATE__ON_SUCCESS => 'board:hero_attach',
         State::STATE__ON_FAILURE => 'board:create',
@@ -160,7 +161,7 @@ return [
     'board:hero_attach' => [
         State::STATE__ID => 'board:hero_attach',
         State::STATE__DISPATCHERS => [
-            \tratabor\components\dispatchers\DispatcherSuccess::class
+            \tratabor\components\dispatchers\boards\BoardHeroAttach::class
         ],
         State::STATE__ON_SUCCESS => 'hero:board_check',
         State::STATE__ON_FAILURE => 'app:terminate',

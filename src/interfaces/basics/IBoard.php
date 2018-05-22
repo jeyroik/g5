@@ -29,5 +29,10 @@ interface IBoard extends IItem
     /**
      * @return int
      */
+    public function getCreaturesCount(): int;
+
+    /**
+     * @return int
+     */
     public function getCreaturesMax(): int;
 }

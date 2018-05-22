@@ -1,6 +1,8 @@
 <?php
 namespace tratabor\components\systems\repositories;
 
+use deflou\components\compares\CompareDefault;
+use deflou\interfaces\ICompare;
 use tratabor\interfaces\systems\IRepository;
 
 /**
@@ -33,6 +35,16 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
      */
     protected $where = [];
 
+    protected $whereClauseMap = [
+        '=' => CompareDefault::class,
+        '!=' => CompareDefault::class,
+        '>' => CompareDefault::class,
+        '<' => CompareDefault::class,
+        '>=' => CompareDefault::class,
+        '<=' => CompareDefault::class,
+        'like' => CompareDefault::class
+    ];
+
     /**
      * RepositoryPhp constructor.
      * @param $dsn
@@ -59,19 +71,9 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
         }
 
         foreach ($this->items as $item) {
-            $skip = false;
-            foreach ($this->where as $field => $value) {
-                if (!isset($item[$field]) || ($item[$field] != $value)) {
-                    $skip = true;
-                    break;
-                }
+            if ($this->isItemApplicable($item)) {
+                return new $itemClass($item);
             }
-
-            if ($skip) {
-                continue;
-            }
-
-            return new $itemClass($item);
         }
 
         return null;
@@ -86,21 +88,9 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
         $items = [];
 
         foreach ($this->items as $item) {
-
-            if (!empty($this->where)) {
-                $skip = false;
-                foreach ($this->where as $field => $value) {
-                    if (!isset($item[$field]) || ($item[$field] != $value)) {
-                        $skip = true;
-                        break;
-                    }
-                }
-
-                if ($skip) {
-                    continue;
-                }
+            if ($this->isItemApplicable($item)) {
+                $items[] = new $itemClass($item);
             }
-            $items[] = new $itemClass($item);
         }
 
         return $items;
@@ -148,5 +138,61 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
     public function delete($item): int
     {
         return 0;
+    }
+
+    /**
+     * @param $item
+     *
+     * @return bool|mixed
+     * @throws \Exception
+     */
+    protected function isItemApplicable($item)
+    {
+        if ($this->isCompositeWhere()) {
+            list($field, $clause, $value) = $this->where;
+
+            if (!isset($item[$field])) {
+                return false;
+            }
+
+            /**
+             * Compare to another field
+             */
+            if (isset($item[$value])) {
+                $value = $item[$value];
+            }
+
+            if (isset($this->whereClauseMap[$clause])) {
+                $compareClass = $this->whereClauseMap[$clause];
+
+                /**
+                 * @var $compare ICompare
+                 */
+                $compare = new $compareClass();
+                return $compare->compare($item[$field], $value, $clause);
+            } else {
+                throw new \Exception('Unknown compare clause: "' . $clause . '".');
+            }
+
+        } else {
+            foreach ($this->where as $field => $value) {
+                if (!isset($item[$field]) || ($item[$field] != $value)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isCompositeWhere()
+    {
+        $keys = array_keys($this->where);
+        $key = array_shift($keys);
+
+        return is_numeric($key);
     }
 }

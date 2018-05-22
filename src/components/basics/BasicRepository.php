@@ -4,6 +4,8 @@ namespace tratabor\components\basics;
 /**
  * Class BasicRepository
  *
+ * @deprecated use RepositoryPhp instead
+ *
  * @package tratabor\components\basics
  * @author Funcraft <me@funcraft.ru>
  */

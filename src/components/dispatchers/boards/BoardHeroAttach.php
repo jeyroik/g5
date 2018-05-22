@@ -4,35 +4,33 @@ namespace tratabor\components\dispatchers\boards;
 use tratabor\components\dispatchers\DispatcherAbstract;
 use tratabor\interfaces\basics\creatures\ICreatureHero;
 use tratabor\interfaces\systems\IContext;
-use tratabor\interfaces\systems\states\IStateDispatcher;
 use tratabor\interfaces\systems\states\IStateMachine;
 
 /**
- * Class BoardCheck
+ * Class BoardHeroAttach
  *
  * @package tratabor\components\dispatchers\boards
  * @author Funcraft <me@funcraft.ru>
  */
-class BoardCheck extends DispatcherAbstract implements IStateDispatcher
+class BoardHeroAttach extends DispatcherAbstract
 {
     /**
      * @param IContext $context
      *
      * @return IContext
-     * @throws \Exception
      */
     protected function dispatch(IContext $context): IContext
     {
+        $board = $context->readItem('board.free')->getValue();
+
         /**
          * @var $hero ICreatureHero
          */
         $hero = $context->readItem('hero')->getValue();
+        $hero->attachToBoard($board);
 
-        if ($hero->getBoardId()) {
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
-        } else {
-            throw new \Exception('Hero is not attached to a board');
-        }
+        $context->updateItem('hero', $hero);
+        $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
 
         return $context;
     }

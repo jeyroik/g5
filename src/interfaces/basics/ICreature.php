@@ -95,4 +95,11 @@ interface ICreature extends ICellSnag
      * @return string
      */
     public function getType(): string;
+
+    /**
+     * @param IBoard $board
+     *
+     * @return bool
+     */
+    public function attachToBoard(IBoard $board): bool;
 }

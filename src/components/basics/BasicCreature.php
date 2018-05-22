@@ -8,6 +8,7 @@ use tratabor\components\basics\creatures\CreatureRoute;
 use tratabor\components\basics\creatures\CreatureSkill;
 use tratabor\interfaces\basics\creatures\ICreatureInventory;
 use tratabor\interfaces\basics\creatures\ICreatureRoute;
+use tratabor\interfaces\basics\IBoard;
 use tratabor\interfaces\basics\ICreature;
 
 /**
@@ -156,6 +157,18 @@ class BasicCreature extends BasicSnag implements ICreature
     public function getType(): string
     {
         return $this->data['type'] ?? 'creature';
+    }
+
+    /**
+     * @param IBoard $board
+     *
+     * @return bool
+     */
+    public function attachToBoard(IBoard $board): bool
+    {
+        $this->data['board_id'] = $board->getId();
+
+        return true;
     }
 
     /**
