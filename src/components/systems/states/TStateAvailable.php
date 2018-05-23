@@ -25,7 +25,7 @@ trait TStateAvailable
     public function getCurrentState()
     {
         if (!$this->smState) {
-            if ($this instanceof IMachineAvailable) {
+            if (($this instanceof IMachineAvailable) && $this->getStateMachine()) {
                 $this->smState = $this->getStateMachine()->getCurrentState();
             }
         }
