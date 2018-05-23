@@ -75,4 +75,9 @@ interface IRepository
      * @return string
      */
     public function getItemClass(): string;
+
+    /**
+     * @return bool
+     */
+    public function commit(): bool;
 }

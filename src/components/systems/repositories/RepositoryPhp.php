@@ -3,7 +3,6 @@ namespace tratabor\components\systems\repositories;
 
 use deflou\components\compares\CompareDefault;
 use deflou\interfaces\ICompare;
-use tratabor\interfaces\systems\IItem;
 use tratabor\interfaces\systems\IRepository;
 
 /**
@@ -139,6 +138,14 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
     public function delete($item): int
     {
         return 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function commit(): bool
+    {
+        return true;
     }
 
     /**

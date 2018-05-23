@@ -41,6 +41,9 @@ class RepositoryJson extends RepositoryPhp implements IRepository
             $this->items[$item->getId()] = $item->__toArray();
         } elseif (is_array($item)) {
             $itemClass = $this->getItemClass();
+            if (!isset($item['id']) || empty($item['id'])) {
+                $item['id'] = substr(sha1($itemClass), 0, 10) . '_' . time() . mt_rand(1000, 9999);
+            }
             $item = new $itemClass($item);
 
             return $this->create($item);
@@ -113,8 +116,19 @@ class RepositoryJson extends RepositoryPhp implements IRepository
      */
     public function __destruct()
     {
+        $this->commit();
+    }
+
+    /**
+     * @return bool
+     */
+    public function commit(): bool
+    {
         if ($this->dsn) {
             file_put_contents($this->dsn, json_encode($this->items));
+            return true;
         }
+
+        return false;
     }
 }

@@ -33,6 +33,8 @@ class BoardCreate extends DispatcherAbstract implements IStateDispatcher
             $board = BoardGenerator::generate(5, 5, 1);
             $repo = new BoardRepository();
             $repo->create($board);
+            $repo->commit();
+
             $context->pushItemByName('board.created', $board);
             $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
         }
