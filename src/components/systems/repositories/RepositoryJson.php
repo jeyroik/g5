@@ -13,6 +13,19 @@ use tratabor\interfaces\systems\IRepository;
 class RepositoryJson extends RepositoryPhp implements IRepository
 {
     /**
+     * RepositoryJson constructor.
+     *
+     * @param string $dsn
+     * @param bool $autoConnect
+     */
+    public function __construct($dsn = '', $autoConnect = true)
+    {
+        parent::__construct($dsn);
+
+        $autoConnect && $this->connect();
+    }
+
+    /**
      * @return IRepository
      * @throws \Exception
      */

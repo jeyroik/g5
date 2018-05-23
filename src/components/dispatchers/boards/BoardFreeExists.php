@@ -23,7 +23,7 @@ class BoardFreeExists extends DispatcherAbstract
     protected function dispatch(IContext $context): IContext
     {
         $repo = new BoardRepository();
-        $board = $repo->connect()->find(['creatures_count', '<', 'creatures_max'])->one();
+        $board = $repo->find(['creatures_count', '<', 'creatures_max'])->one();
 
         if ($board) {
             $context->pushItemByName('board.free', $board);
