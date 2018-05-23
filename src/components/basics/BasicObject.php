@@ -7,7 +7,7 @@ namespace tratabor\components\basics;
  * @package tratabor\components\basics
  * @author Funcraft <me@funcraft.ru>
  */
-class BasicObject
+class BasicObject extends Basic
 {
     /**
      * @var array
@@ -15,32 +15,10 @@ class BasicObject
     protected $data = [];
 
     /**
-     * BasicObject constructor.
-     *
-     * @param array $config
-     */
-    public function __construct($config = [])
-    {
-        $this->initConfig($config);
-    }
-
-    /**
      * @return array
      */
-    public function __toArray()
+    public function __toArray(): array
     {
         return $this->data;
-    }
-
-    /**
-     * @param $config
-     *
-     * @return $this
-     */
-    protected function initConfig($config)
-    {
-        $this->data = $config;
-
-        return $this;
     }
 }
