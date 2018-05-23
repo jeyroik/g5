@@ -33,9 +33,9 @@ trait TMachineAvailable
     protected $stateMachineIsPublicInit = false;
 
     /**
-     * @return IStateMachine
+     * @return IStateMachine|null
      */
-    public function getStateMachine(): IStateMachine
+    public function getStateMachine()
     {
         return $this->stateMachine;
     }

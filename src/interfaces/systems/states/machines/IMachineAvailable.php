@@ -13,9 +13,9 @@ use tratabor\interfaces\systems\states\IStateMachine;
 interface IMachineAvailable
 {
     /**
-     * @return IStateMachine
+     * @return IStateMachine|null
      */
-    public function getStateMachine(): IStateMachine;
+    public function getStateMachine();
 
     /**
      * @param string $stateId
