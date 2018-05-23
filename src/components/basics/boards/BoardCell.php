@@ -39,9 +39,9 @@ class BoardCell extends Basic implements ICell
     }
 
     /**
-     * @return ICellSnag
+     * @return ICellSnag|null
      */
-    public function getContain(): ICellSnag
+    public function getContain()
     {
         return $this->data['contain'] ?: null;
     }
