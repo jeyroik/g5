@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\basics;
 
+use tratabor\components\basics\boards\BoardCell;
 use tratabor\interfaces\basics\IBoard;
 use tratabor\interfaces\basics\ICell;
 use tratabor\interfaces\basics\ICreature;
@@ -13,6 +14,17 @@ use tratabor\interfaces\basics\ICreature;
  */
 class BasicBoard extends Basic implements IBoard
 {
+    /**
+     * BasicBoard constructor.
+     * 
+     * @param $config
+     */
+    public function __construct($config)
+    {
+        parent::__construct($config);
+        $this->initBoard();
+    }
+
     /**
      * @return string
      */
@@ -69,12 +81,61 @@ class BasicBoard extends Basic implements IBoard
         return [
             'id' => $this->getId(),
             'size' => $this->getSize(),
-            'cells' => $this->getCells(),
+            'cells' => $this->__toArrayCells(),
             'creatures_max' => $this->getCreaturesMax(),
             'creatures' => $this->getCreatures(),
             'creatures_count' => $this->getCreaturesCount(),
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt()
         ];
+    }
+
+    /**
+     * @return $this
+     */
+    protected function initBoard()
+    {
+        $this->initCells()->initCreatures();
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function initCreatures()
+    {
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function initCells()
+    {
+        if (isset($this->data['cells']) && !empty($this->data['cells'])) {
+            foreach ($this->data['cells'] as $index => $cell) {
+                $this->data['cells'][$index] = new BoardCell($cell);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    protected function __toArrayCells(): array
+    {
+        $cells = [];
+
+        foreach ($this->data['cells'] as $cell) {
+            /**
+             * @var $cell ICell
+             */
+            $cells[] = $cell->__toArray();
+        }
+
+        return $cells;
     }
 }

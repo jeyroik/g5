@@ -4,6 +4,7 @@ namespace tratabor\components\basics\boards;
 use tratabor\components\basics\Basic;
 use tratabor\interfaces\basics\cells\ICellSnag;
 use tratabor\interfaces\basics\ICell;
+use tratabor\interfaces\systems\IItem;
 
 /**
  * Class BoardCell
@@ -59,5 +60,27 @@ class BoardCell extends Basic implements ICell
     public function isEmpty(): bool
     {
         return !$this->getContain();
+    }
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        $contain = $this->getContain();
+
+        if ($contain && ($contain instanceof IItem)) {
+            $contain = $contain->__toArray();
+        }
+
+        return [
+            'x' => $this->getX(),
+            'y' => $this->getY(),
+            'z' => $this->getZ(),
+            'contain' => $contain,
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
+            'state' => $this->getCurrentStateId()
+        ];
     }
 }
