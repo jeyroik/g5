@@ -16,7 +16,7 @@ class BasicBoard extends Basic implements IBoard
 {
     /**
      * BasicBoard constructor.
-     * 
+     *
      * @param $config
      */
     public function __construct($config)
@@ -115,7 +115,9 @@ class BasicBoard extends Basic implements IBoard
     {
         if (isset($this->data['cells']) && !empty($this->data['cells'])) {
             foreach ($this->data['cells'] as $index => $cell) {
-                $this->data['cells'][$index] = new BoardCell($cell);
+                if (is_array($cell)) {
+                    $this->data['cells'][$index] = new BoardCell($cell);
+                }
             }
         }
 
