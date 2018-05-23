@@ -67,9 +67,9 @@ interface ICreature extends ICellSnag
     public function getPropertiesMax(): int;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getBoardId(): int;
+    public function getBoardId(): string;
 
     /**
      * @return ICreatureInventory

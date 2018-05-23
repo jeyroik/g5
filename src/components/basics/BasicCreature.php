@@ -111,9 +111,9 @@ class BasicCreature extends BasicSnag implements ICreature
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getBoardId(): int
+    public function getBoardId(): string
     {
         return $this->data['board_id'] ?? 0;
     }
