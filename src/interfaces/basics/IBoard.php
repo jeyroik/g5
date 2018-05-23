@@ -35,4 +35,16 @@ interface IBoard extends IItem
      * @return int
      */
     public function getCreaturesMax(): int;
+
+    /**
+     * @return ICell[]
+     */
+    public function getSpawnCells();
+
+    /**
+     * @param ICreature $creature
+     *
+     * @return ICell cell creature is attached to
+     */
+    public function attachCreature(ICreature $creature): ICell;
 }

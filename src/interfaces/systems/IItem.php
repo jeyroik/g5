@@ -1,5 +1,7 @@
 <?php
 namespace tratabor\interfaces\systems;
+use tratabor\interfaces\basics\ICell;
+use tratabor\interfaces\basics\ICreature;
 
 /**
  * Interface IItem

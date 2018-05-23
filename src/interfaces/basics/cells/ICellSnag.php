@@ -11,6 +11,27 @@ use tratabor\interfaces\systems\IItem;
  */
 interface ICellSnag extends IItem
 {
+    /**
+     * @return string
+     */
+    public function getAvatar(): string;
+
+    /**
+     * @return bool
+     */
     public function isCanBePassed(): bool;
+
+    /**
+     * @param $creature
+     *
+     * @return mixed
+     */
     public function applyTo($creature);
+
+    /**
+     * @param string $viewPath
+     *
+     * @return string
+     */
+    public function render($viewPath): string;
 }

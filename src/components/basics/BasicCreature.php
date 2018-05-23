@@ -4,6 +4,7 @@ namespace tratabor\components\basics;
 use tratabor\components\basics\creatures\CreatureCharacteristic;
 use tratabor\components\basics\creatures\CreatureInventory;
 use tratabor\components\basics\creatures\CreatureProperty;
+use tratabor\components\basics\creatures\CreatureRepository;
 use tratabor\components\basics\creatures\CreatureRoute;
 use tratabor\components\basics\creatures\CreatureSkill;
 use tratabor\interfaces\basics\creatures\ICreatureInventory;
@@ -19,6 +20,24 @@ use tratabor\interfaces\basics\ICreature;
  */
 class BasicCreature extends BasicSnag implements ICreature
 {
+    const FIELD__ID = 'id';
+    const FIELD__NAME = 'name';
+    const FIELD__AVATAR = 'avatar';
+    const FIELD__SKILLS = 'skills';
+    const FIELD__SKILLS_MAX = 'skills_max';
+    const FIELD__PROPERTIES = 'properties';
+    const FIELD__PROPERTIES_MAX = 'properties_max';
+    const FIELD__CHARACTERISTICS = 'characteristics';
+    const FIELD__CHARACTERISTICS_MAX = 'characteristics_max';
+    const FIELD__ROUTE = 'route';
+    const FIELD__INVENTORY = 'inventory';
+    const FIELD__LEVEL_CURRENT = 'level_current';
+    const FIELD__LEVEL_NEXT = 'level_next';
+    const FIELD__EXP_CURRENT = 'exp_current';
+    const FIELD__EXP_NEXT = 'exp_next';
+    const FIELD__BOARD_ID = 'board_id';
+    const FIELD__TYPE = 'type';
+
     /**
      * BasicCreature constructor.
      *
@@ -36,14 +55,6 @@ class BasicCreature extends BasicSnag implements ICreature
     public function getName(): string
     {
         return $this->data['name'] ?? '';
-    }
-
-    /**
-     * @return string
-     */
-    public function getAvatar(): string
-    {
-        return $this->data['avatar'] ?? '';
     }
 
     /**
@@ -167,7 +178,52 @@ class BasicCreature extends BasicSnag implements ICreature
     {
         $this->data['board_id'] = $board->getId();
 
+        $cell = $board->attachCreature($this);
+        $this->getRoute()->addStep($cell);
+        $this->commit();
+
         return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        return [
+            static::FIELD__ID => $this->getId(),
+            static::FIELD__AVATAR => $this->getAvatar(),
+            static::FIELD__ROUTE => $this->getRoute()->__toArray(),
+            static::FIELD__NAME => $this->getName(),
+            static::FIELD__BOARD_ID => $this->getBoardId(),
+            static::FIELD__TYPE => $this->getType(),
+            static::FIELD__CHARACTERISTICS => $this->getCharacteristics(),
+            static::FIELD__CHARACTERISTICS_MAX => $this->getCharacteristicsMax(),
+            static::FIELD__EXP_CURRENT => $this->getExpCurrent(),
+            static::FIELD__EXP_NEXT => $this->getExpNext(),
+            static::FIELD__LEVEL_CURRENT => $this->getLevelCurrent(),
+            static::FIELD__LEVEL_NEXT => $this->getLevelNext(),
+            static::FIELD__SKILLS => $this->getSkills(),
+            static::FIELD__SKILLS_MAX => $this->getSkillsMax(),
+            static::FIELD__PROPERTIES => $this->getProperties(),
+            static::FIELD__PROPERTIES_MAX => $this->getPropertiesMax(),
+            static::FIELD__INVENTORY => $this->getInventory(),
+
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt()
+        ];
+    }
+
+    /**
+     * @return $this
+     */
+    protected function commit()
+    {
+        $repo = new CreatureRepository();
+        $repo->update($this);
+        $repo->commit();
+
+        return $this;
     }
 
     /**

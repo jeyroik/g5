@@ -41,4 +41,11 @@ interface ICell extends IItem
      * @return ICellSnag|null
      */
     public function getContain();
+
+    /**
+     * @param ICreature $creature
+     *
+     * @return bool
+     */
+    public function attachCreature(ICreature $creature): bool;
 }

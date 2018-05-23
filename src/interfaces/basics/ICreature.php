@@ -19,11 +19,6 @@ interface ICreature extends ICellSnag
     /**
      * @return string
      */
-    public function getAvatar(): string;
-
-    /**
-     * @return string
-     */
     public function getName(): string;
 
     /**

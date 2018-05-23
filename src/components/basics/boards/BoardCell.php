@@ -4,6 +4,7 @@ namespace tratabor\components\basics\boards;
 use tratabor\components\basics\Basic;
 use tratabor\interfaces\basics\cells\ICellSnag;
 use tratabor\interfaces\basics\ICell;
+use tratabor\interfaces\basics\ICreature;
 use tratabor\interfaces\systems\IItem;
 
 /**
@@ -14,6 +15,12 @@ use tratabor\interfaces\systems\IItem;
  */
 class BoardCell extends Basic implements ICell
 {
+    const FIELD__ID = 'id';
+    const FIELD__X = 'x';
+    const FIELD__Y = 'y';
+    const FIELD__Z = 'z';
+    const FIELD__CONTAIN = 'contain';
+
     /**
      * @return int
      */
@@ -60,6 +67,22 @@ class BoardCell extends Basic implements ICell
     public function isEmpty(): bool
     {
         return !$this->getContain();
+    }
+
+    /**
+     * @param ICreature $creature
+     *
+     * @return bool
+     */
+    public function attachCreature(ICreature $creature): bool
+    {
+        if ($this->isEmpty()) {
+            $this->data[static::FIELD__CONTAIN] = $creature;
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

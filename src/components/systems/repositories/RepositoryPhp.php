@@ -103,7 +103,9 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
     {
         parent::connect();
 
-        if (is_file($this->dsn)) {
+        if (is_array($this->dsn)) {
+            $this->items = $this->dsn;
+        } else if (is_file($this->dsn)) {
             $this->items = include $this->dsn;
         }
 
