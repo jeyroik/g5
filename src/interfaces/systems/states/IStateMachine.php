@@ -13,6 +13,7 @@ interface IStateMachine
 {
     const CONTEXT__SUCCESS = '@directive.success()';
     const CONTEXT__STATES = '';
+    const CONTEXT__ERRORS = '@directive.errors()';
 
     const MACHINE__CONFIG = '@directive.config()';
     const MACHINE__CONFIG__VERSION = 'version';

@@ -336,6 +336,7 @@ class StateMachine implements IStateMachine
             $this->currentContext->readItem(static::CONTEXT__SUCCESS);
         } catch (\Exception $e) {
             $this->currentContext->pushItemByName(static::CONTEXT__SUCCESS, true);
+            $this->currentContext->pushItemByName(static::CONTEXT__ERRORS, []);
         }
 
         return $this;
