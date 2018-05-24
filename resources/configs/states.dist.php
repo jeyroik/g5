@@ -47,6 +47,25 @@ return [
         State::STATE__ON_FAILURE => '',
         State::STATE__ON_TERMINATE => '',
     ],
+    'app:failure' => [
+        State::STATE__ID => 'app:failure',
+        State::STATE__MAX_TRY => 1,
+        State::STATE__DISPATCHERS => [
+            function ($currentState, $context) {
+                /**
+                 * @var $currentState \tratabor\interfaces\systems\IState
+                 */
+                echo 'App failure on "' . $currentState->getId() . '"...<br/><pre>';
+                print_r($context);
+                echo '</pre>';
+
+                return $context;
+            }
+        ],
+        State::STATE__ON_SUCCESS => '',
+        State::STATE__ON_FAILURE => '',
+        State::STATE__ON_TERMINATE => '',
+    ],
     'world:exists' => [
         State::STATE__ID => 'world:exists',
         State::STATE__DISPATCHERS => [
@@ -164,7 +183,7 @@ return [
             \tratabor\components\dispatchers\boards\BoardHeroAttach::class
         ],
         State::STATE__ON_SUCCESS => 'hero:board_check',
-        State::STATE__ON_FAILURE => 'app:terminate',
+        State::STATE__ON_FAILURE => 'app:failure',
         State::STATE__ON_TERMINATE => 'app:terminate',
     ],
     'board:create' => [
