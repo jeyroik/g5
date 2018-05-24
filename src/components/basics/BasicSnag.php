@@ -14,11 +14,6 @@ use tratabor\interfaces\basics\cells\ICellSnag;
 class BasicSnag extends Basic implements ICellSnag
 {
     /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
      * @return string
      */
     public function getAvatar(): string

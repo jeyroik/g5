@@ -27,6 +27,14 @@ class Basic extends Item
     }
 
     /**
+     * @return mixed|string
+     */
+    public function getId()
+    {
+        return $this->data['id'] ?: parent::getId();
+    }
+
+    /**
      * @return array
      */
     public function __toArray(): array
