@@ -97,6 +97,7 @@ class BoardCell extends Basic implements ICell
         }
 
         return [
+            'id' => $this->getId(),
             'x' => $this->getX(),
             'y' => $this->getY(),
             'z' => $this->getZ(),
