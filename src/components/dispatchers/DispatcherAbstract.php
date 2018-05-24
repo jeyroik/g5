@@ -32,6 +32,7 @@ abstract class DispatcherAbstract implements IStateDispatcher
             $context = $this->dispatch($context);
         } catch (\Exception $e) {
             $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+            $context->pushItemByName('error_' . $currentState->getId(), $e);
         }
 
         return $context;
