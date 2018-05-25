@@ -105,7 +105,7 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
 
         if (is_array($this->dsn)) {
             $this->items = $this->dsn;
-        } else if (is_file($this->dsn)) {
+        } elseif (is_file($this->dsn)) {
             $this->items = include $this->dsn;
         }
 

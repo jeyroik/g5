@@ -260,7 +260,7 @@ class BasicBoard extends Basic implements IBoard
          * @var $repo IRepository
          */
         $repo = $this->data[static::FIELD__CELLS];
-        $cells = $repo->all();
+        $cells = $repo->find([])->all();
         $cellsAsArray = [];
 
         foreach ($cells as $cell) {

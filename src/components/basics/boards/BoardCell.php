@@ -26,7 +26,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getX(): int
     {
-        return $this->data['x'] ?? 0;
+        return $this->data[static::FIELD__X] ?? 0;
     }
 
     /**
@@ -34,7 +34,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getY(): int
     {
-        return $this->data['y'] ?? 0;
+        return $this->data[static::FIELD__Y] ?? 0;
     }
 
     /**
@@ -42,7 +42,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getZ(): int
     {
-        return $this->data['z'] ?? 0;
+        return $this->data[static::FIELD__Z] ?? 0;
     }
 
     /**
@@ -50,7 +50,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getContain()
     {
-        return $this->data['contain'] ?: null;
+        return $this->data[static::FIELD__CONTAIN] ?: null;
     }
 
     /**
@@ -97,11 +97,11 @@ class BoardCell extends Basic implements ICell
         }
 
         return [
-            'id' => $this->getId(),
-            'x' => $this->getX(),
-            'y' => $this->getY(),
-            'z' => $this->getZ(),
-            'contain' => $contain,
+            static::FIELD__ID => $this->getId(),
+            static::FIELD__X => $this->getX(),
+            static::FIELD__Y => $this->getY(),
+            static::FIELD__Z => $this->getZ(),
+            static::FIELD__CONTAIN => $contain,
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
             'state' => $this->getCurrentStateId()
