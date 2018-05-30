@@ -98,7 +98,7 @@ class BasicBoard extends Basic implements IBoard
          * @var $repo IRepository
          */
         $repo = $this->data[static::FIELD__CELLS];
-        return $repo->find()->all();
+        return $repo->find(['board_id' => $this->getId()])->all();
     }
 
     /**
@@ -207,7 +207,7 @@ class BasicBoard extends Basic implements IBoard
          * @var $repo CellRepository
          */
         $repo = $this->data[static::FIELD__CELLS];
-        $repo->update($cell);
+        $repo->find($cell->__toArray())->update($cell);
         $repo->commit();
         $this->data[static::FIELD__CELLS] = $repo;
 
@@ -237,7 +237,9 @@ class BasicBoard extends Basic implements IBoard
      */
     protected function initCells()
     {
-        $this->data[static::FIELD__CELLS] = new CellRepository($this->data['cells']);
+        $dsn = getenv('G5__MONGO__DSN') ?: 'mongodb://localhost:27017';
+        $repo = new CellRepository($dsn);
+        $this->data[static::FIELD__CELLS] = $repo;
         $this->data[static::FIELD__CELLS]->connect();
 
         return $this;
@@ -260,7 +262,7 @@ class BasicBoard extends Basic implements IBoard
          * @var $repo IRepository
          */
         $repo = $this->data[static::FIELD__CELLS];
-        $cells = $repo->find([])->all();
+        $cells = $repo->find(['board_id' => $this->getId()])->all();
         $cellsAsArray = [];
 
         foreach ($cells as $cell) {
