@@ -3,6 +3,7 @@ namespace tratabor\components\systems\repositories;
 
 use deflou\components\compares\CompareDefault;
 use deflou\interfaces\ICompare;
+use tratabor\interfaces\systems\IItem;
 use tratabor\interfaces\systems\IRepository;
 
 /**
@@ -116,10 +117,33 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
      * @param $item
      *
      * @return mixed
+     * @throws \Exception
      */
     public function create($item)
     {
-        return null;
+        if (is_object($item) && ($item instanceof IItem)) {
+            $byId = array_column($this->items, null, 'id');
+
+            if (isset($byId[$item->getId()])) {
+                $byId[$item->getId()] = $item->__toArray();
+            } else {
+                $byId[] = $item->__toArray();
+            }
+
+            $this->items[] = $byId;
+        } elseif (is_array($item)) {
+            $itemClass = $this->getItemClass();
+            if (!isset($item['id']) || empty($item['id'])) {
+                $item['id'] = substr(sha1($itemClass), 0, 10) . '_' . time() . mt_rand(1000, 9999);
+            }
+            $item = new $itemClass($item);
+
+            return $this->create($item);
+        } else {
+            throw new \Exception('Unsupported item type "' . gettype($item) . '".');
+        }
+
+        return $item;
     }
 
     /**
@@ -129,7 +153,23 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
      */
     public function update($item): int
     {
-        return 0;
+        if (empty($this->where)) {
+            $this->create($item);
+
+            return 1;
+        } else {
+            $count = 0;
+            foreach ($this->items as $id => $currentItem) {
+                if ($this->isItemApplicable($currentItem)) {
+                    foreach ($item as $field => $value) {
+                        $this->items[$id][$field] = $value;
+                        $count++;
+                    }
+                }
+            }
+
+            return $count;
+        }
     }
 
     /**
