@@ -239,6 +239,12 @@ class BasicBoard extends Basic implements IBoard
     {
         $dsn = getenv('G5__MONGO__DSN') ?: 'mongodb://localhost:27017';
         $repo = new CellRepository($dsn);
+        $cells = $repo->find(['board_id' => $this->getId()])->all();
+        if (empty($cells)) {
+            foreach ($this->data[static::FIELD__CELLS] as $cell) {
+                $repo->create($cell);
+            }
+        }
         $this->data[static::FIELD__CELLS] = $repo;
         $this->data[static::FIELD__CELLS]->connect();
 

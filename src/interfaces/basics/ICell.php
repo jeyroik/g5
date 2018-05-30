@@ -43,6 +43,11 @@ interface ICell extends IItem
     public function getContain();
 
     /**
+     * @return string
+     */
+    public function getBoardId(): string;
+
+    /**
      * @param ICreature $creature
      *
      * @return bool

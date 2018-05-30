@@ -21,6 +21,7 @@ class BoardCell extends Basic implements ICell
     const FIELD__Y = 'y';
     const FIELD__Z = 'z';
     const FIELD__CONTAIN = 'contain';
+    const FIELD__BOARD_ID = 'board_id';
 
     /**
      * @return int
@@ -59,6 +60,14 @@ class BoardCell extends Basic implements ICell
         }
 
         return $contain;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBoardId(): string
+    {
+        return $this->data[static::FIELD__BOARD_ID] ?? '';
     }
 
     /**
@@ -112,7 +121,8 @@ class BoardCell extends Basic implements ICell
             static::FIELD__CONTAIN => $contain,
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
-            'state' => $this->getCurrentStateId()
+            'state' => $this->getCurrentStateId(),
+            'board_id' => $this->getBoardId()
         ];
     }
 }

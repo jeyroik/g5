@@ -59,7 +59,8 @@ class BoardGenerator
                         'x' => $j,
                         'y' => $i,
                         'z' => $k,
-                        'contain' => null
+                        'contain' => null,
+                        'board_id' => $boardId
                     ];
                     if (mt_rand(0, $spawnRate) == 1) {
                         $spawnCells[] = $boardId . '_' . $j . $i . $k;
