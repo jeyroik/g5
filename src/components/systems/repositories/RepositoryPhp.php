@@ -159,6 +159,9 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
             return 1;
         } else {
             $count = 0;
+            if (is_object($item) && ($item instanceof IItem)) {
+                $item = $item->__toArray();
+            }
             foreach ($this->items as $id => $currentItem) {
                 if ($this->isItemApplicable($currentItem)) {
                     foreach ($item as $field => $value) {
