@@ -207,7 +207,7 @@ class BasicBoard extends Basic implements IBoard
          * @var $repo CellRepository
          */
         $repo = $this->data[static::FIELD__CELLS];
-        $repo->find($cell->__toArray())->update($cell);
+        $repo->find(['id' => $cell->getId()])->update($cell);
         $repo->commit();
         $this->data[static::FIELD__CELLS] = $repo;
 

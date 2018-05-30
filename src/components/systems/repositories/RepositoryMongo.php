@@ -107,6 +107,8 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
             throw new \Exception('Unsupported item type "' . gettype($item) . '".');
         }
 
+        $data = $this->prepareForUpdate($data);
+
         if ($this->where) {
             $updated = $this->collection->updateMany($this->where, $data);
             $this->reset();
@@ -156,6 +158,16 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
     public function commit(): bool
     {
         return true;
+    }
+
+    /**
+     * @param $item
+     *
+     * @return array
+     */
+    protected function prepareForUpdate($item)
+    {
+        return ['$set' => $item];
     }
 
     /**
