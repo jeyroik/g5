@@ -210,7 +210,8 @@ class BasicCreature extends BasicSnag implements ICreature
             static::FIELD__INVENTORY => $this->getInventory(),
 
             'created_at' => $this->getCreatedAt(),
-            'updated_at' => $this->getUpdatedAt()
+            'updated_at' => $this->getUpdatedAt(),
+            'class' => static::class
         ];
     }
 

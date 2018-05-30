@@ -2,6 +2,7 @@
 namespace tratabor\components\basics\boards;
 
 use tratabor\components\basics\Basic;
+use tratabor\components\basics\BasicSnag;
 use tratabor\interfaces\basics\cells\ICellSnag;
 use tratabor\interfaces\basics\ICell;
 use tratabor\interfaces\basics\ICreature;
@@ -50,7 +51,14 @@ class BoardCell extends Basic implements ICell
      */
     public function getContain()
     {
-        return $this->data[static::FIELD__CONTAIN] ?: null;
+        $contain = $this->data[static::FIELD__CONTAIN] ?: null;
+
+        if (($contain) && (is_array($contain))) {
+            $snagClass = $contain['class'] ?? BasicSnag::class;
+            $contain = new $snagClass($contain);
+        }
+
+        return $contain;
     }
 
     /**
