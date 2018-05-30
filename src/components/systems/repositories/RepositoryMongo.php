@@ -181,8 +181,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
 
     protected function initDriver()
     {
-        $this->driver = new \MongoClient($this->dsn);
-        $this->driver->selectDB('g5');
+        $this->driver = new \MongoDB\Client($this->dsn);
 
         return $this;
     }
