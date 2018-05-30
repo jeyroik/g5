@@ -61,23 +61,24 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
     public function one()
     {
         $itemClass = $this->getItemClass();
+        $item = null;
 
         if (empty($this->where)) {
             $items = $this->items;
-
             $item = array_shift($items);
 
-
-            return new $itemClass($item);
-        }
-
-        foreach ($this->items as $item) {
-            if ($this->isItemApplicable($item)) {
-                return new $itemClass($item);
+            $item = new $itemClass($item);
+        } else {
+            foreach ($this->items as $item) {
+                if ($this->isItemApplicable($item)) {
+                    $item = new $itemClass($item);
+                    break;
+                }
             }
+            $this->reset();
         }
 
-        return null;
+        return $item;
     }
 
     /**
@@ -93,6 +94,8 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
                 $items[] = new $itemClass($item);
             }
         }
+
+        $this->reset();
 
         return $items;
     }
@@ -191,6 +194,16 @@ class RepositoryPhp extends RepositoryAbstract implements IRepository
     public function commit(): bool
     {
         return true;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function reset()
+    {
+        $this->where = [];
+
+        return $this;
     }
 
     /**
