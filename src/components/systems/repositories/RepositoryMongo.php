@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\systems\repositories;
 
+use MongoDB\Model\BSONDocument;
 use tratabor\interfaces\systems\IItem;
 use tratabor\interfaces\systems\IRepository;
 
@@ -131,7 +132,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
         $itemClass = $this->getItemClass();
         $this->reset();
 
-        return new $itemClass($item);
+        return new $itemClass((array) $item);
     }
 
     /**
@@ -146,7 +147,10 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
             $rows = $this->where->toArray();
 
             foreach ($rows as $item) {
-                $items[] = new $itemClass($item);
+                /**
+                 * @var $item BSONDocument
+                 */
+                $items[] = new $itemClass((array) $item);
             }
         }
 
