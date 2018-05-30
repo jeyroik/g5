@@ -132,7 +132,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
         $itemClass = $this->getItemClass();
         $this->reset();
 
-        return new $itemClass((array) $item);
+        return new $itemClass($this->unSerializeItem($item));
     }
 
     /**
@@ -150,7 +150,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
                 /**
                  * @var $item BSONDocument
                  */
-                $items[] = new $itemClass((array) $item);
+                $items[] = new $itemClass($this->unSerializeItem($item));
             }
         }
 
@@ -172,6 +172,28 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
     protected function prepareForUpdate($item)
     {
         return ['$set' => $item];
+    }
+
+    /**
+     * @param $item
+     *
+     * @return array
+     */
+    protected function unSerializeItem($item)
+    {
+        $unSerialized = [];
+
+        $item = (array) $item;
+
+        foreach ($item as $field => $value) {
+            if (is_object($value)) {
+                $value = $this->unSerializeItem($value);
+            }
+
+            $unSerialized[$field] = $value;
+        }
+
+        return $unSerialized;
     }
 
     /**
