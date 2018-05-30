@@ -15,17 +15,17 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
     protected $collectionName = 'system';
 
     /**
-     * @var \MongoClient
+     * @var \MongoDB\Client
      */
     protected $driver = null;
 
     /**
-     * @var \MongoCursor
+     * @var \MongoDb\Driver\Cursor
      */
     protected $where = null;
 
     /**
-     * @var \MongoCollection
+     * @var \MongoDB\Collection
      */
     protected $collection = null;
 
@@ -68,7 +68,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
             throw new \Exception('Unsupported item type "' . gettype($item) . '".');
         }
 
-        $this->collection->insert($data);
+        $this->collection->insertOne($data);
         $itemClass = $this->getItemClass();
 
         return new $itemClass($item);
@@ -82,10 +82,10 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
     public function delete($item): int
     {
         if ($this->where) {
-            $removed = $this->collection->remove($this->where);
+            $removed = $this->collection->deleteMany($this->where);
             $this->reset();
 
-            return is_array($removed) ? count($removed) : (int) $removed;
+            return $removed->getDeletedCount();
         }
 
         return 0;
@@ -108,12 +108,12 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
         }
 
         if ($this->where) {
-            $updated = $this->collection->update((array) $this->where, $data);
+            $updated = $this->collection->updateMany($this->where, $data);
             $this->reset();
 
-            return (int) $updated;
+            return $updated->getUpsertedCount();
         } else {
-            $this->collection->update([], $data);
+            $this->collection->updateOne([], $data);
             return 1;
         }
     }
@@ -123,7 +123,9 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
      */
     public function one()
     {
-        $item = $this->where ? $this->where->current() : [];
+        $items = $this->where ? $this->where->toArray() : [];
+        $item = count($items) ? array_shift($items) : [];
+
         $itemClass = $this->getItemClass();
         $this->reset();
 
@@ -139,7 +141,9 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
         $itemClass = $this->getItemClass();
 
         if ($this->where) {
-            foreach ($this->where as $item) {
+            $rows = $this->where->toArray();
+
+            foreach ($rows as $item) {
                 $items[] = new $itemClass($item);
             }
         }
