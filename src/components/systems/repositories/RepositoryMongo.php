@@ -41,19 +41,6 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
     }
 
     /**
-     * @param array $where
-     *
-     * @return IRepository
-     */
-    public function find($where = []): IRepository
-    {
-        $this->initCollection();
-        $this->where = $this->collection->find($where);
-
-        return $this;
-    }
-
-    /**
      * @param $item
      *
      * @return mixed
@@ -114,9 +101,9 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
             $updated = $this->collection->updateMany($this->where, $data);
             $this->reset();
 
-            return $updated->getUpsertedCount();
+            return $updated->getModifiedCount();
         } else {
-            $this->collection->updateOne([], $data);
+            $this->collection->updateOne(['id' => $data['id']], $data);
             return 1;
         }
     }
@@ -126,7 +113,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
      */
     public function one()
     {
-        $items = $this->where ? $this->where->toArray() : [];
+        $items = $this->where ? $this->collection->find($this->where)->toArray() : [];
         $item = count($items) ? array_shift($items) : [];
 
         $itemClass = $this->getItemClass();
@@ -144,7 +131,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
         $itemClass = $this->getItemClass();
 
         if ($this->where) {
-            $rows = $this->where->toArray();
+            $rows = $this->collection->find($this->where)->toArray();
 
             foreach ($rows as $item) {
                 /**
@@ -224,6 +211,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
     protected function initDriver()
     {
         $this->driver = new \MongoDB\Client($this->dsn);
+        $this->initCollection();
 
         return $this;
     }
