@@ -123,7 +123,7 @@ return [
         ]
     ],
 
-    Machine::MACHINE__STATES => [
+    IMachineConfig::FIELD__STATES => [
         'app:run' => [
             State::STATE__ID => 'app:run',
             State::STATE__MAX_TRY => 1,
