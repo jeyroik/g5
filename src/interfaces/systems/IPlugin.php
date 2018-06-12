@@ -9,7 +9,7 @@ namespace tratabor\interfaces\systems;
  */
 interface IPlugin
 {
-    const FIELD__CLASS = 'Class';
+    const FIELD__CLASS = 'class';
     const FIELD__VERSION = 'version';
     const FIELD__STAGE = 'stage';
 
