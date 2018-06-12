@@ -28,7 +28,7 @@ class Extension implements IExtension
         array_unshift($args, $subject);
 
         return isset($this->methods[$methodName])
-            ? call_user_func_array($this->methods[$methodName], $args)
+            ? call_user_func_array([$this, $methodName], $args)
             : null;
     }
 
