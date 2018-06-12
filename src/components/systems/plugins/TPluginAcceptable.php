@@ -66,13 +66,12 @@ trait TPluginAcceptable
          * @var $pluginRepo IPluginRepository
          */
         $pluginRepo = SystemContainer::getItem(IPluginRepository::class);
+        $plugins = $source[IPluginsAcceptable::FIELD__PLUGINS] ?? $source;
 
-        if (isset($source[IPluginsAcceptable::FIELD__PLUGINS])) {
-            $pluginSubjectId = $source[IPluginsAcceptable::FIELD__PLUGINS_SUBJECT_ID] ?? static::class;
-            foreach ($source[IPluginsAcceptable::FIELD__PLUGINS] as $pluginConfig) {
-                $plugin = new Plugin($pluginConfig);
-                $pluginRepo::addPluginForStage($pluginSubjectId, $plugin->getStage(), $plugin->getClass());
-            }
+        $pluginSubjectId = $source[IPluginsAcceptable::FIELD__PLUGINS_SUBJECT_ID] ?? static::class;
+        foreach ($plugins as $pluginConfig) {
+            $plugin = new Plugin($pluginConfig);
+            $pluginRepo::addPluginForStage($pluginSubjectId, $plugin->getStage(), $plugin->getClass());
         }
 
         return $this;
