@@ -97,8 +97,10 @@ class PluginSubject implements IPluginSubject
      */
     public function getPlugins($stageName)
     {
-        foreach ($this->stages[$stageName] as $plugin) {
-            yield $plugin;
+        if ($this->hasStage($stageName)) {
+            foreach ($this->stages[$stageName] as $plugin) {
+                yield $plugin;
+            }
         }
     }
 }
