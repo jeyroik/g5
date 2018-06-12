@@ -7,7 +7,7 @@
     "league/container": "*",
     "deflou/compares": "*",
     "mongodb/mongodb": "*",
-    "jeyroik/extas-m": "*"
+    "jeyroik/extas-m": "dev-master"
   },
   "autoload": {
     "psr-4": {
