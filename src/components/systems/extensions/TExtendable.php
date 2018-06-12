@@ -4,7 +4,7 @@ namespace tratabor\components\systems\extensions;
 use tratabor\components\systems\SystemContainer;
 use tratabor\interfaces\systems\IExtendable;
 use tratabor\interfaces\systems\plugins\IPluginRepository;
-use tratabor\interfaces\systems\states\IExtension;
+use tratabor\interfaces\systems\IExtension;
 
 /**
  * Trait TExtendable

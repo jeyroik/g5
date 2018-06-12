@@ -1,8 +1,6 @@
 <?php
 namespace tratabor\interfaces\systems;
 
-use tratabor\interfaces\systems\states\IExtension;
-
 /**
  * Interface IExtendable
  *

@@ -1,5 +1,5 @@
 <?php
-namespace tratabor\interfaces\systems\states;
+namespace tratabor\interfaces\systems;
 
 /**
  * Interface IExtension

@@ -1,7 +1,7 @@
 <?php
 namespace tratabor\components\systems;
 
-use tratabor\interfaces\systems\states\IExtension;
+use tratabor\interfaces\systems\IExtension;
 
 /**
  * Class Extension
