@@ -102,6 +102,11 @@ return [
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__BEFORE_STATE_RUN
         ],
         [
+            ISystems\IPlugin::FIELD__CLASS => StatesPlugins\PluginBeforeStateBuildStatesRoute::class,
+            ISystems\IPlugin::FIELD__VERSION => '1.0',
+            ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__BEFORE_STATE_BUILD
+        ],
+        [
             ISystems\IPlugin::FIELD__CLASS => StatesPlugins\PluginStateResultOnFailure::class,
             ISystems\IPlugin::FIELD__VERSION => '1.0',
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__STATE_RESULT

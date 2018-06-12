@@ -25,7 +25,7 @@ class Extension implements IExtension
      */
     public function runMethod(&$subject, $methodName, $args)
     {
-        array_unshift($args, $subject);
+        array_push($args, $subject);
 
         return isset($this->methods[$methodName])
             ? call_user_func_array([$this, $methodName], $args)
