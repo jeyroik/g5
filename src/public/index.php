@@ -23,10 +23,14 @@ try {
     echo $e->getMessage();
 }
 
+/**
+ * @var $stateMachine \tratabor\interfaces\systems\states\IStatesRoute
+ */
+
 echo '
 <div class="row mt-5">
     <div class="col-md-12">
-        States route:<pre>' . print_r($stateMachine->getStatesRoute(), true) . '</pre>
+        States route:<pre>' . print_r($stateMachine->getRoute(), true) . '</pre>
     </div>
 </div>
 ';
