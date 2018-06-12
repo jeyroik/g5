@@ -2,6 +2,7 @@
 namespace tratabor\components\dispatchers\boards;
 
 use tratabor\components\dispatchers\DispatcherAbstract;
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\creatures\ICreatureHero;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\states\IStateDispatcher;
@@ -29,7 +30,7 @@ class BoardCheck extends DispatcherAbstract implements IStateDispatcher
         $hero = $context->readItem('hero')->getValue();
 
         if ($hero->getBoardId()) {
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
         } else {
             throw new \Exception('Hero is not attached to a board');
         }

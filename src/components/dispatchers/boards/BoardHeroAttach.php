@@ -2,6 +2,7 @@
 namespace tratabor\components\dispatchers\boards;
 
 use tratabor\components\dispatchers\DispatcherAbstract;
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\creatures\ICreatureHero;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\states\IStateMachine;
@@ -30,7 +31,7 @@ class BoardHeroAttach extends DispatcherAbstract
         $hero->attachToBoard($board);
 
         $context->updateItem('hero', $hero);
-        $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+        $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
 
         return $context;
     }

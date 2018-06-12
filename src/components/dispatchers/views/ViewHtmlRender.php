@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\dispatchers\views;
 
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\components\systems\views\ViewRender;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
@@ -24,7 +25,7 @@ class ViewHtmlRender implements IStateDispatcher
     public function __invoke(IState $currentState, IContext $context): IContext
     {
         $this->render($context);
-        $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+        $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
 
         return $context;
     }

@@ -3,6 +3,7 @@ namespace tratabor\components\dispatchers\boards;
 
 use tratabor\components\basics\boards\BoardRepository;
 use tratabor\components\dispatchers\DispatcherAbstract;
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\components\systems\views\ViewRender;
 use tratabor\interfaces\basics\creatures\ICreatureHero;
 use tratabor\interfaces\basics\IBoard;
@@ -62,7 +63,7 @@ class BoardRender extends DispatcherAbstract implements IStateDispatcher
             $views = [$boardRendered];
             $context->pushItemByName('html', $views);
         }
-        $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+        $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
 
         return $context;
     }

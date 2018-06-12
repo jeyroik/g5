@@ -2,6 +2,7 @@
 namespace tratabor\components\dispatchers\worlds;
 
 use tratabor\components\basics\worlds\WorldRepository;
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\IStateDispatcher;
@@ -25,14 +26,15 @@ class WorldExists implements IStateDispatcher
     {
         try {
             $context->readItem('world');
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
         } catch (\Exception $e) {
-            $worlds = WorldRepository::all();
+            $repo = new WorldRepository();
+            $worlds = $repo->find([])->all();
 
             if (empty($worlds)) {
-                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+                $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
             } else {
-                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+                $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
                 $context->pushItemByName('world', array_shift($worlds));
             }
         }

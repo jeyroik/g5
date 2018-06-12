@@ -4,6 +4,7 @@ namespace tratabor\components\dispatchers\boards;
 use tratabor\components\basics\boards\BoardGenerator;
 use tratabor\components\basics\boards\BoardRepository;
 use tratabor\components\dispatchers\DispatcherAbstract;
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\states\IStateDispatcher;
 use tratabor\interfaces\systems\states\IStateMachine;
@@ -25,7 +26,7 @@ class BoardCreate extends DispatcherAbstract implements IStateDispatcher
     {
         try {
             $context->readItem('board.created');
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
         } catch (\Exception $e) {
             /**
              * todo get x, y, z from the configuration or context-options.
@@ -36,7 +37,7 @@ class BoardCreate extends DispatcherAbstract implements IStateDispatcher
             $repo->commit();
 
             $context->pushItemByName('board.created', $board);
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
         }
 
         return $context;

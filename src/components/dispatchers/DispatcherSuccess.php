@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\dispatchers;
 
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\IStateDispatcher;
@@ -26,7 +27,7 @@ class DispatcherSuccess implements IStateDispatcher
     public function __invoke(IState $currentState, IContext $context): IContext
     {
         $context->pushItemByName(static::class . '.' . static::$counter, 'worked');
-        $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+        $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
 
         static::$counter++;
 

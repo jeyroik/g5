@@ -2,6 +2,7 @@
 namespace tratabor\components\dispatchers\creatures;
 
 use tratabor\components\basics\users\profiles\ProfileRepository;
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\users\IUserProfile;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
@@ -26,11 +27,11 @@ class CreatureHeroExists implements IStateDispatcher
     {
         try {
             $context->readItem('profile')->getValue();
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
         } catch (\Exception $e) {
             $profiles = ProfileRepository::all();
             if (empty($profiles)) {
-                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+                $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
 
                 return $context;
             } else {
@@ -44,9 +45,9 @@ class CreatureHeroExists implements IStateDispatcher
             $heroes = $profile->getHeroes();
 
             if (empty($heroes)) {
-                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+                $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
             } else {
-                $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+                $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
                 $context->pushItemByName('heroes', $heroes);
             }
         }

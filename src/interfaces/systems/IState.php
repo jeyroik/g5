@@ -8,19 +8,21 @@ use tratabor\interfaces\systems\states\IStateDispatcher;
  * @package tratabor\interfaces\system
  * @author Funcraft <me@funcraft.ru>
  */
-interface IState
+interface IState extends IExtendable, IPluginsAcceptable
 {
     /**
      * IState constructor.
      * @param $id
      * @param $fromState
      * @param $dispatchers
-     * @param $onSuccess
-     * @param $onFailure
-     * @param $onTerminate
-     * @param $maxTry
+     * @param array $additional
      */
-    public function __construct($id, $fromState, $dispatchers, $onSuccess, $onFailure, $onTerminate, $maxTry);
+    public function __construct($id, $fromState, $dispatchers = [], $additional = []);
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array;
 
     /**
      * @return string
@@ -44,22 +46,17 @@ interface IState
     public function getDispatchers();
 
     /**
-     * @return int
+     * @param string $name
+     *
+     * @return mixed
      */
-    public function getMaxTry(): int;
+    public function getAdditional($name = '');
 
     /**
-     * @return string|array
+     * @param $name
+     * @param $value
+     *
+     * @return $this
      */
-    public function getOnSuccess();
-
-    /**
-     * @return string|array
-     */
-    public function getOnFailure();
-
-    /**
-     * @return string|array
-     */
-    public function getOnTerminate();
+    public function setAdditional($name, $value);
 }

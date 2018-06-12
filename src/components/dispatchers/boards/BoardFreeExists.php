@@ -3,6 +3,7 @@ namespace tratabor\components\dispatchers\boards;
 
 use tratabor\components\basics\boards\BoardRepository;
 use tratabor\components\dispatchers\DispatcherAbstract;
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\states\IStateMachine;
 
@@ -27,7 +28,7 @@ class BoardFreeExists extends DispatcherAbstract
 
         if ($board) {
             $context->pushItemByName('board.free', $board);
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
         } else {
             throw new \Exception('Missed free boards');
         }

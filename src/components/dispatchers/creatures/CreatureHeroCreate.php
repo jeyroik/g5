@@ -3,6 +3,7 @@ namespace tratabor\components\dispatchers\creatures;
 
 use tratabor\components\basics\creatures\CreatureRepository;
 use tratabor\components\dispatchers\DispatcherAbstract;
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\users\IUserProfile;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
@@ -50,7 +51,7 @@ class CreatureHeroCreate extends DispatcherAbstract implements IStateDispatcher
         $profile = $context->readItem('profile')->getValue();
         $profile->addCreature($hero);
         $context->updateItem('profile', $profile);
-        $context->updateItem(IStateMachine::CONTEXT__SUCCESS, true);
+        $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
 
         return $context;
     }

@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\dispatchers;
 
+use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IState;
 use tratabor\interfaces\systems\states\IStateDispatcher;
@@ -31,7 +32,7 @@ abstract class DispatcherAbstract implements IStateDispatcher
             $this->currentState = $currentState;
             $context = $this->dispatch($context);
         } catch (\Exception $e) {
-            $context->updateItem(IStateMachine::CONTEXT__SUCCESS, false);
+            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
             $errors = $context->readItem(IStateMachine::CONTEXT__ERRORS)->getValue();
             $errors[] = ['state' => $currentState->getId(), 'error' => $e->getMessage()];
             $context->updateItem(IStateMachine::CONTEXT__ERRORS, $errors);
