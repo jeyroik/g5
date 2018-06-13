@@ -77,6 +77,11 @@ return [
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__INIT_CONTEXT
         ],
         [
+            ISystems\IPlugin::FIELD__CLASS => MachinePlugins\PluginInitStateFactoryMaxTry::class,
+            ISystems\IPlugin::FIELD__VERSION => '1.0',
+            ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__INIT_STATE_FACTORY
+        ],
+        [
             ISystems\IPlugin::FIELD__CLASS => MachinePlugins\PluginInitContextErrors::class,
             ISystems\IPlugin::FIELD__VERSION => '1.0',
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__INIT_CONTEXT
