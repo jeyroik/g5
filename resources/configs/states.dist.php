@@ -7,6 +7,8 @@ use tratabor\components\systems\states\machines\plugins\PluginInitConfigStatePlu
 use tratabor\interfaces\systems as ISystems;
 use tratabor\components\systems\states\plugins as StatesPlugins;
 use tratabor\components\systems\states\machines\plugins as MachinePlugins;
+use tratabor\components\systems\states\plugins\ExtensionMaxTry as EMaxTry;
+use tratabor\components\systems\states\plugins\PluginNextStateOnFailure as POnFail;
 
 /**
  * README
@@ -141,31 +143,31 @@ return [
     IMachineConfig::FIELD__STATES => [
         'app:run' => [
             State::STATE__ID => 'app:run',
-            State::STATE__MAX_TRY => 1,
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\DispatcherSuccess::class
             ],
-            State::STATE__ON_SUCCESS => 'world:exists',
-            State::STATE__ON_FAILURE => 'app:terminate',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'world:exists',
+            POnFail::STATE__ON_FAILURE => 'app:terminate',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
 
         'test:to_state' => [
             State::STATE__ID => 'test:to_state',
-            State::STATE__MAX_TRY => 1,
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\DispatcherSuccess::class
             ],
-            State::STATE__ON_SUCCESS => '',
-            State::STATE__ON_FAILURE => '',
-            State::STATE__ON_TERMINATE => '',
+            POnFail::STATE__ON_SUCCESS => '',
+            POnFail::STATE__ON_FAILURE => '',
+            EMaxTry::STATE__ON_TERMINATE => '',
             'plugins' => [
 
             ]
         ],
         'app:terminate' => [
             State::STATE__ID => 'app:terminate',
-            State::STATE__MAX_TRY => 1,
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 function ($currentState, $context) {
                     /**
@@ -178,13 +180,13 @@ return [
                     return $context;
                 }
             ],
-            State::STATE__ON_SUCCESS => '',
-            State::STATE__ON_FAILURE => '',
-            State::STATE__ON_TERMINATE => '',
+            POnFail::STATE__ON_SUCCESS => '',
+            POnFail::STATE__ON_FAILURE => '',
+            EMaxTry::STATE__ON_TERMINATE => '',
         ],
         'app:failure' => [
             State::STATE__ID => 'app:failure',
-            State::STATE__MAX_TRY => 1,
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 function ($currentState, $context) {
                     /**
@@ -197,138 +199,159 @@ return [
                     return $context;
                 }
             ],
-            State::STATE__ON_SUCCESS => '',
-            State::STATE__ON_FAILURE => '',
-            State::STATE__ON_TERMINATE => '',
+            POnFail::STATE__ON_SUCCESS => '',
+            POnFail::STATE__ON_FAILURE => '',
+            EMaxTry::STATE__ON_TERMINATE => '',
         ],
         'world:exists' => [
             State::STATE__ID => 'world:exists',
+            EMaxTry::STATE__MAX_TRY => 2,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\worlds\WorldExists::class
             ],
-            State::STATE__ON_SUCCESS => 'user:is_authorized',
-            State::STATE__ON_FAILURE => 'world:create',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'user:is_authorized',
+            POnFail::STATE__ON_FAILURE => 'world:create',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
+        ],
+        'world:create' => [
+            State::STATE__ID => 'world:create',
+            EMaxTry::STATE__MAX_TRY => 1,
+            State::STATE__DISPATCHERS => [
+                \tratabor\components\dispatchers\worlds\WorldCreate::class
+            ],
+            POnFail::STATE__ON_SUCCESS => 'world:exists',
+            POnFail::STATE__ON_FAILURE => 'app:terminate',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'user:is_authorized' => [
             State::STATE__ID => 'user:is_authorized',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\users\UserAuthorized::class
             ],
-            State::STATE__ON_SUCCESS => 'user:profile_exists',
-            State::STATE__ON_FAILURE => 'world:info_render',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'user:profile_exists',
+            POnFail::STATE__ON_FAILURE => 'world:info_render',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'user:profile_exists' => [
             State::STATE__ID => 'user:profile_exists',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\DispatcherSuccess::class
             ],
-            State::STATE__ON_SUCCESS => 'profile:hero_exists',
-            State::STATE__ON_FAILURE => 'profile:create',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'profile:hero_exists',
+            POnFail::STATE__ON_FAILURE => 'profile:create',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'profile:hero_exists' => [
             State::STATE__ID => 'profile:hero_exists',
-            State::STATE__MAX_TRY => 2,
+            EMaxTry::STATE__MAX_TRY => 2,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\creatures\CreatureHeroExists::class
             ],
-            State::STATE__ON_SUCCESS => 'hero:board_check',
-            State::STATE__ON_FAILURE => 'hero:create',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'hero:board_check',
+            POnFail::STATE__ON_FAILURE => 'hero:create',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'hero:create' => [
             State::STATE__ID => 'hero:create',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\creatures\CreatureHeroCreate::class
             ],
-            State::STATE__ON_SUCCESS => 'profile:hero_exists',
-            State::STATE__ON_FAILURE => 'app:terminate',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'profile:hero_exists',
+            POnFail::STATE__ON_FAILURE => 'app:terminate',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'hero:board_check' => [
             State::STATE__ID => 'hero:board_check',
-            State::STATE__MAX_TRY => 3,
+            EMaxTry::STATE__MAX_TRY => 3,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\boards\BoardCheck::class
             ],
-            State::STATE__ON_SUCCESS => 'hero:route_exists',
-            State::STATE__ON_FAILURE => 'board:free_exists',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'hero:route_exists',
+            POnFail::STATE__ON_FAILURE => 'board:free_exists',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'hero:route_exists' => [
             State::STATE__ID => 'hero:route_exists',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\DispatcherSuccess::class
             ],
-            State::STATE__ON_SUCCESS => 'request:debug_exists',
-            State::STATE__ON_FAILURE => 'route:create',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'request:debug_exists',
+            POnFail::STATE__ON_FAILURE => 'route:create',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'request:debug_exists' => [
             State::STATE__ID => 'request::debug_exists',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\DispatcherFail::class
             ],
-            State::STATE__ON_SUCCESS => 'response:json_render',
-            State::STATE__ON_FAILURE => 'board:render',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'response:json_render',
+            POnFail::STATE__ON_FAILURE => 'board:render',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'board:render' => [
             State::STATE__ID => 'board:render',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\boards\BoardRender::class
             ],
-            State::STATE__ON_SUCCESS => 'board:c_panel_render',
-            State::STATE__ON_FAILURE => '',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'board:c_panel_render',
+            POnFail::STATE__ON_FAILURE => '',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'board:c_panel_render' => [
             State::STATE__ID => 'board:c_panel_render',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\DispatcherSuccess::class
             ],
-            State::STATE__ON_SUCCESS => 'response:html_render',
-            State::STATE__ON_FAILURE => '',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'response:html_render',
+            POnFail::STATE__ON_FAILURE => '',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'response:html_render' => [
             State::STATE__ID => 'response:html_render',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\views\ViewHtmlRender::class
             ],
-            State::STATE__ON_SUCCESS => '',
-            State::STATE__ON_FAILURE => '',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => '',
+            POnFail::STATE__ON_FAILURE => '',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'board:free_exists' => [
             State::STATE__ID => 'board:free_exists',
-            State::STATE__MAX_TRY => 2,
+            EMaxTry::STATE__MAX_TRY => 2,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\boards\BoardFreeExists::class
             ],
-            State::STATE__ON_SUCCESS => 'board:hero_attach',
-            State::STATE__ON_FAILURE => 'board:create',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'board:hero_attach',
+            POnFail::STATE__ON_FAILURE => 'board:create',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'board:hero_attach' => [
             State::STATE__ID => 'board:hero_attach',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\boards\BoardHeroAttach::class
             ],
-            State::STATE__ON_SUCCESS => 'hero:board_check',
-            State::STATE__ON_FAILURE => 'app:failure',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'hero:board_check',
+            POnFail::STATE__ON_FAILURE => 'app:failure',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'board:create' => [
             State::STATE__ID => 'board:create',
+            EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
                 \tratabor\components\dispatchers\boards\BoardCreate::class
             ],
-            State::STATE__ON_SUCCESS => 'hero:board_check',
-            State::STATE__ON_FAILURE => 'app:terminate',
-            State::STATE__ON_TERMINATE => 'app:terminate',
+            POnFail::STATE__ON_SUCCESS => 'hero:board_check',
+            POnFail::STATE__ON_FAILURE => 'app:terminate',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
     ]
 ];

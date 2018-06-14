@@ -7,7 +7,7 @@ namespace tratabor\interfaces\systems;
  * @package tratabor\interfaces\systems
  * @author Funcraft <me@funcraft.ru>
  */
-interface IContext
+interface IContext extends IPluginsAcceptable, IExtendable
 {
     const MODE__READ_ONLY = -1;
     const MODE__READ_WRITE = 1;

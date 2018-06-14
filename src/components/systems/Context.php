@@ -1,6 +1,8 @@
 <?php
 namespace tratabor\components\systems;
 
+use tratabor\components\systems\extensions\TExtendable;
+use tratabor\components\systems\plugins\TPluginAcceptable;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\IItem;
 
@@ -10,8 +12,11 @@ use tratabor\interfaces\systems\IItem;
  * @package tratabor\components\systems
  * @author Funcraft <me@funcraft.ru>
  */
-class Context implements IContext
+class Context extends Extension implements IContext
 {
+    use TPluginAcceptable;
+    use TExtendable;
+
     protected const ITEM__SELF = 'item';
     protected const ITEM__MODE = 'mode';
 

@@ -31,6 +31,11 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
     protected $collection = null;
 
     /**
+     * @var string
+     */
+    protected $dsn = 'mongodb://localhost:27017';
+
+    /**
      * RepositoryMongo constructor.
      * @param string $dsn
      */
