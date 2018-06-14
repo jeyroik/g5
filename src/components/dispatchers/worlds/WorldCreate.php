@@ -27,7 +27,7 @@ class WorldCreate extends DispatcherAbstract
             $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
         } catch (\Exception $e) {
             $repo = new WorldRepository();
-            $world = $repo->create(new BasicWorld(['host' => $_SERVER['SERVER_ADDR']]));
+            $world = $repo->create(['host' => $_SERVER['SERVER_ADDR']]);
 
             $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
             $context->pushItemByName('world', $world);
