@@ -147,7 +147,7 @@ class BasicBoard extends Basic implements IBoard
         return [
             static::FIELD__ID => $this->getId(),
             static::FIELD__SIZE => $this->getSize(),
-            static::FIELD__CELLS => 'hidden for __toArray',
+            static::FIELD__CELLS => $this->__toArrayCells(),
             static::FIELD__CREATURES_MAX => $this->getCreaturesMax(),
             static::FIELD__CREATURES => $this->getCreatures(),
             static::FIELD__CREATURES_COUNT => $this->getCreaturesCount(),
@@ -234,8 +234,11 @@ class BasicBoard extends Basic implements IBoard
     /**
      * @return array
      */
-    protected function __toArrayCellsSpawn(): array
+    protected function __toArrayCells(): array
     {
-        return $this->data[static::FIELD__CELLS_SPAWN];
+        $repo = new CellRepository();
+        $cells = $repo->find(['board_id' => $this->getId()])->all();
+
+        return count($cells);
     }
 }
