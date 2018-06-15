@@ -33,7 +33,11 @@ class BoardFreeExists extends DispatcherAbstract
             /**
              * @var $board IBoard
              */
-            $board = $repo->find(['creatures_count', '<', 'creatures_max'])->one();
+            $board = $repo->find([
+                $repo->getName() . '.creatures_count',
+                '<',
+                $repo->getName() . '.creatures_max'
+            ])->one();
 
             if ($board->getId()) {
                 $context->pushItemByName('board.free', $board);

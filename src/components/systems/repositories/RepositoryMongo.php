@@ -13,6 +13,11 @@ use tratabor\interfaces\systems\IRepository;
  */
 class RepositoryMongo extends RepositoryAbstract implements IRepository
 {
+    const CLAUSE__FIELD = 0;
+    const CLAUSE__WHERE = 1;
+    const CLAUSE__VALUE = 2;
+    const CLAUSE__GLUE = 3;
+
     protected $collectionName = 'system';
 
     /**
@@ -154,6 +159,60 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
     public function commit(): bool
     {
         return true;
+    }
+
+    /**
+     * @param array $where
+     *
+     * @return IRepository
+     */
+    public function find($where = []): IRepository
+    {
+        if (!empty($where)) {
+            $keys = array_keys($where);
+            if (is_numeric($keys[0])) {
+                $compositeWhere = 'function(){ return ';
+                foreach ($where as $clause) {
+                    $compositeWhere .= $clause;
+                }
+                $compositeWhere .= '}';
+                $this->where = $compositeWhere;
+            } else {
+                $this->where = $where;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $clause
+     *
+     * @return string
+     */
+    protected function buildCompositeWhere($clause)
+    {
+        $glue = $clause[static::CLAUSE__GLUE] ?? ';';
+
+        $whereToMongo = [
+            '=' => '==',
+            'eq' => '==',
+            'neq' => '!='
+        ];
+
+        list($field, $where, $value) = $clause;
+
+        $field = 'this.' . $field;
+        $where = $whereToMongo[$where] ?? $where;
+
+        if (strpos($value, $this->getName() . '.') !== false) {
+            $fieldName = explode('.', $value)[1];
+            $value = 'this.' . $fieldName;
+        } elseif (!is_numeric($value)) {
+            $value = "'" . $value . "'";
+        }
+
+        return $field . ' ' . $where . ' ' . $value . $glue;
     }
 
     /**

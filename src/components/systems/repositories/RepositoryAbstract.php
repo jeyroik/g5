@@ -32,6 +32,11 @@ abstract class RepositoryAbstract implements IRepository
     protected $where = [];
 
     /**
+     * @var string
+     */
+    protected $name = '';
+
+    /**
      * @return IRepository
      *
      * @throws \Exception
@@ -43,6 +48,14 @@ abstract class RepositoryAbstract implements IRepository
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**

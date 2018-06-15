@@ -80,4 +80,9 @@ interface IRepository
      * @return bool
      */
     public function commit(): bool;
+
+    /**
+     * @return string
+     */
+    public function getName(): string;
 }

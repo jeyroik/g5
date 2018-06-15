@@ -14,4 +14,5 @@ class BoardRepository extends RepositoryMongo
 {
     protected $itemClass = BasicBoard::class;
     protected $collectionName = 'g5__boards';
+    protected $name = 'board';
 }
