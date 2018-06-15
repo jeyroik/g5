@@ -4,6 +4,7 @@ namespace tratabor\components\dispatchers\boards;
 use tratabor\components\basics\boards\BoardRepository;
 use tratabor\components\dispatchers\DispatcherAbstract;
 use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
+use tratabor\interfaces\basics\IBoard;
 use tratabor\interfaces\systems\IContext;
 use tratabor\interfaces\systems\states\IStateMachine;
 
@@ -24,9 +25,13 @@ class BoardFreeExists extends DispatcherAbstract
     protected function dispatch(IContext $context): IContext
     {
         $repo = new BoardRepository();
+
+        /**
+         * @var $board IBoard
+         */
         $board = $repo->find(['creatures_count', '<', 'creatures_max'])->one();
 
-        if ($board) {
+        if ($board->getId()) {
             $context->pushItemByName('board.free', $board);
             $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
         } else {

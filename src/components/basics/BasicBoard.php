@@ -213,7 +213,7 @@ class BasicBoard extends Basic implements IBoard
     {
         $repo = new CellRepository();
         $cells = $repo->find(['board_id' => $this->getId()])->all();
-        if (empty($cells)) {
+        if (empty($cells) && isset($this->data[static::FIELD__CELLS])) {
             foreach ($this->data[static::FIELD__CELLS] as $cell) {
                 $repo->create($cell);
             }
