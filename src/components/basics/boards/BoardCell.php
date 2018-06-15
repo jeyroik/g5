@@ -24,6 +24,8 @@ class BoardCell extends Basic implements ICell
     const FIELD__BOARD_ID = 'board_id';
     const FIELD__IS_SPAWN = 'is_spawn';
 
+    protected $crashes = [];
+
     /**
      * @return int
      */
@@ -106,9 +108,19 @@ class BoardCell extends Basic implements ICell
             $this->data[static::FIELD__CONTAIN] = $creature;
 
             return true;
+        } else {
+            $this->crashes[] = 'Not empty cell';
         }
 
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCrashes(): array
+    {
+        return $this->crashes;
     }
 
     /**

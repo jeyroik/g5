@@ -71,10 +71,12 @@ class BasicBoard extends Basic implements IBoard
             throw new \Exception('Board max creatures count is reached.');
         }
 
-        /**
-         * @var $spawnCell ICell
-         */
-        $spawnCell = array_shift($spawnCells);
+        $spawnCell = $this->getFreeSpawnCell($spawnCells);
+
+        if (!$spawnCell) {
+            throw new \Exception('There is no free spawn cells on the current board');
+        }
+        
         $attached = $spawnCell->attachCreature($creature);
 
         if ($attached) {
@@ -86,7 +88,9 @@ class BasicBoard extends Basic implements IBoard
             return $spawnCell;
         }
 
-        throw new \Exception('Can not attached creature to a cell');
+        throw new \Exception(
+            'Can not attached creature to a cell: ' . implode(', ', $spawnCell->getCrashes())
+        );
     }
 
     /**
@@ -154,6 +158,22 @@ class BasicBoard extends Basic implements IBoard
             static::FIELD__CREATED_AT => $this->getCreatedAt(),
             static::FIELD__UPDATED_AT => $this->getUpdatedAt()
         ];
+    }
+
+    /**
+     * @param $spawnCells ICell[]
+     *
+     * @return bool|ICell
+     */
+    protected function getFreeSpawnCell($spawnCells)
+    {
+        foreach ($spawnCells as $spawnCell) {
+            if ($spawnCell->isEmpty()) {
+                return $spawnCell;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -58,4 +58,9 @@ interface ICell extends IItem
      * @return bool
      */
     public function attachCreature(ICreature $creature): bool;
+
+    /**
+     * @return array
+     */
+    public function getCrashes(): array;
 }
