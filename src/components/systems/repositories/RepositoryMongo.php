@@ -64,7 +64,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
         $this->collection->insertOne($data);
         $itemClass = $this->getItemClass();
 
-        return new $itemClass($item);
+        return is_object($item) ? $item : new $itemClass($item);
     }
 
     /**
