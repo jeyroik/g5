@@ -176,7 +176,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
                     $compositeWhere .= $clause;
                 }
                 $compositeWhere .= '}';
-                $this->where = $compositeWhere;
+                $this->where = ['$where' => $compositeWhere];
             } else {
                 $this->where = $where;
             }
