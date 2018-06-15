@@ -30,6 +30,7 @@ class BoardFreeExists extends DispatcherAbstract
             $context->pushItemByName('board.free', $board);
             $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
         } else {
+            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
             throw new \Exception('Missed free boards');
         }
 
