@@ -1,8 +1,10 @@
 <?php
 namespace tratabor\components\dispatchers\boards;
 
+use tratabor\components\basics\BasicBoard;
 use tratabor\components\basics\boards\BoardRepository;
 use tratabor\components\dispatchers\DispatcherAbstract;
+use tratabor\components\extensions\basics\boards\BoardExtensionContextFreeBoard;
 use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\IBoard;
 use tratabor\interfaces\systems\IContext;
@@ -24,26 +26,32 @@ class BoardFreeExists extends DispatcherAbstract
      */
     protected function dispatch(IContext $context): IContext
     {
-        if ($context->hasItem('board.free')) {
-            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
-        } else {
-            $repo = new BoardRepository();
-
+        if ($context->isImplementsInterface(BoardExtensionContextFreeBoard::class)) {
             /**
-             * @var $board IBoard
+             * @var $context BoardExtensionContextFreeBoard
              */
-            $board = $repo->find([[
-                'creatures_count',
-                '<',
-                $repo->getName() . '.creatures_max'
-            ]])->one();
+            $board = $context->getFreeBoard();
 
-            if ($board->getId()) {
-                $context->pushItemByName('board.free', $board);
+            if ($board) {
                 $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
             } else {
-                $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
-                throw new \Exception('Missed free boards');
+                $repo = new BoardRepository();
+
+                /**
+                 * @var $board IBoard
+                 */
+                $board = $repo->find([[
+                    BasicBoard::FIELD__CREATURES_COUNT,
+                    '<',
+                    $repo->getName() . '.' . BasicBoard::FIELD__CREATURES_MAX
+                ]])->one();
+
+                if ($board->getId()) {
+                    $context->setFreeBoard($board);
+                    $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
+                } else {
+                    throw new \Exception('Missed free boards');
+                }
             }
         }
 

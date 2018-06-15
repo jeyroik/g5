@@ -9,6 +9,7 @@ use tratabor\components\systems\states\plugins as StatesPlugins;
 use tratabor\components\systems\states\machines\plugins as MachinePlugins;
 use tratabor\components\systems\states\plugins\ExtensionMaxTry as EMaxTry;
 use tratabor\components\systems\states\plugins\PluginNextStateOnFailure as POnFail;
+use tratabor\components\plugins\basics as BasicPlugins;
 
 /**
  * README
@@ -75,6 +76,11 @@ return [
         ],
         [
             ISystems\IPlugin::FIELD__CLASS => MachinePlugins\PluginInitContextSuccess::class,
+            ISystems\IPlugin::FIELD__VERSION => '1.0',
+            ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__INIT_CONTEXT
+        ],
+        [
+            ISystems\IPlugin::FIELD__CLASS => BasicPlugins\boards\BoardPluginInitContextFree::class,
             ISystems\IPlugin::FIELD__VERSION => '1.0',
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__INIT_CONTEXT
         ],
