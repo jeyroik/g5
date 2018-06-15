@@ -22,6 +22,7 @@ class BoardCell extends Basic implements ICell
     const FIELD__Z = 'z';
     const FIELD__CONTAIN = 'contain';
     const FIELD__BOARD_ID = 'board_id';
+    const FIELD__IS_SPAWN = 'is_spawn';
 
     /**
      * @return int
@@ -84,6 +85,14 @@ class BoardCell extends Basic implements ICell
     public function isEmpty(): bool
     {
         return !$this->getContain();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSpawn(): bool
+    {
+        return $this->data[static::FIELD__IS_SPAWN] ?? false;
     }
 
     /**

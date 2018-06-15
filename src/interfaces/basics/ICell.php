@@ -38,6 +38,11 @@ interface ICell extends IItem
     public function isEmpty(): bool;
 
     /**
+     * @return bool
+     */
+    public function isSpawn(): bool;
+
+    /**
      * @return ICellSnag|null
      */
     public function getContain();

@@ -5,7 +5,6 @@ use tratabor\components\dispatchers\DispatcherAbstract;
 use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\creatures\ICreatureHero;
 use tratabor\interfaces\systems\IContext;
-use tratabor\interfaces\systems\states\IStateMachine;
 
 /**
  * Class BoardHeroAttach

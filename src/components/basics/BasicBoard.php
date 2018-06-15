@@ -81,7 +81,7 @@ class BasicBoard extends Basic implements IBoard
             $this->data[static::FIELD__CREATURES][] = $creature->getId();
             $this->data[static::FIELD__CREATURES_COUNT] += 1;
 
-            $this->cellsUpdate($spawnCell)->removeSpawnCell($spawnCell)->commit();
+            $this->cellsUpdate($spawnCell)->commit();
 
             return $spawnCell;
         }
@@ -106,18 +106,11 @@ class BasicBoard extends Basic implements IBoard
      */
     public function getSpawnCells()
     {
-        $cellsIds = $this->data[static::FIELD__CELLS_SPAWN] ?? [];
-        $spawnCells = [];
-
         /**
          * @var $repo IRepository
          */
         $repo = $this->data[static::FIELD__CELLS];
-
-        foreach ($cellsIds as $id) {
-            $cell = $repo->find([static::FIELD__ID => $id])->one();
-            $cell && ($spawnCells[] = $cell);
-        }
+        $spawnCells = $repo->find(['board_id' => $this->getId(), 'is_spawn' => true])->all();
 
         return $spawnCells;
     }
@@ -179,24 +172,6 @@ class BasicBoard extends Basic implements IBoard
     }
 
     /**
-     * @param ICell $spawnCell
-     *
-     * @return $this
-     */
-    protected function removeSpawnCell(ICell $spawnCell)
-    {
-        $spawnCells = $this->getSpawnCells();
-
-        foreach ($spawnCells as $index => $cell) {
-            if ($cell->getId() == $spawnCell->getId()) {
-                unset($this->data[static::FIELD__CELLS_SPAWN][$index]);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @param ICell $cell
      *
      * @return $this
@@ -237,8 +212,7 @@ class BasicBoard extends Basic implements IBoard
      */
     protected function initCells()
     {
-        $dsn = getenv('G5__MONGO__DSN') ?: 'mongodb://localhost:27017';
-        $repo = new CellRepository($dsn);
+        $repo = new CellRepository();
         $cells = $repo->find(['board_id' => $this->getId()])->all();
         if (empty($cells)) {
             foreach ($this->data[static::FIELD__CELLS] as $cell) {
@@ -246,7 +220,6 @@ class BasicBoard extends Basic implements IBoard
             }
         }
         $this->data[static::FIELD__CELLS] = $repo;
-        $this->data[static::FIELD__CELLS]->connect();
 
         return $this;
     }

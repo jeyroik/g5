@@ -151,20 +151,6 @@ return [
             POnFail::STATE__ON_FAILURE => 'app:terminate',
             EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
-
-        'test:to_state' => [
-            State::STATE__ID => 'test:to_state',
-            EMaxTry::STATE__MAX_TRY => 1,
-            State::STATE__DISPATCHERS => [
-                \tratabor\components\dispatchers\DispatcherSuccess::class
-            ],
-            POnFail::STATE__ON_SUCCESS => '',
-            POnFail::STATE__ON_FAILURE => '',
-            EMaxTry::STATE__ON_TERMINATE => '',
-            'plugins' => [
-
-            ]
-        ],
         'app:terminate' => [
             State::STATE__ID => 'app:terminate',
             EMaxTry::STATE__MAX_TRY => 1,

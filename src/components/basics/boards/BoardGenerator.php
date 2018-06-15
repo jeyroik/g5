@@ -47,12 +47,12 @@ class BoardGenerator
     {
         $boardId = 'board_' . time();
         $cells = [];
-        $spawnCells = [];
         $spawnRate = 5;
 
         for ($i = 0; $i < $y; $i++) {
             for ($j = 0; $j < $x; $j++) {
                 for ($k = 0; $k < $z; $k++) {
+                    $isSpawn = (mt_rand(0, $spawnRate) == 1);
                     $cells[] = [
                         'id' => $boardId . '_' . $j . $i . $k,
                         'state' => 'created',
@@ -60,11 +60,9 @@ class BoardGenerator
                         'y' => $i,
                         'z' => $k,
                         'contain' => null,
-                        'board_id' => $boardId
+                        'board_id' => $boardId,
+                        'is_spawn' => $isSpawn
                     ];
-                    if (mt_rand(0, $spawnRate) == 1) {
-                        $spawnCells[] = $boardId . '_' . $j . $i . $k;
-                    }
                 }
             }
         }
@@ -72,7 +70,6 @@ class BoardGenerator
         return new BasicBoard([
             BasicBoard::FIELD__ID => $boardId,
             BasicBoard::FIELD__CELLS => $cells,
-            BasicBoard::FIELD__CELLS_SPAWN => $spawnCells,
             BasicBoard::FIELD__SIZE => count($cells),
             BasicBoard::FIELD__CREATURES_MAX => 1,
             BasicBoard::FIELD__CREATURES_COUNT => 0,
