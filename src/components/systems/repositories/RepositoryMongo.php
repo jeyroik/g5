@@ -173,7 +173,7 @@ class RepositoryMongo extends RepositoryAbstract implements IRepository
             if (is_numeric($keys[0])) {
                 $compositeWhere = 'function(){ return ';
                 foreach ($where as $clause) {
-                    $compositeWhere .= $clause;
+                    $compositeWhere .= $this->buildCompositeWhere($clause);
                 }
                 $compositeWhere .= '}';
                 $this->where = ['$where' => $compositeWhere];
