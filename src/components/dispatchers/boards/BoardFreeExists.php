@@ -24,19 +24,24 @@ class BoardFreeExists extends DispatcherAbstract
      */
     protected function dispatch(IContext $context): IContext
     {
-        $repo = new BoardRepository();
-
-        /**
-         * @var $board IBoard
-         */
-        $board = $repo->find(['creatures_count', '<', 'creatures_max'])->one();
-
-        if ($board->getId()) {
-            $context->pushItemByName('board.free', $board);
+        try {
+            $context->readItem('board.free')->getValue();
             $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
-        } else {
-            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
-            throw new \Exception('Missed free boards');
+        } catch (\Exception $e) {
+            $repo = new BoardRepository();
+
+            /**
+             * @var $board IBoard
+             */
+            $board = $repo->find(['creatures_count', '<', 'creatures_max'])->one();
+
+            if ($board->getId()) {
+                $context->pushItemByName('board.free', $board);
+                $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
+            } else {
+                $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
+                throw new \Exception('Missed free boards');
+            }
         }
 
         return $context;
