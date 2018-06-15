@@ -24,10 +24,9 @@ class BoardFreeExists extends DispatcherAbstract
      */
     protected function dispatch(IContext $context): IContext
     {
-        try {
-            $context->readItem('board.free')->getValue();
+        if ($context->hasItem('board.free')) {
             $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
-        } catch (\Exception $e) {
+        } else {
             $repo = new BoardRepository();
 
             /**
