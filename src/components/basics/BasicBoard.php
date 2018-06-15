@@ -232,9 +232,9 @@ class BasicBoard extends Basic implements IBoard
     }
 
     /**
-     * @return array
+     * @return int
      */
-    protected function __toArrayCells(): array
+    protected function __toArrayCells(): int
     {
         $repo = new CellRepository();
         $cells = $repo->find(['board_id' => $this->getId()])->all();
