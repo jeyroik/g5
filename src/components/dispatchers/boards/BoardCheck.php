@@ -1,12 +1,12 @@
 <?php
 namespace tratabor\components\dispatchers\boards;
 
-use tratabor\components\dispatchers\DispatcherAbstract;
-use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
+use jeyroik\extas\components\dispatchers\DispatcherAbstract;
+use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\creatures\ICreatureHero;
-use tratabor\interfaces\systems\IContext;
-use tratabor\interfaces\systems\states\IStateDispatcher;
-use tratabor\interfaces\systems\states\IStateMachine;
+use jeyroik\extas\interfaces\systems\IContext;
+use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
+use jeyroik\extas\interfaces\systems\states\IStateMachine;
 
 /**
  * Class BoardCheck

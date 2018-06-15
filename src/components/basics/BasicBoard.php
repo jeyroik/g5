@@ -76,7 +76,7 @@ class BasicBoard extends Basic implements IBoard
         if (!$spawnCell) {
             throw new \Exception('There is no free spawn cells on the current board');
         }
-        
+
         $attached = $spawnCell->attachCreature($creature);
 
         if ($attached) {

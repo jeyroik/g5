@@ -2,13 +2,11 @@
 namespace tratabor\components\dispatchers\creatures;
 
 use tratabor\components\basics\creatures\CreatureRepository;
-use tratabor\components\dispatchers\DispatcherAbstract;
-use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
+use jeyroik\extas\components\dispatchers\DispatcherAbstract;
+use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\users\IUserProfile;
-use tratabor\interfaces\systems\IContext;
-use tratabor\interfaces\systems\IState;
-use tratabor\interfaces\systems\states\IStateDispatcher;
-use tratabor\interfaces\systems\states\IStateMachine;
+use jeyroik\extas\interfaces\systems\IContext;
+use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
 
 /**
  * Class CreatureHeroCreate

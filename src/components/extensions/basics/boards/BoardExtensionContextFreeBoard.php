@@ -1,9 +1,9 @@
 <?php
 namespace tratabor\components\extensions\basics\boards;
 
-use tratabor\components\systems\Extension;
+use jeyroik\extas\components\systems\Extension;
 use tratabor\interfaces\basics\IBoard;
-use tratabor\interfaces\systems\IContext;
+use jeyroik\extas\interfaces\systems\IContext;
 
 /**
  * Class BoardExtensionContextFreeBoard

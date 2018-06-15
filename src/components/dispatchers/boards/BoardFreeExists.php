@@ -3,12 +3,11 @@ namespace tratabor\components\dispatchers\boards;
 
 use tratabor\components\basics\BasicBoard;
 use tratabor\components\basics\boards\BoardRepository;
-use tratabor\components\dispatchers\DispatcherAbstract;
+use jeyroik\extas\components\dispatchers\DispatcherAbstract;
 use tratabor\components\extensions\basics\boards\BoardExtensionContextFreeBoard;
-use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
+use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use tratabor\interfaces\basics\IBoard;
-use tratabor\interfaces\systems\IContext;
-use tratabor\interfaces\systems\states\IStateMachine;
+use jeyroik\extas\interfaces\systems\IContext;
 
 /**
  * Class BoardFreeExists

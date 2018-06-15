@@ -1,9 +1,9 @@
 <?php
 namespace tratabor\components\dispatchers\users;
 
-use tratabor\interfaces\systems\IContext;
-use tratabor\interfaces\systems\IState;
-use tratabor\interfaces\systems\states\IStateDispatcher;
+use jeyroik\extas\interfaces\systems\IContext;
+use jeyroik\extas\interfaces\systems\IState;
+use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
 
 /**
  * Class UserAuthorized

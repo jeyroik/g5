@@ -1,14 +1,14 @@
 <?php
 
-use tratabor\interfaces\systems\states\IStateFactory as State;
-use tratabor\interfaces\systems\states\IStateMachine as Machine;
-use tratabor\interfaces\systems\states\machines\IMachineConfig;
-use tratabor\components\systems\states\machines\plugins\PluginInitConfigStatePlugins as StatePlugins;
-use tratabor\interfaces\systems as ISystems;
-use tratabor\components\systems\states\plugins as StatesPlugins;
-use tratabor\components\systems\states\machines\plugins as MachinePlugins;
-use tratabor\components\systems\states\plugins\ExtensionMaxTry as EMaxTry;
-use tratabor\components\systems\states\plugins\PluginNextStateOnFailure as POnFail;
+use jeyroik\extas\interfaces\systems\states\IStateFactory as State;
+use jeyroik\extas\interfaces\systems\states\IStateMachine as Machine;
+use jeyroik\extas\interfaces\systems\states\machines\IMachineConfig;
+use jeyroik\extas\components\systems\states\machines\plugins\PluginInitConfigStatePlugins as StatePlugins;
+use jeyroik\extas\interfaces\systems as ISystems;
+use jeyroik\extas\components\systems\states\plugins as StatesPlugins;
+use jeyroik\extas\components\systems\states\machines\plugins as MachinePlugins;
+use jeyroik\extas\components\systems\states\plugins\ExtensionMaxTry as EMaxTry;
+use jeyroik\extas\components\systems\states\plugins\PluginNextStateOnFailure as POnFail;
 use tratabor\components\plugins\basics as BasicPlugins;
 
 /**
@@ -151,7 +151,7 @@ return [
             State::STATE__ID => 'app:run',
             EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
-                \tratabor\components\dispatchers\DispatcherSuccess::class
+                \jeyroik\extas\components\dispatchers\DispatcherSuccess::class
             ],
             POnFail::STATE__ON_SUCCESS => 'world:exists',
             POnFail::STATE__ON_FAILURE => 'app:terminate',
@@ -163,7 +163,7 @@ return [
             State::STATE__DISPATCHERS => [
                 function ($currentState, $context) {
                     /**
-                     * @var $currentState \tratabor\interfaces\systems\IState
+                     * @var $currentState \jeyroik\extas\interfaces\systems\IState
                      */
                     echo 'App termination at ' . $currentState->getId() . ' ...<br/><pre>';
                     print_r($context);
@@ -182,7 +182,7 @@ return [
             State::STATE__DISPATCHERS => [
                 function ($currentState, $context) {
                     /**
-                     * @var $currentState \tratabor\interfaces\systems\IState
+                     * @var $currentState \jeyroik\extas\interfaces\systems\IState
                      */
                     echo 'App failure on "' . $currentState->getId() . '"...<br/><pre>';
                     print_r($context);
@@ -229,7 +229,7 @@ return [
             State::STATE__ID => 'user:profile_exists',
             EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
-                \tratabor\components\dispatchers\DispatcherSuccess::class
+                \jeyroik\extas\components\dispatchers\DispatcherSuccess::class
             ],
             POnFail::STATE__ON_SUCCESS => 'profile:hero_exists',
             POnFail::STATE__ON_FAILURE => 'profile:create',
@@ -269,7 +269,7 @@ return [
             State::STATE__ID => 'hero:route_exists',
             EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
-                \tratabor\components\dispatchers\DispatcherSuccess::class
+                \jeyroik\extas\components\dispatchers\DispatcherSuccess::class
             ],
             POnFail::STATE__ON_SUCCESS => 'request:debug_exists',
             POnFail::STATE__ON_FAILURE => 'route:create',
@@ -279,7 +279,7 @@ return [
             State::STATE__ID => 'request::debug_exists',
             EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
-                \tratabor\components\dispatchers\DispatcherFail::class
+                \jeyroik\extas\components\dispatchers\DispatcherFail::class
             ],
             POnFail::STATE__ON_SUCCESS => 'response:json_render',
             POnFail::STATE__ON_FAILURE => 'board:render',
@@ -299,7 +299,7 @@ return [
             State::STATE__ID => 'board:c_panel_render',
             EMaxTry::STATE__MAX_TRY => 1,
             State::STATE__DISPATCHERS => [
-                \tratabor\components\dispatchers\DispatcherSuccess::class
+                \jeyroik\extas\components\dispatchers\DispatcherSuccess::class
             ],
             POnFail::STATE__ON_SUCCESS => 'response:html_render',
             POnFail::STATE__ON_FAILURE => '',

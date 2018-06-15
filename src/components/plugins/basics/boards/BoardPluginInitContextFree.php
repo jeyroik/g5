@@ -2,10 +2,10 @@
 namespace tratabor\components\plugins\basics\boards;
 
 use tratabor\components\extensions\basics\boards\BoardExtensionContextFreeBoard;
-use tratabor\components\systems\Plugin;
-use tratabor\interfaces\systems\IContext;
-use tratabor\interfaces\systems\states\IStateMachine;
-use tratabor\interfaces\systems\states\machines\plugins\IPluginInitContext;
+use jeyroik\extas\components\systems\Plugin;
+use jeyroik\extas\interfaces\systems\IContext;
+use jeyroik\extas\interfaces\systems\states\IStateMachine;
+use jeyroik\extas\interfaces\systems\states\machines\plugins\IPluginInitContext;
 
 /**
  * Class BoardPluginInitContextFree

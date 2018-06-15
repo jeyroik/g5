@@ -15,7 +15,7 @@ if (!is_file(G5__ROOT_PATH . '/resources/configs/states.php')) {
 }
 
 $statesConfig = include G5__ROOT_PATH . '/resources/configs/states.php';
-$stateMachine = new \tratabor\components\systems\states\StateMachine($statesConfig);
+$stateMachine = new \jeyroik\extas\components\systems\states\StateMachine($statesConfig);
 
 try {
     $stateMachine->run();
@@ -24,7 +24,7 @@ try {
 }
 
 /**
- * @var $stateMachine \tratabor\interfaces\systems\states\IStatesRoute
+ * @var $stateMachine \jeyroik\extas\interfaces\systems\states\IStatesRoute
  */
 
 echo '

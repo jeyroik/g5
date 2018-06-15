@@ -1,11 +1,10 @@
 <?php
 namespace tratabor\components\dispatchers\worlds;
 
-use tratabor\components\basics\BasicWorld;
 use tratabor\components\basics\worlds\WorldRepository;
-use tratabor\components\dispatchers\DispatcherAbstract;
-use tratabor\components\systems\states\machines\plugins\PluginInitContextSuccess;
-use tratabor\interfaces\systems\IContext;
+use jeyroik\extas\components\dispatchers\DispatcherAbstract;
+use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
+use jeyroik\extas\interfaces\systems\IContext;
 
 /**
  * Class WorldCreate
