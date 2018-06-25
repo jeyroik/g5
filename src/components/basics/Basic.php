@@ -1,7 +1,7 @@
 <?php
 namespace tratabor\components\basics;
 
-use tratabor\components\systems\Item;
+use jeyroik\extas\components\systems\Item;
 
 /**
  * Class Basic

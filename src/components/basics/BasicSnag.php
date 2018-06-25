@@ -1,7 +1,6 @@
 <?php
 namespace tratabor\components\basics;
 
-use tratabor\components\systems\Item;
 use tratabor\components\systems\views\ViewRender;
 use tratabor\interfaces\basics\cells\ICellSnag;
 

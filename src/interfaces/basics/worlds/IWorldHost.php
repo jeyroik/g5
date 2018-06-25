@@ -23,4 +23,9 @@ interface IWorldHost
      * @return string
      */
     public function getState();
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array;
 }

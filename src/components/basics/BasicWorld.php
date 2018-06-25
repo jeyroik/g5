@@ -2,7 +2,7 @@
 namespace tratabor\components\basics;
 
 use tratabor\components\basics\worlds\WorldHost;
-use tratabor\components\systems\Item;
+use jeyroik\extas\components\systems\Item;
 use tratabor\interfaces\basics\IWorld;
 
 /**
@@ -26,22 +26,6 @@ class BasicWorld extends Item implements IWorld
     {
         $this->initWorld($worldConfig);
         parent::__construct('wid', 'world__' . time());
-    }
-
-    /**
-     * @return array|mixed
-     */
-    public function getBoards()
-    {
-        return $this->world['boards'] ?? [];
-    }
-
-    /**
-     * @return array|mixed
-     */
-    public function getCreatures()
-    {
-        return $this->world['creatures'] ?? [];
     }
 
     /**
@@ -83,9 +67,25 @@ class BasicWorld extends Item implements IWorld
     /**
      * @return int
      */
+    public function getCreaturesCurrent(): int
+    {
+        return $this->world['creatures_current'] ?? 0;
+    }
+
+    /**
+     * @return int
+     */
     public function getBoardsMax(): int
     {
         return $this->world['boards_max'] ?? 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBoardsCurrent(): int
+    {
+        return $this->world['boards_current'] ?? 0;
     }
 
     /**
@@ -110,6 +110,24 @@ class BasicWorld extends Item implements IWorld
     public function getHost()
     {
         return $this->world['host'] ?? new WorldHost();
+    }
+
+    /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'host' => $this->getHost()->__toArray(),
+            'boards_max' => $this->getBoardsMax(),
+            'boards_current' => $this->getBoardsCurrent(),
+            'creatures_max' => $this->getCreaturesMax(),
+            'creatures_current' => $this->getCreaturesCurrent(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt()
+        ];
     }
 
     /**

@@ -2,7 +2,7 @@
 namespace tratabor\components\systems\repositories;
 
 use MongoDB\Model\BSONDocument;
-use tratabor\interfaces\systems\IItem;
+use jeyroik\extas\interfaces\systems\IItem;
 use tratabor\interfaces\systems\IRepository;
 
 /**

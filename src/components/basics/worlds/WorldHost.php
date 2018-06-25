@@ -50,6 +50,18 @@ class WorldHost implements IWorldHost
     }
 
     /**
+     * @return array
+     */
+    public function __toArray(): array
+    {
+        return [
+            'ip' => $this->getIp(),
+            'name' => $this->getName(),
+            'state' => $this->getState()
+        ];
+    }
+
+    /**
      * @param $hostConfig
      *
      * @return $this

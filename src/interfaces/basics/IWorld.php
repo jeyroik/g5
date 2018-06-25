@@ -2,7 +2,7 @@
 namespace tratabor\interfaces\basics;
 
 use tratabor\interfaces\basics\worlds\IWorldHost;
-use tratabor\interfaces\systems\IItem;
+use jeyroik\extas\interfaces\systems\IItem;
 
 /**
  * Interface IWorld
@@ -21,26 +21,25 @@ interface IWorld extends IItem
      * @return IWorldHost
      */
     public function getHost();
-
-    /**
-     * @return IBoard[]
-     */
-    public function getBoards();
-
     /**
      * @return int
      */
     public function getBoardsMax(): int;
 
     /**
-     * @return ICreature[]
+     * @return int
      */
-    public function getCreatures();
+    public function getBoardsCurrent(): int;
 
     /**
      * @return int
      */
     public function getCreaturesMax(): int;
+
+    /**
+     * @return int
+     */
+    public function getCreaturesCurrent(): int;
 
     /**
      * @return int
