@@ -3,8 +3,8 @@ namespace tratabor\components\systems\repositories;
 
 use deflou\components\compares\CompareDefault;
 use deflou\interfaces\ICompare;
-use tratabor\interfaces\systems\IItem;
-use tratabor\interfaces\systems\IRepository;
+use jeyroik\extas\interfaces\systems\IItem;
+use jeyroik\extas\interfaces\systems\IRepository;
 
 /**
  * Class RepositoryPhp

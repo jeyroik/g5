@@ -1,8 +1,8 @@
 <?php
 namespace tratabor\components\systems\repositories;
 
-use tratabor\interfaces\systems\IItem;
-use tratabor\interfaces\systems\IRepository;
+use jeyroik\extas\interfaces\systems\IItem;
+use jeyroik\extas\interfaces\systems\IRepository;
 
 /**
  * Class RepositoryJson
