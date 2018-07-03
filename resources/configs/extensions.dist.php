@@ -10,7 +10,7 @@ use jeyroik\extas\components\systems\states\machines\extensions\ExtensionContext
 use jeyroik\extas\interfaces\systems as ISystems;
 use jeyroik\extas\components\systems\states\plugins as StatesPlugins;
 use tratabor\components\extensions\basics\boards\BoardExtensionContextFreeBoard;
-use tratabor\components\extensions\basics\worlds\WorldContext;
+use tratabor\components\extensions\basics\worlds\WorldContextExtension;
 use jeyroik\extas\components\systems\states\plugins\ExtensionMaxTry;
 use jeyroik\extas\interfaces\systems\IState;
 
@@ -38,10 +38,10 @@ return [
             'getFreeBoard' => BoardExtensionContextFreeBoard::class,
             'setFreeBoard' => BoardExtensionContextFreeBoard::class,
 
-            'getWorld' => WorldContext::class,
-            'isWorldExist' => WorldContext::class,
-            'findWorld' => WorldContext::class,
-            'createWorld' => WorldContext::class
+            'getWorld' => WorldContextExtension::class,
+            'isWorldExist' => WorldContextExtension::class,
+            'findWorld' => WorldContextExtension::class,
+            'createWorld' => WorldContextExtension::class
         ],
         IState::class => [
             'getMaxTry' => ExtensionMaxTry::class,

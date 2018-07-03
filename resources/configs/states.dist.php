@@ -63,7 +63,7 @@ return [
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__STATE_RUN_BEFORE
         ],
         [
-            ISystems\IPlugin::FIELD__CLASS => MachinePlugins\PluginStateRunExistingStateBefore::class,
+            ISystems\IPlugin::FIELD__CLASS => MachinePlugins\PluginStateRunBeforeExistingState::class,
             ISystems\IPlugin::FIELD__VERSION => '1.0',
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__STATE_RUN_BEFORE
         ],
@@ -93,12 +93,12 @@ return [
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__STATE_RUN_AFTER
         ],
         [
-            ISystems\IPlugin::FIELD__CLASS => StatesPlugins\PluginStateBuildGuaranteeStateIdBefore::class,
+            ISystems\IPlugin::FIELD__CLASS => StatesPlugins\PluginStateBuildBeforeGuaranteeStateId::class,
             ISystems\IPlugin::FIELD__VERSION => '1.0',
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__STATE_BUILD_BEFORE
         ],
         [
-            ISystems\IPlugin::FIELD__CLASS => StatesPlugins\PluginStateBuildErrorStateBefore::class,
+            ISystems\IPlugin::FIELD__CLASS => StatesPlugins\PluginStateBuildBeforeError::class,
             ISystems\IPlugin::FIELD__VERSION => '1.0',
             ISystems\IPlugin::FIELD__STAGE => Machine::STAGE__STATE_BUILD_BEFORE
         ],

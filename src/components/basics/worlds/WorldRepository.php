@@ -2,7 +2,7 @@
 namespace tratabor\components\basics\worlds;
 
 use tratabor\components\basics\BasicWorld;
-use tratabor\components\systems\repositories\RepositoryMongo;
+use jeyroik\extas\components\systems\repositories\RepositoryMongo;
 
 /**
  * Class WorldRepository

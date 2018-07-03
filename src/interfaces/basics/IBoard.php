@@ -1,7 +1,7 @@
 <?php
 namespace tratabor\interfaces\basics;
 
-use tratabor\interfaces\systems\IItem;
+use jeyroik\extas\interfaces\systems\IItem;
 
 /**
  * Interface IBoard
@@ -11,6 +11,8 @@ use tratabor\interfaces\systems\IItem;
  */
 interface IBoard extends IItem
 {
+    const SUBJECT = 'board';
+
     /**
      * @return int
      */

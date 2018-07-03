@@ -12,6 +12,8 @@ use jeyroik\extas\interfaces\systems\IItem;
  */
 interface IWorld extends IItem
 {
+    const SUBJECT = 'world';
+
     /**
      * @return string
      */

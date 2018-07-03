@@ -5,7 +5,7 @@ use jeyroik\extas\components\dispatchers\DispatcherAbstract;
 use jeyroik\extas\components\systems\states\extensions\ExtensionContextOnFailure;
 use jeyroik\extas\interfaces\systems\IContext;
 use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
-use tratabor\components\extensions\basics\worlds\WorldContext;
+use tratabor\components\extensions\basics\worlds\WorldContextExtension;
 
 /**
  * Class WorldExists
@@ -19,7 +19,7 @@ use tratabor\components\extensions\basics\worlds\WorldContext;
 class WorldExists extends DispatcherAbstract implements IStateDispatcher
 {
     protected $requireInterfaces = [
-        WorldContext::class,
+        WorldContextExtension::class,
         ExtensionContextOnFailure::class
     ];
 
@@ -32,7 +32,7 @@ class WorldExists extends DispatcherAbstract implements IStateDispatcher
     public function dispatch(IContext $context): IContext
     {
         /**
-         * @var $context WorldContext|ExtensionContextOnFailure
+         * @var $context WorldContextExtension|ExtensionContextOnFailure
          */
         if ($context->isWorldExist()) {
             $context->setSuccess();

@@ -2,6 +2,7 @@
 namespace tratabor\components\extensions\basics\worlds;
 
 use jeyroik\extas\components\systems\Extension;
+use jeyroik\extas\interfaces\systems\contexts\IContextWorld;
 use jeyroik\extas\interfaces\systems\IContext;
 use tratabor\components\basics\worlds\WorldRepository;
 use tratabor\interfaces\basics\IWorld;
@@ -12,16 +13,18 @@ use tratabor\interfaces\basics\IWorld;
  * @package tratabor\components\extensions\basics\worlds
  * @author Funcraft <me@funcraft.ru>
  */
-class WorldContext extends Extension
+class WorldContextExtension extends Extension implements IContextWorld
 {
     const CONTEXT__ITEM__WORLD = 'world';
 
-    protected $methods = [
-        'getWorld' => WorldContext::class,
-        'isWorldExist' => WorldContext::class,
-        'findWorld' => WorldContext::class,
-        'createWorld' => WorldContext::class
+    public $methods = [
+        'getWorld' => WorldContextExtension::class,
+        'isWorldExist' => WorldContextExtension::class,
+        'findWorld' => WorldContextExtension::class,
+        'createWorld' => WorldContextExtension::class
     ];
+
+    public $subject = IWorld::SUBJECT;
 
     /**
      * @param IContext|null $context
@@ -30,7 +33,7 @@ class WorldContext extends Extension
      */
     public function isWorldExist(IContext $context = null)
     {
-        return $context && $context->hasItem(static::CONTEXT__ITEM__WORLD);
+        return $context && isset($context[static::CONTEXT__ITEM__WORLD]);
     }
 
     /**
@@ -59,7 +62,7 @@ class WorldContext extends Extension
     public function getWorld(IContext $context = null)
     {
         if ($this->isWorldExist($context)) {
-            return $context->readItem(static::CONTEXT__ITEM__WORLD)->getValue();
+            return $context[static::CONTEXT__ITEM__WORLD];
         }
 
         return null;

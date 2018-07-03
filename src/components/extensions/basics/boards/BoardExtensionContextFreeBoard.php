@@ -2,6 +2,7 @@
 namespace tratabor\components\extensions\basics\boards;
 
 use jeyroik\extas\components\systems\Extension;
+use jeyroik\extas\interfaces\systems\contexts\IContextBoard;
 use tratabor\interfaces\basics\IBoard;
 use jeyroik\extas\interfaces\systems\IContext;
 
@@ -11,14 +12,16 @@ use jeyroik\extas\interfaces\systems\IContext;
  * @package tratabor\components\extensions\basics\boards
  * @author Funcraft <me@funcraft.ru>
  */
-class BoardExtensionContextFreeBoard extends Extension
+class BoardExtensionContextFreeBoard extends Extension implements IContextBoard
 {
     const CONTEXT_ITEM__FREE_BOARD = 'board.free';
 
-    protected $methods = [
+    public $methods = [
         'getFreeBoard' => BoardExtensionContextFreeBoard::class,
         'setFreeBoard' => BoardExtensionContextFreeBoard::class,
     ];
+
+    public $subject = IBoard::SUBJECT;
 
     /**
      * @param $context IContext
@@ -27,8 +30,8 @@ class BoardExtensionContextFreeBoard extends Extension
      */
     public function getFreeBoard(IContext &$context = null)
     {
-        if ($context->hasItem(static::CONTEXT_ITEM__FREE_BOARD)) {
-            return $context->readItem(static::CONTEXT_ITEM__FREE_BOARD)->getValue();
+        if (isset($context[static::CONTEXT_ITEM__FREE_BOARD])) {
+            return $context[static::CONTEXT_ITEM__FREE_BOARD];
         }
 
         return false;
@@ -40,9 +43,9 @@ class BoardExtensionContextFreeBoard extends Extension
      *
      * @return bool
      */
-    public function setFreeBoard(IBoard $board, IContext $context = null)
+    public function setFreeBoard(IBoard $board, IContext &$context = null)
     {
-        $context->pushItemByName(static::CONTEXT_ITEM__FREE_BOARD, $board);
+        $context[static::CONTEXT_ITEM__FREE_BOARD] = $board;
 
         return true;
     }
