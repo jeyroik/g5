@@ -2,7 +2,7 @@
 namespace tratabor\components\extensions\basics\boards;
 
 use jeyroik\extas\components\systems\Extension;
-use jeyroik\extas\interfaces\systems\contexts\IContextBoard;
+use tratabor\interfaces\systems\contexts\IContextBoard;
 use tratabor\interfaces\basics\IBoard;
 use jeyroik\extas\interfaces\systems\IContext;
 

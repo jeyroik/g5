@@ -2,7 +2,7 @@
 namespace tratabor\components\extensions\basics\worlds;
 
 use jeyroik\extas\components\systems\Extension;
-use jeyroik\extas\interfaces\systems\contexts\IContextWorld;
+use tratabor\interfaces\systems\contexts\IContextWorld;
 use jeyroik\extas\interfaces\systems\IContext;
 use tratabor\components\basics\worlds\WorldRepository;
 use tratabor\interfaces\basics\IWorld;

@@ -1,12 +1,13 @@
 <?php
-namespace jeyroik\extas\interfaces\systems\contexts;
+namespace tratabor\interfaces\systems\contexts;
 
 use jeyroik\extas\interfaces\systems\IContext;
+use tratabor\interfaces\basics\IWorld;
 
 /**
  * Interface IContextWorld
  *
- * @package jeyroik\extas\interfaces\systems\contexts
+ * @package tratabor\interfaces\systems\contexts
  * @author Funcraft <me@funcraft.ru>
  */
 interface IContextWorld
