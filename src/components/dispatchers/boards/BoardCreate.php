@@ -1,12 +1,11 @@
 <?php
 namespace tratabor\components\dispatchers\boards;
 
-use tratabor\components\basics\boards\BoardGenerator;
-use tratabor\components\basics\boards\BoardRepository;
+use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
 use jeyroik\extas\components\dispatchers\DispatcherAbstract;
-use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use jeyroik\extas\interfaces\systems\IContext;
 use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
+use tratabor\interfaces\systems\contexts\IContextBoard;
 
 /**
  * Class BoardCreate
@@ -16,28 +15,21 @@ use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
  */
 class BoardCreate extends DispatcherAbstract implements IStateDispatcher
 {
+    protected $requireInterfaces = [
+        IContextOnFailure::class,
+        IContextBoard::class
+    ];
+
     /**
-     * @param IContext $context
+     * @param IContext|IContextBoard|IContextOnFailure $context
      *
      * @return IContext
      */
     protected function dispatch(IContext $context): IContext
     {
-        try {
-            $context->readItem('board.created');
-            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
-        } catch (\Exception $e) {
-            /**
-             * todo get x, y, z from the configuration or context-options.
-             */
-            $board = BoardGenerator::generate(5, 5, 1);
-            $repo = new BoardRepository();
-            $repo->create($board);
-            $repo->commit();
-
-            $context->pushItemByName('board.created', $board);
-            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
-        }
+        $context->hasCreatedBoard()
+            ? $context->setSuccess()
+            : $context->setSuccessOn($context->createBoard(5, 5, 1)->getSize());
 
         return $context;
     }

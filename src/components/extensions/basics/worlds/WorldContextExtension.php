@@ -2,7 +2,7 @@
 namespace tratabor\components\extensions\basics\worlds;
 
 use jeyroik\extas\components\systems\Extension;
-use tratabor\interfaces\systems\contexts\IContextWorld;
+use tratabor\interfaces\basics\contexts\IContextWorld;
 use jeyroik\extas\interfaces\systems\IContext;
 use tratabor\components\basics\worlds\WorldRepository;
 use tratabor\interfaces\basics\IWorld;
@@ -15,8 +15,6 @@ use tratabor\interfaces\basics\IWorld;
  */
 class WorldContextExtension extends Extension implements IContextWorld
 {
-    const CONTEXT__ITEM__WORLD = 'world';
-
     public $methods = [
         'getWorld' => WorldContextExtension::class,
         'isWorldExist' => WorldContextExtension::class,
@@ -24,7 +22,7 @@ class WorldContextExtension extends Extension implements IContextWorld
         'createWorld' => WorldContextExtension::class
     ];
 
-    public $subject = IWorld::SUBJECT;
+    public $subject = IContext::SUBJECT;
 
     /**
      * @param IContext|null $context
@@ -33,7 +31,7 @@ class WorldContextExtension extends Extension implements IContextWorld
      */
     public function isWorldExist(IContext $context = null)
     {
-        return $context && isset($context[static::CONTEXT__ITEM__WORLD]);
+        return $context && isset($context[static::CONTEXT_ITEM__WORLD]);
     }
 
     /**
@@ -62,14 +60,28 @@ class WorldContextExtension extends Extension implements IContextWorld
     public function getWorld(IContext $context = null)
     {
         if ($this->isWorldExist($context)) {
-            return $context[static::CONTEXT__ITEM__WORLD];
+            return $context[static::CONTEXT_ITEM__WORLD];
         }
 
         return null;
     }
 
-    public function createWorld(IContext &$context = null)
+    /**
+     * @param IWorld|array $world
+     * @param IContext|null $context
+     *
+     * @return mixed
+     */
+    public function createWorld($world, IContext &$context = null)
     {
+        $repo = new WorldRepository();
+        try {
+            $world = $repo->create($world);
+            $context[static::CONTEXT_ITEM__WORLD] = $world;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
 
+        return $world;
     }
 }

@@ -1,11 +1,11 @@
 <?php
 namespace tratabor\components\dispatchers\views;
 
-use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
+use jeyroik\extas\components\dispatchers\DispatcherAbstract;
+use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
 use tratabor\components\systems\views\ViewRender;
 use jeyroik\extas\interfaces\systems\IContext;
-use jeyroik\extas\interfaces\systems\IState;
-use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
+use tratabor\interfaces\systems\contexts\IContextRender;
 
 /**
  * Class ViewHtmlRender
@@ -13,24 +13,28 @@ use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
  * @package tratabor\components\dispatchers\views
  * @author Funcraft <me@funcraft.ru>
  */
-class ViewHtmlRender implements IStateDispatcher
+class ViewHtmlRender extends DispatcherAbstract
 {
+    protected $requireInterfaces = [
+        IContextOnFailure::class,
+        IContextRender::class
+    ];
+
     /**
-     * @param IState $currentState
-     * @param IContext $context
+     * @param IContext|IContextOnFailure $context
      *
      * @return IContext
      */
-    public function __invoke(IState $currentState, IContext $context): IContext
+    protected function dispatch(IContext $context): IContext
     {
         $this->render($context);
-        $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
+        $context->setSuccess();
 
         return $context;
     }
 
     /**
-     * @param IContext $context
+     * @param IContext|IContextRender $context
      *
      * @return $this
      * @throws \Exception
@@ -39,12 +43,7 @@ class ViewHtmlRender implements IStateDispatcher
     {
         $viewRender = new ViewRender();
         $content = '';
-
-        try {
-            $views = $context->readItem('html')->getValue();
-        } catch (\Exception $e) {
-            $views = [];
-        }
+        $views = $context->getViews();
 
         foreach ($views as $view) {
             $content .= $view;

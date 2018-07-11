@@ -13,6 +13,13 @@ interface IBoard extends IItem
 {
     const SUBJECT = 'board';
 
+    const FIELD__SIZE = 'size';
+    const FIELD__CELLS = 'cells';
+    const FIELD__CREATURES = 'creatures';
+    const FIELD__CREATURES_COUNT = 'creatures_count';
+    const FIELD__CREATURES_MAX = 'creatures_max';
+    const FIELD__ID = 'id';
+
     /**
      * @return int
      */

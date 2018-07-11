@@ -2,7 +2,7 @@
 namespace tratabor\components\basics\boards;
 
 use tratabor\components\basics\BasicBoard;
-use tratabor\components\systems\repositories\RepositoryMongo;
+use jeyroik\extas\components\systems\repositories\RepositoryMongo;
 
 /**
  * Class BoardRepository

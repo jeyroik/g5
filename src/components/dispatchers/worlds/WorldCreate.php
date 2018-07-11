@@ -1,10 +1,11 @@
 <?php
 namespace tratabor\components\dispatchers\worlds;
 
-use tratabor\components\basics\worlds\WorldRepository;
+use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
 use jeyroik\extas\components\dispatchers\DispatcherAbstract;
-use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
 use jeyroik\extas\interfaces\systems\IContext;
+use tratabor\interfaces\basics\IWorld;
+use tratabor\interfaces\systems\contexts\IContextWorld;
 
 /**
  * Class WorldCreate
@@ -14,22 +15,23 @@ use jeyroik\extas\interfaces\systems\IContext;
  */
 class WorldCreate extends DispatcherAbstract
 {
+    protected $requireInterfaces = [
+        IContextWorld::class,
+        IContextOnFailure::class
+    ];
+
     /**
-     * @param IContext $context
+     * @param IContext|IContextWorld|IContextOnFailure $context
      *
      * @return IContext
      */
     protected function dispatch(IContext $context): IContext
     {
-        try {
-            $context->readItem('world');
-            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, false);
-        } catch (\Exception $e) {
-            $repo = new WorldRepository();
-            $world = $repo->create(['host' => $_SERVER['SERVER_NAME']]);
-
-            $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
-            $context->pushItemByName('world', $world);
+        if ($context->isWorldExist()) {
+            $context->setFail();
+        } else {
+            $context->createWorld([IWorld::FIELD__HOST => $_SERVER['SERVER_NAME']]);
+            $context->setSuccess();
         }
 
         return $context;

@@ -1,5 +1,5 @@
 <?php
-namespace tratabor\interfaces\systems\contexts;
+namespace tratabor\interfaces\basics\contexts;
 
 use jeyroik\extas\interfaces\systems\IContext;
 use tratabor\interfaces\basics\IWorld;
@@ -7,11 +7,13 @@ use tratabor\interfaces\basics\IWorld;
 /**
  * Interface IContextWorld
  *
- * @package tratabor\interfaces\systems\contexts
+ * @package tratabor\interfaces\basics\contexts
  * @author Funcraft <me@funcraft.ru>
  */
 interface IContextWorld
 {
+    const CONTEXT_ITEM__WORLD = 'world';
+
     /**
      * @param IContext|null $context
      *
@@ -35,9 +37,10 @@ interface IContextWorld
     public function getWorld(IContext $context = null);
 
     /**
+     * @param IWorld|array $world
      * @param IContext|null $context
      *
      * @return mixed
      */
-    public function createWorld(IContext &$context = null);
+    public function createWorld($world, IContext &$context = null);
 }

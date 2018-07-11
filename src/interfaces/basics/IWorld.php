@@ -14,6 +14,14 @@ interface IWorld extends IItem
 {
     const SUBJECT = 'world';
 
+    const FIELD__NAME = 'name';
+    const FIELD__HOST = 'host';
+    const FIELD__BOARDS_MAX = 'boards_max';
+    const FIELD__BOARDS_CURRENT = 'boards_current';
+    const FIELD__CREATURES_MAX = 'creatures_max';
+    const FIELD__CREATURES_CURRENT = 'creatures_current';
+    const FIELD__SIZE = 'size';
+
     /**
      * @return string
      */

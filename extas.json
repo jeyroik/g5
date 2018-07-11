@@ -10,7 +10,8 @@
       "subject": "board",
       "methods": [
         "getFreeBoard",
-        "setFreeBoard"
+        "setFreeBoard",
+        "hasFreeBoard"
       ]
     },
     {

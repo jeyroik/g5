@@ -1,10 +1,10 @@
 <?php
 namespace tratabor\components\dispatchers\creatures;
 
-use tratabor\components\basics\creatures\CreatureRepository;
+use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
 use jeyroik\extas\components\dispatchers\DispatcherAbstract;
-use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
-use tratabor\interfaces\basics\users\IUserProfile;
+use tratabor\interfaces\basics\contexts\IContextCreatureHero;
+use tratabor\interfaces\basics\contexts\IContextProfile;
 use jeyroik\extas\interfaces\systems\IContext;
 use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
 
@@ -16,10 +16,20 @@ use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
  */
 class CreatureHeroCreate extends DispatcherAbstract implements IStateDispatcher
 {
+    protected $requireInterfaces = [
+        IContextOnFailure::class,
+        IContextCreatureHero::class,
+        IContextProfile::class
+    ];
+
+    /**
+     * @param IContext|IContextCreatureHero|IContextOnFailure|IContextProfile $context
+     * @return IContext
+     * @throws \Exception
+     */
     protected function dispatch(IContext $context): IContext
     {
-        $repo = new CreatureRepository();
-        $hero = $repo->create([
+        !$context->hasHero() && $context->createHero([
             'name' => 'Hero #' . time(),
             'type' => 'hero',
             'avatar' => 'https://image.freepik.com/free-icon/no-translate-detected_318-9118.jpg',
@@ -37,19 +47,7 @@ class CreatureHeroCreate extends DispatcherAbstract implements IStateDispatcher
             'characteristics_max' => 3
         ]);
 
-        if ($hero) {
-            $context->pushItemByName('hero', $hero);
-        } else {
-            throw new \Exception('Can not create hero.');
-        }
-
-        /**
-         * @var $profile IUserProfile
-         */
-        $profile = $context->readItem('profile')->getValue();
-        $profile->addCreature($hero);
-        $context->updateItem('profile', $profile);
-        $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
+        $context->setSuccessOn($context->addHeroToProfile());
 
         return $context;
     }

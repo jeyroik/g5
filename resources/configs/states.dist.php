@@ -24,7 +24,7 @@ return [
         IMachineConfig::FIELD__START_STATE => 'app:run',
         IMachineConfig::FIELD__END_STATE => 'app:terminate',
     ],
-    
+
     IMachineConfig::FIELD__STATES => [
         'app:run' => [
             State::FIELD__ID => 'app:run',
@@ -138,7 +138,7 @@ return [
             State::FIELD__ID => 'hero:board_check',
             EMaxTry::STATE__MAX_TRY => 3,
             State::FIELD__DISPATCHERS => [
-                \tratabor\components\dispatchers\boards\BoardCheck::class
+                \tratabor\components\dispatchers\creatures\CreatureHeroBoardCheck::class
             ],
             POnFail::STATE__ON_SUCCESS => 'hero:route_exists',
             POnFail::STATE__ON_FAILURE => 'board:free_exists',
@@ -208,7 +208,7 @@ return [
             State::FIELD__ID => 'board:hero_attach',
             EMaxTry::STATE__MAX_TRY => 1,
             State::FIELD__DISPATCHERS => [
-                \tratabor\components\dispatchers\boards\BoardHeroAttach::class
+                \tratabor\components\dispatchers\creatures\CreatureHeroBoardAttachTo::class
             ],
             POnFail::STATE__ON_SUCCESS => 'hero:board_check',
             POnFail::STATE__ON_FAILURE => 'app:failure',

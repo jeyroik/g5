@@ -2,7 +2,7 @@
 namespace tratabor\components\basics\creatures;
 
 use tratabor\components\basics\BasicCreature;
-use tratabor\components\systems\repositories\RepositoryMongo;
+use jeyroik\extas\components\systems\repositories\RepositoryMongo;
 
 /**
  * Class CreatureRepository

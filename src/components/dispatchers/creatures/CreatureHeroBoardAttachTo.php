@@ -3,35 +3,36 @@ namespace tratabor\components\dispatchers\creatures;
 
 use jeyroik\extas\components\dispatchers\DispatcherAbstract;
 use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
-use tratabor\interfaces\basics\contexts\IContextCreatureHero;
-use tratabor\interfaces\basics\contexts\IContextProfile;
 use jeyroik\extas\interfaces\systems\IContext;
+use tratabor\interfaces\basics\contexts\IContextCreatureHero;
+use tratabor\interfaces\systems\contexts\IContextBoard;
 
 /**
- * Class CreatureHeroExists
+ * Class CreatureHeroBoardAttachTo
  *
  * @package tratabor\components\dispatchers\creatures
  * @author Funcraft <me@funcraft.ru>
  */
-class CreatureHeroExists extends DispatcherAbstract
+class CreatureHeroBoardAttachTo extends DispatcherAbstract
 {
     protected $requireInterfaces = [
         IContextOnFailure::class,
         IContextCreatureHero::class,
-        IContextProfile::class
+        IContextBoard::class
     ];
 
     /**
-     * @param IContext|IContextCreatureHero|IContextOnFailure|IContextProfile $context
+     * @param IContext|IContextOnFailure|IContextBoard|IContextCreatureHero $context
      *
      * @return IContext
      */
     protected function dispatch(IContext $context): IContext
     {
-        $profile = $context->getProfile();
-        $heroes = $profile->getHeroes();
-
-        $context->setFailOn(empty($heroes));
+        if ($context->hasHero() && $context->hasFreeBoard()) {
+            $context->setSuccessOn($context->attachHeroToFreeBoard());
+        } else {
+            $context->setFail();
+        }
 
         return $context;
     }

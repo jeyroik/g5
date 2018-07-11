@@ -1,14 +1,16 @@
 <?php
 namespace tratabor\components\dispatchers\boards;
 
-use tratabor\components\basics\boards\BoardRepository;
+use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
 use jeyroik\extas\components\dispatchers\DispatcherAbstract;
-use jeyroik\extas\components\systems\states\machines\plugins\PluginInitContextSuccess;
-use tratabor\components\systems\views\ViewRender;
-use tratabor\interfaces\basics\creatures\ICreatureHero;
-use tratabor\interfaces\basics\IBoard;
 use jeyroik\extas\interfaces\systems\IContext;
 use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
+
+use tratabor\components\systems\views\ViewRender;
+use tratabor\interfaces\basics\contexts\IContextCreatureHero;
+use tratabor\interfaces\basics\IBoard;
+use tratabor\components\basics\boards\BoardRepository;
+use tratabor\interfaces\systems\contexts\IContextRender;
 
 /**
  * Class BoardRender
@@ -18,24 +20,27 @@ use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
  */
 class BoardRender extends DispatcherAbstract implements IStateDispatcher
 {
+    protected $requireInterfaces = [
+        IContextCreatureHero::class,
+        IContextOnFailure::class,
+        IContextRender::class
+    ];
+
     /**
-     * @param IContext $context
+     * @param IContext|IContextOnFailure|IContextCreatureHero|IContextRender $context
      *
      * @return IContext
      */
     protected function dispatch(IContext $context): IContext
     {
-        /**
-         * @var $hero ICreatureHero
-         */
-        $hero = $context->readItem('hero')->getValue();
+        $hero = $context->getHero();
         $boardId = $hero->getBoardId();
         $boards = new BoardRepository();
 
         /**
          * @var $board IBoard
          */
-        $board = $boards->find(['id' => $boardId])->one();
+        $board = $boards->find([IBoard::FIELD__ID => $boardId])->one();
 
         $viewRender = new ViewRender();
         $cells = $board->getCells();
@@ -54,15 +59,7 @@ class BoardRender extends DispatcherAbstract implements IStateDispatcher
             $boardRendered .= $viewRender->render('board/row', ['cells' => $row]);
         }
 
-        try {
-            $views = $context->readItem('html')->getValue();
-            $views[] = $boardRendered;
-            $context->updateItem('html', $views);
-        } catch (\Exception $e) {
-            $views = [$boardRendered];
-            $context->pushItemByName('html', $views);
-        }
-        $context->updateItem(PluginInitContextSuccess::CONTEXT__SUCCESS, true);
+        $context->setSuccessOn($context->addView($boardRendered));
 
         return $context;
     }

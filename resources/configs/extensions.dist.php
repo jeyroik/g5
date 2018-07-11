@@ -9,7 +9,7 @@ use jeyroik\extas\interfaces\systems\states\IStateMachine;
 use jeyroik\extas\components\systems\states\machines\extensions\ExtensionContextErrors;
 use jeyroik\extas\interfaces\systems as ISystems;
 use jeyroik\extas\components\systems\states\plugins as StatesPlugins;
-use tratabor\components\extensions\basics\boards\BoardExtensionContextFreeBoard;
+use tratabor\components\extensions\basics\boards\BoardContextExtension;
 use tratabor\components\extensions\basics\worlds\WorldContextExtension;
 use jeyroik\extas\components\systems\states\plugins\ExtensionMaxTry;
 use jeyroik\extas\interfaces\systems\IState;
@@ -35,8 +35,8 @@ return [
             /**
              * G5 extensions
              */
-            'getFreeBoard' => BoardExtensionContextFreeBoard::class,
-            'setFreeBoard' => BoardExtensionContextFreeBoard::class,
+            'getFreeBoard' => BoardContextExtension::class,
+            'setFreeBoard' => BoardContextExtension::class,
 
             'getWorld' => WorldContextExtension::class,
             'isWorldExist' => WorldContextExtension::class,
@@ -72,6 +72,6 @@ return [
             ]
         ],
         ExtensionContextErrors::class => ExtensionContextErrors::class,
-        BoardExtensionContextFreeBoard::class => BoardExtensionContextFreeBoard::class
+        BoardContextExtension::class => BoardContextExtension::class
     ]
 ];
