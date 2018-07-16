@@ -5,7 +5,7 @@ use jeyroik\extas\components\dispatchers\DispatcherAbstract;
 use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
 use jeyroik\extas\interfaces\systems\IContext;
 use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
-use tratabor\interfaces\systems\contexts\IContextWorld;
+use tratabor\interfaces\basics\contexts\IContextWorld;
 
 /**
  * Class WorldExists

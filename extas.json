@@ -7,7 +7,7 @@
     {
       "class": "tratabor\\components\\extensions\\basics\\boards\\BoardExtensionContextFreeBoard",
       "interface": "tratabor\\interfaces\\systems\\contexts\\IContextBoard",
-      "subject": "board",
+      "subject": "context",
       "methods": [
         "getFreeBoard",
         "setFreeBoard",
@@ -17,7 +17,7 @@
     {
       "class": "tratabor\\components\\extensions\\basics\\worlds\\WorldContextExtension",
       "interface": "tratabor\\interfaces\\systems\\contexts\\IContextWorld",
-      "subject": "world",
+      "subject": "context",
       "methods": [
         "getWorld",
         "isWorldExist",

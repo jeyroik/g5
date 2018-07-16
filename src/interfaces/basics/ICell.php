@@ -2,16 +2,36 @@
 namespace tratabor\interfaces\basics;
 
 use tratabor\interfaces\basics\cells\ICellSnag;
-use tratabor\interfaces\systems\IItem;
+use jeyroik\extas\interfaces\systems\IItem;
 
 /**
  * Interface ICell
+ *
+ * @stage.expand.type ICell
+ * @stage.expand.name tratabor\interfaces\basics\ICell
+ *
+ * @stage.name board.cell.init
+ * @stage.description Cell initialization finish
+ * @stage.input ICell $cell
+ * @stage.output void
+ *
+ * @stage.name board.cell.after
+ * @stage.description Cell destructing
+ * @stage.input ICell $cell
+ * @stage.output void
  *
  * @package tratabor\interfaces\basics
  * @author Funcraft <me@funcraft.ru>
  */
 interface ICell extends IItem
 {
+    const SUBJECT = 'board.cell';
+
+    /**
+     * @return mixed
+     */
+    public function getId();
+
     /**
      * @return int
      */

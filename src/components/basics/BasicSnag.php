@@ -49,4 +49,12 @@ class BasicSnag extends Basic implements ICellSnag
 
         return $viewRender->render($viewPath, ['snag' => $this]);
     }
+
+    /**
+     * @return string
+     */
+    protected function getSubjectForExtension(): string
+    {
+        return ICellSnag::SUBJECT;
+    }
 }

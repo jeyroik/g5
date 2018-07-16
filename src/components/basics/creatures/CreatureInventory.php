@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\basics\creatures;
 
+use jeyroik\extas\components\systems\Item;
 use tratabor\interfaces\basics\creatures\ICreatureInventory;
 
 /**
@@ -9,36 +10,18 @@ use tratabor\interfaces\basics\creatures\ICreatureInventory;
  * @package tratabor\components\basics\creatures
  * @author Funcraft <me@funcraft.ru>
  */
-class CreatureInventory implements ICreatureInventory
+class CreatureInventory extends Item implements ICreatureInventory
 {
-    /**
-     * @var array
-     */
-    protected $inventory = [];
-
     /**
      * @var array
      */
     protected $items = [];
 
     /**
-     * CreatureInventory constructor.
-     * @param $inventoryConfig
+     * @return string
      */
-    public function __construct($inventoryConfig)
+    protected function getSubjectForExtension(): string
     {
-        $this->initInventory($inventoryConfig);
-    }
-
-    /**
-     * @param $inventoryConfig
-     *
-     * @return $this
-     */
-    protected function initInventory($inventoryConfig)
-    {
-        $this->inventory = $inventoryConfig;
-
-        return $this;
+        return ICreatureInventory::SUBJECT;
     }
 }

@@ -6,7 +6,7 @@ use tratabor\components\basics\BasicSnag;
 use tratabor\interfaces\basics\cells\ICellSnag;
 use tratabor\interfaces\basics\ICell;
 use tratabor\interfaces\basics\ICreature;
-use tratabor\interfaces\systems\IItem;
+use jeyroik\extas\interfaces\systems\IItem;
 
 /**
  * Class BoardCell
@@ -31,7 +31,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getX(): int
     {
-        return $this->data[static::FIELD__X] ?? 0;
+        return $this->config[static::FIELD__X] ?? 0;
     }
 
     /**
@@ -39,7 +39,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getY(): int
     {
-        return $this->data[static::FIELD__Y] ?? 0;
+        return $this->config[static::FIELD__Y] ?? 0;
     }
 
     /**
@@ -47,7 +47,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getZ(): int
     {
-        return $this->data[static::FIELD__Z] ?? 0;
+        return $this->config[static::FIELD__Z] ?? 0;
     }
 
     /**
@@ -55,7 +55,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getContain()
     {
-        $contain = $this->data[static::FIELD__CONTAIN] ?: null;
+        $contain = $this->config[static::FIELD__CONTAIN] ?: null;
 
         if (($contain) && (is_array($contain))) {
             $snagClass = $contain['class'] ?? BasicSnag::class;
@@ -70,7 +70,7 @@ class BoardCell extends Basic implements ICell
      */
     public function getBoardId(): string
     {
-        return $this->data[static::FIELD__BOARD_ID] ?? '';
+        return $this->config[static::FIELD__BOARD_ID] ?? '';
     }
 
     /**
@@ -94,7 +94,7 @@ class BoardCell extends Basic implements ICell
      */
     public function isSpawn(): bool
     {
-        return $this->data[static::FIELD__IS_SPAWN] ?? false;
+        return $this->config[static::FIELD__IS_SPAWN] ?? false;
     }
 
     /**
@@ -105,7 +105,7 @@ class BoardCell extends Basic implements ICell
     public function attachCreature(ICreature $creature): bool
     {
         if ($this->isEmpty()) {
-            $this->data[static::FIELD__CONTAIN] = $creature;
+            $this->config[static::FIELD__CONTAIN] = $creature;
 
             return true;
         } else {
@@ -142,8 +142,16 @@ class BoardCell extends Basic implements ICell
             static::FIELD__CONTAIN => $contain,
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
-            'state' => $this->getCurrentStateId(),
+            'state' => 'not implemented yet',
             'board_id' => $this->getBoardId()
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSubjectForExtension(): string
+    {
+        return ICell::SUBJECT;
     }
 }

@@ -2,7 +2,7 @@
 namespace tratabor\components\basics\users\profiles;
 
 use tratabor\components\basics\users\UserProfile;
-use tratabor\components\systems\repositories\RepositoryMongo;
+use jeyroik\extas\components\systems\repositories\RepositoryMongo;
 
 /**
  * Class ProfileRepository

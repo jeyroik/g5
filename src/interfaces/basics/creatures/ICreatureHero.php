@@ -6,6 +6,8 @@ use tratabor\interfaces\basics\ICreature;
 /**
  * Interface IHero
  *
+ *
+ *
  * @package tratabor\interfaces\basics\creatures
  * @author Funcraft <me@funcraft.ru>
  */

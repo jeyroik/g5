@@ -4,11 +4,26 @@ namespace tratabor\interfaces\basics;
 /**
  * Interface IUser
  *
+ * @stage.expand.type IUser
+ * @stage.expand.name tratabor\interfaces\basics\IUser
+ *
+ * @stage.name user.init
+ * @stage.description User initialization finish
+ * @stage.input IUser $user
+ * @stage.output void
+ *
+ * @stage.name user.after
+ * @stage.description User destructing
+ * @stage.input IUser $user
+ * @stage.output void
+ *
  * @package tratabor\interfaces\basics
  * @author Funcraft <me@funcraft.ru>
  */
 interface IUser
 {
+    const SUBJECT = 'user';
+
     /**
      * @return string
      */

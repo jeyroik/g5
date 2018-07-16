@@ -1,9 +1,9 @@
 <?php
 namespace tratabor\components\dispatchers\users;
 
+use jeyroik\extas\components\dispatchers\DispatcherAbstract;
+use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
 use jeyroik\extas\interfaces\systems\IContext;
-use jeyroik\extas\interfaces\systems\IState;
-use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
 
 /**
  * Class UserAuthorized
@@ -11,15 +11,16 @@ use jeyroik\extas\interfaces\systems\states\IStateDispatcher;
  * @package tratabor\components\dispatchers\users
  * @author Funcraft <me@funcraft.ru>
  */
-class UserAuthorized implements IStateDispatcher
+class UserAuthorized extends DispatcherAbstract
 {
+    protected $requireInterfaces = [];
+
     /**
-     * @param IState $currentState
-     * @param IContext $context
+     * @param IContext|IContextOnFailure $context
      *
      * @return IContext
      */
-    public function __invoke(IState $currentState, IContext $context): IContext
+    protected function dispatch(IContext $context): IContext
     {
         return $context;
     }

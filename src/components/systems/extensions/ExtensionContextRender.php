@@ -6,16 +6,16 @@ use jeyroik\extas\interfaces\systems\IContext;
 use tratabor\interfaces\systems\contexts\IContextRender;
 
 /**
- * Class ContextRender
+ * Class ExtensionContextRender
  *
  * @package tratabor\components\systems\extensions
  * @author Funcraft <me@funcraft.ru>
  */
-class ContextRender extends Extension implements IContextRender
+class ExtensionContextRender extends Extension implements IContextRender
 {
     public $methods = [
-        'addView' => ContextRender::class,
-        'getViews' => ContextRender::class
+        'addView' => ExtensionContextRender::class,
+        'getViews' => ExtensionContextRender::class
     ];
 
     public $subject = IContext::SUBJECT;

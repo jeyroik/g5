@@ -1,7 +1,7 @@
 <?php
 namespace tratabor\components\basics\creatures;
 
-use tratabor\components\basics\BasicObject;
+use tratabor\components\basics\Basic;
 use tratabor\interfaces\basics\creatures\ICreatureRoute;
 use tratabor\interfaces\basics\ICell;
 
@@ -11,7 +11,7 @@ use tratabor\interfaces\basics\ICell;
  * @package tratabor\components\basics\creatures
  * @author Funcraft <me@funcraft.ru>
  */
-class CreatureRoute extends BasicObject implements ICreatureRoute
+class CreatureRoute extends Basic implements ICreatureRoute
 {
     const FIELD__POSITION_CURRENT = 'position_current';
     const FIELD__POSITION_PREVIOUS = 'position_previous';
@@ -30,9 +30,9 @@ class CreatureRoute extends BasicObject implements ICreatureRoute
         $current = $this->getCurrentPosition();
 
         if (!$current || ($current->getId() != $cell->getId())) {
-            $this->data[static::FIELD__ROUTE][] = $cell;
-            $this->data[static::FIELD__POSITION_PREVIOUS] = $current;
-            $this->data[static::FIELD__POSITION_CURRENT] = $cell;
+            $this->config[static::FIELD__ROUTE][] = $cell;
+            $this->config[static::FIELD__POSITION_PREVIOUS] = $current;
+            $this->config[static::FIELD__POSITION_CURRENT] = $cell;
 
             return true;
         }
@@ -45,6 +45,14 @@ class CreatureRoute extends BasicObject implements ICreatureRoute
      */
     public function getCurrentPosition()
     {
-        return $this->data[static::FIELD__POSITION_CURRENT] ?? null;
+        return $this->config[static::FIELD__POSITION_CURRENT] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSubjectForExtension(): string
+    {
+        return ICreatureRoute::SUBJECT;
     }
 }

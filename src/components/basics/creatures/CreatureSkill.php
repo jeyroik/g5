@@ -1,7 +1,7 @@
 <?php
 namespace tratabor\components\basics\creatures;
 
-use tratabor\components\basics\BasicObject;
+use tratabor\components\basics\Basic;
 use tratabor\interfaces\basics\creatures\ICreatureSkill;
 
 /**
@@ -10,6 +10,13 @@ use tratabor\interfaces\basics\creatures\ICreatureSkill;
  * @package tratabor\components\basics\creatures
  * @author Funcraft <me@funcraft.ru>
  */
-class CreatureSkill extends BasicObject implements ICreatureSkill
+class CreatureSkill extends Basic implements ICreatureSkill
 {
+    /**
+     * @return string
+     */
+    protected function getSubjectForExtension(): string
+    {
+        return ICreatureSkill::SUBJECT;
+    }
 }

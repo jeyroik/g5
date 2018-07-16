@@ -2,8 +2,7 @@
 namespace tratabor\components\basics\boards\cells;
 
 use tratabor\components\basics\boards\BoardCell;
-use tratabor\components\systems\repositories\RepositoryMongo;
-use tratabor\components\systems\repositories\RepositoryPhp;
+use jeyroik\extas\components\systems\repositories\RepositoryMongo;
 
 /**
  * Class CellRepository

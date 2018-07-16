@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\basics\creatures;
 
+use jeyroik\extas\components\systems\Item;
 use tratabor\interfaces\basics\creatures\ICreatureCharacteristic;
 
 /**
@@ -9,28 +10,14 @@ use tratabor\interfaces\basics\creatures\ICreatureCharacteristic;
  * @package tratabor\components\basics\creatures
  * @author Funcraft <me@funcraft.ru>
  */
-class CreatureCharacteristic implements ICreatureCharacteristic
+class CreatureCharacteristic extends Item implements ICreatureCharacteristic
 {
-    /**
-     * @var array
-     */
-    protected $data = [];
-
-    /**
-     * CreatureCharacteristic constructor.
-     * @param $characteristicConfig
-     */
-    public function __construct($characteristicConfig)
-    {
-        $this->initCharacteristic($characteristicConfig);
-    }
-
     /**
      * @return string
      */
     public function getName(): string
     {
-        return $this->data['name'] ?? '';
+        return $this->config['name'] ?? '';
     }
 
     /**
@@ -38,7 +25,7 @@ class CreatureCharacteristic implements ICreatureCharacteristic
      */
     public function getDescription(): string
     {
-        return $this->data['description'] ?? '';
+        return $this->config['description'] ?? '';
     }
 
     /**
@@ -46,18 +33,14 @@ class CreatureCharacteristic implements ICreatureCharacteristic
      */
     public function getValue()
     {
-        return $this->data['value'] ?? '';
+        return $this->config['value'] ?? '';
     }
 
     /**
-     * @param $characteristicConfig
-     *
-     * @return $this
+     * @return string
      */
-    protected function initCharacteristic($characteristicConfig)
+    protected function getSubjectForExtension(): string
     {
-        $this->data = $characteristicConfig;
-
-        return $this;
+        return ICreatureCharacteristic::SUBJECT;
     }
 }

@@ -17,6 +17,11 @@ use tratabor\interfaces\basics\creatures\ICreatureSkill;
 interface ICreature extends ICellSnag
 {
     /**
+     * @return mixed
+     */
+    public function getId();
+
+    /**
      * @return string
      */
     public function getName(): string;

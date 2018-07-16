@@ -6,7 +6,7 @@ use tratabor\components\basics\boards\cells\CellRepository;
 use tratabor\interfaces\basics\IBoard;
 use tratabor\interfaces\basics\ICell;
 use tratabor\interfaces\basics\ICreature;
-use tratabor\interfaces\systems\IRepository;
+use jeyroik\extas\interfaces\systems\IRepository;
 
 /**
  * Class BasicBoard
@@ -42,7 +42,7 @@ class BasicBoard extends Basic implements IBoard
      */
     public function getId()
     {
-        return $this->data[static::FIELD__ID] ?? '';
+        return $this->config[static::FIELD__ID] ?? '';
     }
 
     /**
@@ -50,7 +50,7 @@ class BasicBoard extends Basic implements IBoard
      */
     public function getSize(): int
     {
-        return $this->data[static::FIELD__SIZE] ?? 0;
+        return $this->config[static::FIELD__SIZE] ?? 0;
     }
 
     /**
@@ -80,8 +80,8 @@ class BasicBoard extends Basic implements IBoard
         $attached = $spawnCell->attachCreature($creature);
 
         if ($attached) {
-            $this->data[static::FIELD__CREATURES][] = $creature->getId();
-            $this->data[static::FIELD__CREATURES_COUNT] += 1;
+            $this->config[static::FIELD__CREATURES][] = $creature->getId();
+            $this->config[static::FIELD__CREATURES_COUNT] += 1;
 
             $this->cellsUpdate($spawnCell)->commit();
 
@@ -101,7 +101,7 @@ class BasicBoard extends Basic implements IBoard
         /**
          * @var $repo IRepository
          */
-        $repo = $this->data[static::FIELD__CELLS];
+        $repo = $this->config[static::FIELD__CELLS];
         return $repo->find(['board_id' => $this->getId()])->all();
     }
 
@@ -113,7 +113,7 @@ class BasicBoard extends Basic implements IBoard
         /**
          * @var $repo IRepository
          */
-        $repo = $this->data[static::FIELD__CELLS];
+        $repo = $this->config[static::FIELD__CELLS];
         $spawnCells = $repo->find(['board_id' => $this->getId(), 'is_spawn' => true])->all();
 
         return $spawnCells;
@@ -124,7 +124,7 @@ class BasicBoard extends Basic implements IBoard
      */
     public function getCreaturesMax(): int
     {
-        return $this->data[static::FIELD__CREATURES_MAX] ?? 1;
+        return $this->config[static::FIELD__CREATURES_MAX] ?? 1;
     }
 
     /**
@@ -132,7 +132,7 @@ class BasicBoard extends Basic implements IBoard
      */
     public function getCreatures()
     {
-        return $this->data[static::FIELD__CREATURES] ?? [];
+        return $this->config[static::FIELD__CREATURES] ?? [];
     }
 
     /**
@@ -140,7 +140,7 @@ class BasicBoard extends Basic implements IBoard
      */
     public function getCreaturesCount(): int
     {
-        return $this->data[static::FIELD__CREATURES_COUNT] ?? 0;
+        return $this->config[static::FIELD__CREATURES_COUNT] ?? 0;
     }
 
     /**
@@ -158,6 +158,14 @@ class BasicBoard extends Basic implements IBoard
             static::FIELD__CREATED_AT => $this->getCreatedAt(),
             static::FIELD__UPDATED_AT => $this->getUpdatedAt()
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSubjectForExtension(): string
+    {
+        return IBoard::SUBJECT;
     }
 
     /**
@@ -200,10 +208,10 @@ class BasicBoard extends Basic implements IBoard
         /**
          * @var $repo CellRepository
          */
-        $repo = $this->data[static::FIELD__CELLS];
+        $repo = $this->config[static::FIELD__CELLS];
         $repo->find(['id' => $cell->getId()])->update($cell);
         $repo->commit();
-        $this->data[static::FIELD__CELLS] = $repo;
+        $this->config[static::FIELD__CELLS] = $repo;
 
         return $this;
     }
@@ -233,12 +241,12 @@ class BasicBoard extends Basic implements IBoard
     {
         $repo = new CellRepository();
         $cells = $repo->find(['board_id' => $this->getId()])->all();
-        if (empty($cells) && isset($this->data[static::FIELD__CELLS])) {
-            foreach ($this->data[static::FIELD__CELLS] as $cell) {
+        if (empty($cells) && isset($this->config[static::FIELD__CELLS])) {
+            foreach ($this->config[static::FIELD__CELLS] as $cell) {
                 $repo->create($cell);
             }
         }
-        $this->data[static::FIELD__CELLS] = $repo;
+        $this->config[static::FIELD__CELLS] = $repo;
 
         return $this;
     }
@@ -248,7 +256,7 @@ class BasicBoard extends Basic implements IBoard
      */
     protected function __toArrayCreatures(): array
     {
-        return $this->data[static::FIELD__CREATURES];
+        return $this->config[static::FIELD__CREATURES];
     }
 
     /**

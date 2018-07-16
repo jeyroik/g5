@@ -1,6 +1,7 @@
 <?php
 namespace tratabor\components\basics\worlds;
 
+use jeyroik\extas\components\systems\Item;
 use tratabor\interfaces\basics\worlds\IWorldHost;
 
 /**
@@ -9,28 +10,14 @@ use tratabor\interfaces\basics\worlds\IWorldHost;
  * @package tratabor\components\basics\worlds
  * @author Funcraft <me@funcraft.ru>
  */
-class WorldHost implements IWorldHost
+class WorldHost extends Item implements IWorldHost
 {
-    /**
-     * @var array
-     */
-    protected $host = [];
-
-    /**
-     * WorldHost constructor.
-     * @param array $hostConfig
-     */
-    public function __construct($hostConfig = [])
-    {
-        $this->initHost($hostConfig);
-    }
-
     /**
      * @return mixed|string
      */
     public function getName()
     {
-        return $this->host['name'] ?? '';
+        return $this->config['name'] ?? '';
     }
 
     /**
@@ -38,7 +25,7 @@ class WorldHost implements IWorldHost
      */
     public function getIp()
     {
-        return $this->host['ip'] ?? '';
+        return $this->config['ip'] ?? '';
     }
 
     /**
@@ -46,7 +33,7 @@ class WorldHost implements IWorldHost
      */
     public function getState()
     {
-        return $this->host['state'] ?? '';
+        return $this->config['state'] ?? '';
     }
 
     /**
@@ -62,14 +49,10 @@ class WorldHost implements IWorldHost
     }
 
     /**
-     * @param $hostConfig
-     *
-     * @return $this
+     * @return string
      */
-    protected function initHost($hostConfig)
+    protected function getSubjectForExtension(): string
     {
-        $this->host = $hostConfig;
-
-        return $this;
+        return IWorldHost::SUBJECT;
     }
 }

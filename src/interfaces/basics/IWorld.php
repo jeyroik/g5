@@ -7,6 +7,19 @@ use jeyroik\extas\interfaces\systems\IItem;
 /**
  * Interface IWorld
  *
+ * @stage.expand.type IWorld
+ * @stage.expand.name tratabor\interfaces\basics\IWorld
+ *
+ * @stage.name world.init
+ * @stage.description World initialization finish
+ * @stage.input IWorld $world
+ * @stage.output void
+ *
+ * @stage.name world.after
+ * @stage.description World destructing
+ * @stage.input IWorld $world
+ * @stage.output void
+ *
  * @package tratabor\interfaces\basics
  * @author Funcraft <me@funcraft.ru>
  */

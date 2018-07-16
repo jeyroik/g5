@@ -3,6 +3,7 @@ namespace tratabor\components\extensions\basics\creatures;
 
 use jeyroik\extas\components\systems\Extension;
 use jeyroik\extas\interfaces\systems\IContext;
+use tratabor\components\basics\BasicCreature;
 use tratabor\interfaces\basics\contexts\IContextCreatureHero;
 use tratabor\interfaces\basics\contexts\IContextBoard;
 use tratabor\interfaces\basics\contexts\IContextProfile;
@@ -22,6 +23,20 @@ class CreatureContextExtension extends Extension implements IContextCreatureHero
     ];
 
     public $subject = IContext::SUBJECT;
+
+    /**
+     * @param $hero
+     * @param IContext|null $context
+     *
+     * @return BasicCreature
+     */
+    public function createHero($hero, IContext &$context = null)
+    {
+        $hero = new BasicCreature($hero);
+        $context[static::CONTEXT_ITEM__HERO] = $hero;
+
+        return $hero;
+    }
 
     /**
      * @param IContext|null $context

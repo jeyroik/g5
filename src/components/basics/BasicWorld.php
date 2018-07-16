@@ -14,18 +14,14 @@ use tratabor\interfaces\basics\IWorld;
 class BasicWorld extends Item implements IWorld
 {
     /**
-     * @var array
-     */
-    protected $world = [];
-
-    /**
      * BasicWorld constructor.
      * @param array $worldConfig
      */
     public function __construct($worldConfig = [])
     {
-        $this->initWorld($worldConfig);
-        parent::__construct('wid', 'world__' . time());
+        parent::__construct($worldConfig);
+
+        $this->buildWorld();
     }
 
     /**
@@ -35,7 +31,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getUpdatedAt($format = '')
     {
-        return $format ? date($format, $this->world['updated_at']) : $this->world['updated_at'];
+        return $format ? date($format, $this->config['updated_at']) : $this->config['updated_at'];
     }
 
     /**
@@ -45,7 +41,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getCreatedAt($format = '')
     {
-        return $format ? date($format, $this->world['created_at']) : $this->world['created_at'];
+        return $format ? date($format, $this->config['created_at']) : $this->config['created_at'];
     }
 
     /**
@@ -53,7 +49,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getSize(): int
     {
-        return $this->world['size'] ?? 0;
+        return $this->config['size'] ?? 0;
     }
 
     /**
@@ -61,7 +57,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getCreaturesMax(): int
     {
-        return $this->world['creatures_max'] ?? 0;
+        return $this->config['creatures_max'] ?? 0;
     }
 
     /**
@@ -69,7 +65,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getCreaturesCurrent(): int
     {
-        return $this->world['creatures_current'] ?? 0;
+        return $this->config['creatures_current'] ?? 0;
     }
 
     /**
@@ -77,7 +73,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getBoardsMax(): int
     {
-        return $this->world['boards_max'] ?? 0;
+        return $this->config['boards_max'] ?? 0;
     }
 
     /**
@@ -85,7 +81,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getBoardsCurrent(): int
     {
-        return $this->world['boards_current'] ?? 0;
+        return $this->config['boards_current'] ?? 0;
     }
 
     /**
@@ -93,7 +89,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getId()
     {
-        return $this->world['id'] ?? '';
+        return $this->config['id'] ?? '';
     }
 
     /**
@@ -101,7 +97,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getName(): string
     {
-        return $this->world['name'] ?? '';
+        return $this->config['name'] ?? '';
     }
 
     /**
@@ -109,7 +105,7 @@ class BasicWorld extends Item implements IWorld
      */
     public function getHost()
     {
-        return $this->world['host'] ?? new WorldHost();
+        return $this->config['host'] ?? new WorldHost();
     }
 
     /**
@@ -131,14 +127,19 @@ class BasicWorld extends Item implements IWorld
     }
 
     /**
-     * @param $worldConfig
-     *
+     * @return string
+     */
+    protected function getSubjectForExtension(): string
+    {
+        return IWorld::SUBJECT;
+    }
+
+    /**
      * @return $this
      */
-    protected function initWorld($worldConfig)
+    protected function buildWorld()
     {
-        $this->world = $worldConfig;
-        $this->world['host'] = new WorldHost($this->world['host']);
+        $this->config[IWorld::FIELD__HOST] = new WorldHost($this->config[IWorld::FIELD__HOST]);
 
         return $this;
     }
