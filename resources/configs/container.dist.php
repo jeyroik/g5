@@ -9,5 +9,6 @@ return [
     IStates\IStateFactory::class => CStates\StateFactory::class,
     IStates\dispatchers\IDispatchersFactory::class => CStates\dispatchers\DispatcherFactory::class,
     ISystemPlugins\IPluginRepository::class => \jeyroik\extas\components\systems\plugins\PluginRepository::class,
-    S\extensions\IExtensionRepository::class => \jeyroik\extas\components\systems\extensions\ExtensionRepository::class
+    S\extensions\IExtensionRepository::class => \jeyroik\extas\components\systems\extensions\ExtensionRepository::class,
+    S\packages\IPackageRepository::class => \jeyroik\extas\components\systems\packages\PackageRepository::class
 ];
