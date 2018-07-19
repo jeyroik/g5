@@ -10,5 +10,6 @@ return [
     IStates\dispatchers\IDispatchersFactory::class => CStates\dispatchers\DispatcherFactory::class,
     ISystemPlugins\IPluginRepository::class => \jeyroik\extas\components\systems\plugins\PluginRepository::class,
     S\extensions\IExtensionRepository::class => \jeyroik\extas\components\systems\extensions\ExtensionRepository::class,
-    S\packages\IPackageRepository::class => \jeyroik\extas\components\systems\packages\PackageRepository::class
+    S\packages\IPackageRepository::class => \jeyroik\extas\components\systems\packages\PackageRepository::class,
+    S\plugins\stages\IStageRepository::class => \jeyroik\extas\components\systems\plugins\stages\StageRepository::class
 ];
