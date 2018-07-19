@@ -106,9 +106,4 @@ interface IUserProfile extends IItem
      * @return int
      */
     public function getDecksMax(): int;
-
-    /**
-     * @return array
-     */
-    public function __toArray();
 }
