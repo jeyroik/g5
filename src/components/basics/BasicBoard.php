@@ -16,13 +16,7 @@ use jeyroik\extas\interfaces\systems\IRepository;
  */
 class BasicBoard extends Basic implements IBoard
 {
-    const FIELD__ID = 'id';
-    const FIELD__CELLS = 'cells';
     const FIELD__CELLS_SPAWN = 'cells_spawn';
-    const FIELD__SIZE = 'size';
-    const FIELD__CREATURES = 'creatures';
-    const FIELD__CREATURES_MAX = 'creatures_max';
-    const FIELD__CREATURES_COUNT = 'creatures_count';
     const FIELD__CREATED_AT = 'created_at';
     const FIELD__UPDATED_AT = 'updated_at';
 
