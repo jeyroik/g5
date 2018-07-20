@@ -1,7 +1,7 @@
 <?php
 
 define('G5__ROOT_PATH', __DIR__ . '/../..');
-define('EXTASM__ROOT_PATH', __DIR__ . '/../..');
+define('EXTAS__APPLICATION_PATH', __DIR__ . '/../..');
 
 require(G5__ROOT_PATH . '/vendor/autoload.php');
 
