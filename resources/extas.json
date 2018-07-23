@@ -1,0 +1,29 @@
+{
+  "title": "",
+  "description": "",
+  "schema": "1.0",
+  "plugins": [],
+  "extensions": [
+    {
+      "class": "tratabor\\components\\extensions\\basics\\boards\\BoardExtensionContextFreeBoard",
+      "interface": "tratabor\\interfaces\\systems\\contexts\\IContextBoard",
+      "subject": "context",
+      "methods": [
+        "getFreeBoard",
+        "setFreeBoard",
+        "hasFreeBoard"
+      ]
+    },
+    {
+      "class": "tratabor\\components\\extensions\\basics\\worlds\\WorldContextExtension",
+      "interface": "tratabor\\interfaces\\systems\\contexts\\IContextWorld",
+      "subject": "context",
+      "methods": [
+        "getWorld",
+        "isWorldExist",
+        "findWorld",
+        "createWorld"
+      ]
+    }
+  ]
+}

@@ -43,7 +43,7 @@ class BoardRender extends DispatcherAbstract implements IStateDispatcher
         $board = $boards->find([IBoard::FIELD__ID => $boardId])->one();
 
         $viewRender = new ViewRender();
-        $cells = $board->getCells();
+        $cells = $board ? $board->getCells() : [];
         $rows = [];
         $boardRendered = 'Board #' . $boardId;
 
