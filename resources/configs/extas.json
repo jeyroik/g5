@@ -1,6 +1,6 @@
 {
   "title": "G5",
-  "description": "G5 App",
+  "description": "G5 app",
   "schema": "1.0",
   "plugins": [],
   "extensions": [
@@ -22,6 +22,15 @@
         "getFreeBoard",
         "setFreeBoard",
         "hasFreeBoard"
+      ]
+    },
+    {
+      "class": "tratabor\\components\\extensions\\basics\\UserProfileContextExtension",
+      "interface": "tratabor\\interfaces\\basics\\contexts\\IContextProfile",
+      "subject": "context",
+      "methods": [
+        "getProfile",
+        "setProfile"
       ]
     },
     {
