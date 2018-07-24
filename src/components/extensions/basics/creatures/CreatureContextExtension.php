@@ -105,9 +105,12 @@ class CreatureContextExtension extends Extension implements IContextCreatureHero
         $profile = $context->getProfile();
         $hero = $context->getHero();
 
-        $profile->addCreature($hero);
-        $context->setProfile($profile);
+        if ($profile && $hero) {
+            $profile->addCreature($hero);
+            $context->setProfile($profile);
+            return true;
+        }
 
-        return true;
+        return false;
     }
 }
