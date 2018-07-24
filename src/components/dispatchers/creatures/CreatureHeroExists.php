@@ -29,7 +29,7 @@ class CreatureHeroExists extends DispatcherAbstract
     protected function dispatch(IContext $context): IContext
     {
         $profile = $context->getProfile();
-        $heroes = $profile->getHeroes();
+        $heroes = $profile ? $profile->getHeroes() : [];
 
         $context->setFailOn(empty($heroes));
 

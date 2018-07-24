@@ -26,6 +26,10 @@ interface IWorldHost extends IItem
 {
     const SUBJECT = 'world.host';
 
+    const FIELD__NAME = 'name';
+    const FIELD__IP = 'ip';
+    const FIELD__STATE = 'state';
+
     /**
      * @return string
      */

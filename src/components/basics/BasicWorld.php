@@ -4,6 +4,7 @@ namespace tratabor\components\basics;
 use tratabor\components\basics\worlds\WorldHost;
 use jeyroik\extas\components\systems\Item;
 use tratabor\interfaces\basics\IWorld;
+use tratabor\interfaces\basics\worlds\IWorldHost;
 
 /**
  * Class BasicWorld
@@ -139,7 +140,9 @@ class BasicWorld extends Item implements IWorld
      */
     protected function buildWorld()
     {
-        $this->config[IWorld::FIELD__HOST] = new WorldHost($this->config[IWorld::FIELD__HOST]);
+        $this->config[IWorld::FIELD__HOST] = new WorldHost([
+            IWorldHost::FIELD__IP => $this->config[IWorld::FIELD__HOST]
+        ]);
 
         return $this;
     }
