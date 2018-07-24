@@ -25,7 +25,7 @@
       ]
     },
     {
-      "class": "tratabor\\components\\extensions\\basics\\UserProfileContextExtension",
+      "class": "tratabor\\components\\extensions\\basics\\users\\UserProfileContextExtension",
       "interface": "tratabor\\interfaces\\basics\\contexts\\IContextProfile",
       "subject": "context",
       "methods": [

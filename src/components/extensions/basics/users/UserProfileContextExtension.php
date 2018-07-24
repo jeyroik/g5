@@ -1,5 +1,5 @@
 <?php
-namespace tratabor\components\extensions\basics;
+namespace tratabor\components\extensions\basics\users;
 
 use jeyroik\extas\components\systems\Extension;
 use jeyroik\extas\interfaces\systems\IContext;
