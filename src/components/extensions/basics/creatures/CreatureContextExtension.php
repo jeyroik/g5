@@ -19,7 +19,10 @@ class CreatureContextExtension extends Extension implements IContextCreatureHero
     public $methods = [
         'hasHero' => CreatureContextExtension::class,
         'getHero' => CreatureContextExtension::class,
-        'attachHeroToFreeBoard' => CreatureContextExtension::class
+        'setHero' => CreatureContextExtension::class,
+        'attachHeroToFreeBoard' => CreatureContextExtension::class,
+        'addHeroToProfile' => CreatureContextExtension::class,
+        'createHero' => CreatureContextExtension::class
     ];
 
     public $subject = IContext::SUBJECT;
