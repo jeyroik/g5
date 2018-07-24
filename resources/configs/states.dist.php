@@ -106,12 +106,22 @@ return [
         ],
         'user:profile_exists' => [
             State::FIELD__ID => 'user:profile_exists',
-            EMaxTry::STATE__MAX_TRY => 1,
+            EMaxTry::STATE__MAX_TRY => 2,
             State::FIELD__DISPATCHERS => [
-                \jeyroik\extas\components\dispatchers\DispatcherSuccess::class
+                \tratabor\components\dispatchers\users\UserProfileExists::class
             ],
             POnFail::STATE__ON_SUCCESS => 'profile:hero_exists',
             POnFail::STATE__ON_FAILURE => 'profile:create',
+            EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
+        ],
+        'profile:create' => [
+            State::FIELD__ID => 'user:profile_exists',
+            EMaxTry::STATE__MAX_TRY => 1,
+            State::FIELD__DISPATCHERS => [
+                \tratabor\components\dispatchers\users\UserProfileCreate::class
+            ],
+            POnFail::STATE__ON_SUCCESS => 'user:profile_exists',
+            POnFail::STATE__ON_FAILURE => 'app:terminate',
             EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'profile:hero_exists' => [

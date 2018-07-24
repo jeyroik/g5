@@ -24,7 +24,7 @@ try {
 }
 
 /**
- * @var $stateMachine \jeyroik\extas\interfaces\systems\states\IStatesRoute
+ * @var $stateMachine \jeyroik\extas\interfaces\systems\states\machines\extensions\IStatesRoute
  */
 
 echo '

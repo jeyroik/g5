@@ -25,7 +25,19 @@ use tratabor\interfaces\basics\ICreature;
  */
 interface IUserProfile extends IItem
 {
-    const SUBJECT = 'subject';
+    const SUBJECT = 'user.profile';
+
+    const FIELD__ID = 'id';
+    const FIELD__NAME = 'name';
+    const FIELD__UID = 'uid';
+    const FIELD__CREATURES = 'creatures';
+    const FIELD__CREATURES_MAX = 'creatures_max';
+    const FIELD__HEROES = 'heroes';
+    const FILED__HEROES_MAX = 'heroes_max';
+    const FIELD__CURRENT_EXP = 'current_exp';
+    const FIELD__CURRENT_LEVEL = 'current_level';
+    const FIELD__DECKS = 'decks';
+    const FIELD__DECKS_MAX = 'decks_max';
 
     /**
      * @return int
