@@ -24,7 +24,9 @@
       "methods": [
         "getFreeBoard",
         "setFreeBoard",
-        "hasFreeBoard"
+        "hasFreeBoard",
+        "createBoard",
+        "hasCreatedBoard"
       ]
     },
     {
