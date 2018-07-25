@@ -4,7 +4,7 @@ namespace tratabor\components\dispatchers\boards;
 use jeyroik\extas\interfaces\systems\contexts\IContextOnFailure;
 use jeyroik\extas\components\dispatchers\DispatcherAbstract;
 use jeyroik\extas\interfaces\systems\IContext;
-use tratabor\interfaces\systems\contexts\IContextBoard;
+use tratabor\interfaces\basics\contexts\IContextBoard;
 
 /**
  * Class BoardFreeExists
