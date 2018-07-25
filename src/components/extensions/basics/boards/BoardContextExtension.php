@@ -88,6 +88,9 @@ class BoardContextExtension extends Extension implements IContextBoard
         $repo = new BoardRepository();
         $repo->create($board);
         $context[static::CONTEXT_ITEM__BOARD_CREATED] = $board;
+        if (!$this->hasFreeBoard($context)) {
+            $this->setFreeBoard($board, $context);
+        }
         $context->setSuccess();
 
         return $board;
