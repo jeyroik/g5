@@ -20,7 +20,9 @@ class BoardContextExtension extends Extension implements IContextBoard
     public $methods = [
         'getFreeBoard' => BoardContextExtension::class,
         'setFreeBoard' => BoardContextExtension::class,
-        'hasFreeBoard' => BoardContextExtension::class
+        'hasFreeBoard' => BoardContextExtension::class,
+        'createBoard' => BoardContextExtension::class,
+        'hasCreatedBoard' => BoardContextExtension::class
     ];
 
     public $subject = IContext::SUBJECT;
