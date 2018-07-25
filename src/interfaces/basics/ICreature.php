@@ -17,6 +17,7 @@ use tratabor\interfaces\basics\creatures\ICreatureSkill;
 interface ICreature extends ICellSnag
 {
     const FIELD__ID = 'id';
+    const FIELD__NAME = 'name';
     const FIELD__LEVEL_CURRENT = 'level_current';
     const FIELD__LEVEL_NEXT = 'level_next';
     const FIELD__EXP_CURRENT = 'exp_current';

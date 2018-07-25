@@ -26,6 +26,8 @@ interface ICellSnag extends IItem
 {
     const SUBJECT = 'cell.snag';
 
+    const FIELD__AVATAR = 'avatar';
+
     /**
      * @return string
      */

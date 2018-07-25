@@ -20,24 +20,6 @@ use tratabor\interfaces\basics\ICreature;
  */
 class BasicCreature extends BasicSnag implements ICreature
 {
-    const FIELD__ID = 'id';
-    const FIELD__NAME = 'name';
-    const FIELD__AVATAR = 'avatar';
-    const FIELD__SKILLS = 'skills';
-    const FIELD__SKILLS_MAX = 'skills_max';
-    const FIELD__PROPERTIES = 'properties';
-    const FIELD__PROPERTIES_MAX = 'properties_max';
-    const FIELD__CHARACTERISTICS = 'characteristics';
-    const FIELD__CHARACTERISTICS_MAX = 'characteristics_max';
-    const FIELD__ROUTE = 'route';
-    const FIELD__INVENTORY = 'inventory';
-    const FIELD__LEVEL_CURRENT = 'level_current';
-    const FIELD__LEVEL_NEXT = 'level_next';
-    const FIELD__EXP_CURRENT = 'exp_current';
-    const FIELD__EXP_NEXT = 'exp_next';
-    const FIELD__BOARD_ID = 'board_id';
-    const FIELD__TYPE = 'type';
-
     /**
      * BasicCreature constructor.
      *
