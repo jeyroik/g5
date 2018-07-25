@@ -115,7 +115,7 @@ return [
             EMaxTry::STATE__ON_TERMINATE => 'app:terminate',
         ],
         'profile:create' => [
-            State::FIELD__ID => 'user:profile_exists',
+            State::FIELD__ID => 'profile:create',
             EMaxTry::STATE__MAX_TRY => 1,
             State::FIELD__DISPATCHERS => [
                 \tratabor\components\dispatchers\users\UserProfileCreate::class

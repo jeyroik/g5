@@ -18,7 +18,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getUID(): int
     {
-        return $this->config['uid'] ?? 0;
+        return $this->config[static::FIELD__UID] ?? 0;
     }
 
     /**
@@ -26,7 +26,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getHeroes()
     {
-        return $this->config['heroes'] ?? [];
+        return $this->config[static::FIELD__HEROES] ?? [];
     }
 
     /**
@@ -34,7 +34,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getHeroesMax(): int
     {
-        return $this->config['heroes_max'] = 1;
+        return $this->config[static::FILED__HEROES_MAX] = 1;
     }
 
     /**
@@ -42,7 +42,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getCreatures()
     {
-        return $this->config['creatures'] ?? [];
+        return $this->config[static::FIELD__CREATURES] ?? [];
     }
 
     /**
@@ -50,7 +50,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getCreaturesMax(): int
     {
-        return $this->config['creatures_max'] ?? 1;
+        return $this->config[static::FIELD__CREATURES_MAX] ?? 1;
     }
 
     /**
@@ -60,7 +60,11 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function addCreature(ICreature $creature)
     {
-        $this->config['creatures'][] = $creature;
+        $this->config[static::FIELD__CREATURES][] = $creature;
+
+        if ($creature->getType() == ICreature::TYPE__HERO) {
+            $this->config[static::FIELD__HEROES][] = $creature;
+        }
 
         return $this;
     }
@@ -70,7 +74,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getDecks()
     {
-        return $this->config['decks'] ?? [];
+        return $this->config[static::FIELD__DECKS] ?? [];
     }
 
     /**
@@ -78,7 +82,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getDecksMax(): int
     {
-        return $this->config['decks_max'] ?? 1;
+        return $this->config[static::FIELD__DECKS_MAX] ?? 1;
     }
 
     /**
@@ -86,7 +90,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getName(): string
     {
-        return $this->config['name'] ?? '';
+        return $this->config[static::FIELD__NAME] ?? '';
     }
 
     /**
@@ -94,7 +98,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getId(): int
     {
-        return $this->config['id'] ?? '';
+        return $this->config[static::FIELD__ID] ?? '';
     }
 
     /**
@@ -122,7 +126,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getCurrentLevel(): int
     {
-        return $this->config['level_current'] ?? 0;
+        return $this->config[static::FIELD__CURRENT_LEVEL] ?? 0;
     }
 
     /**
@@ -130,7 +134,7 @@ class UserProfile extends Basic implements IUserProfile
      */
     public function getCurrentExp(): int
     {
-        return $this->config['exp_current'] ?? 0;
+        return $this->config[static::FIELD__CURRENT_EXP] ?? 0;
     }
 
     /**
