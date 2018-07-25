@@ -7,10 +7,18 @@ use jeyroik\extas\interfaces\systems\IContext;
 use tratabor\interfaces\basics\contexts\IContextCreatureHero;
 use tratabor\interfaces\basics\contexts\IContextProfile;
 
+/**
+ * Class CreatureHeroChoose
+ *
+ * @package tratabor\components\dispatchers\creatures
+ * @author Funcraft <me@funcraft.ru>
+ */
 class CreatureHeroChoose extends DispatcherAbstract
 {
     protected $requireInterfaces = [
-        IContextOnFailure::class
+        IContextOnFailure::class,
+        IContextCreatureHero::class,
+        IContextProfile::class
     ];
 
     /**
